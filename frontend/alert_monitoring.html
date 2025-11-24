@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye — Alert Monitoring Dashboard
+  </title>
+  <!-- Brand Typography: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+   <!-- Flatpickr (Date Range Picker) -->
+   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <!-- Leaflet (Maps) -->
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+    <!-- SweetAlert2 (modals) -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet"/>
+    <!-- Site theme -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page specific CSS -->
+    <link href="alert_monitoring.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Header (used on dashboards and app pages) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./authority_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brandlogo/44/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:#FF0000">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:420px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" id="globalSearch" placeholder="Search incidents, infrastructure, overlays..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./report_generator.html">
+      <i class="fa-solid fa-file-lines me-1">
+      </i>
+      Generate Report
+     </a>
+     <a class="btn btn-light position-relative" href="./notification_settings.html" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+       5
+      </span>
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-tie me-1">
+       </i>
+       {{UserName}}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="d-flex">
+   <!-- Sidebar (left) -->
+   <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:290px;">
+    <div class="position-sticky">
+     <div class="p-3 border-bottom d-flex align-items-center gap-2">
+      <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brand2/64/32';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+      <span class="fw-bold">
+       DisasterEye
+      </span>
+     </div>
+     <div class="p-3">
+      <div class="d-flex align-items-center gap-2 mb-3">
+       <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+        <i class="fa-solid fa-user-tie text-secondary">
+        </i>
+       </div>
+       <div>
+        <div class="fw-semibold">
+         {{UserName}}
+        </div>
+        <div class="badge" style="background-color:#FFD700; color:#000;">
+         Local Authority
+        </div>
+       </div>
+      </div>
+      <ul class="nav nav-pills flex-column gap-1">
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./authority_dashboard.html">
+         <i class="fa-solid fa-city me-2 text-danger">
+         </i>
+         Command Center
+        </a>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#publicAlerts" data-bs-toggle="collapse">
+         <i class="fa-solid fa-bullhorn me-2 text-danger">
+         </i>
+         Public Alerts
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="publicAlerts">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./alert_composer.html">
+            <i class="fa-solid fa-bolt me-2 text-muted">
+            </i>
+            Issue Alert
+           </a>
+          </li>
+          <li class="nav-item">
+           <a class="nav-link active" href="./alert_monitoring.html">
+            <i class="fa-solid fa-chart-bar me-2 text-muted">
+            </i>
+            Alert Monitoring
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#analytics" data-bs-toggle="collapse">
+         <i class="fa-solid fa-list-check me-2 text-danger">
+         </i>
+         Analytics &amp; Reports
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="analytics">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./report_generator.html">
+            <i class="fa-solid fa-file-lines me-2 text-muted">
+            </i>
+            Report Generator
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./incident_details.html">
+         <i class="fa-solid fa-sitemap me-2 text-danger">
+         </i>
+         Incident Details
+        </a>
+       </li>
+      </ul>
+      <div class="mt-3 p-2 bg-light rounded small">
+       <div class="text-uppercase fw-bold mb-1" style="color:#555;">
+        Quick Actions
+       </div>
+       <a class="btn btn-danger w-100 mb-2" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Issue Official Alert
+       </a>
+       <a class="btn btn-outline-danger w-100" href="./report_generator.html">
+        <i class="fa-solid fa-file-lines me-2">
+        </i>
+        Generate Report
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Main Content -->
+   <main class="flex-grow-1">
+    <div class="container-fluid py-3">
+     <!-- Breadcrumb + Actions -->
+     <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+         <a href="./authority_dashboard.html">
+          Authority
+         </a>
+        </li>
+        <li aria-current="page" class="breadcrumb-item active">
+         Alert Monitoring
+        </li>
+       </ol>
+      </nav>
+      <div class="d-flex align-items-center gap-2">
+       <button class="btn btn-light" id="refreshDataBtn">
+        <i class="fa-solid fa-rotate">
+        </i>
+        Refresh Data
+       </button>
+       <a class="btn btn-outline-danger" href="./report_generator.html">
+        <i class="fa-solid fa-file-export me-1">
+        </i>
+        Export Report
+       </a>
+      </div>
+     </div>
+     <!-- System feedback area -->
+     <div class="alert alert-info d-flex align-items-center gap-2" id="statusInfo" role="alert">
+      <i class="fa-solid fa-circle-info">
+      </i>
+      <div>
+       Data last updated
+       <span id="lastUpdated">
+        just now
+       </span>
+       . Network: Normal.
+      </div>
+     </div>
+     <!-- Split layout: Issued Alerts (30%) + Analytics (70%) -->
+     <div class="monitoring-layout d-flex flex-column flex-lg-row gap-3">
+      <!-- Left: Issued Alerts Panel -->
+      <section class="issued-panel card flex-grow-1">
+       <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-bullhorn text-danger">
+         </i>
+         <span class="fw-semibold">
+          Issued Alerts
+         </span>
+        </div>
+        <span class="text-muted small" id="alertsCountLabel">
+         Showing 0 of 0
+        </span>
+       </div>
+       <div class="card-body">
+        <!-- Filters Toolbar -->
+        <div class="row g-2 mb-2">
+         <div class="col-12">
+          <label class="form-label mb-1">
+           Date Range
+          </label>
+          <div class="input-group">
+           <span class="input-group-text bg-white">
+            <i class="fa-regular fa-calendar">
+            </i>
+           </span>
+           <input class="form-control" id="dateRange" placeholder="Select date range">
+           </input>
+          </div>
+         </div>
+         <div class="col-6">
+          <label class="form-label mb-1">
+           Disaster Type
+          </label>
+          <select class="form-select" id="filterType">
+           <option value="">
+            All Types
+           </option>
+           <option>
+            Flood
+           </option>
+           <option>
+            Fire
+           </option>
+           <option>
+            Storm
+           </option>
+           <option>
+            Earthquake
+           </option>
+           <option>
+            Landslide
+           </option>
+          </select>
+         </div>
+         <div class="col-6">
+          <label class="form-label mb-1">
+           Sort By
+          </label>
+          <select class="form-select" id="sortOrder">
+           <option value="newest">
+            Newest
+           </option>
+           <option value="oldest">
+            Oldest
+           </option>
+           <option value="severity">
+            Severity
+           </option>
+          </select>
+         </div>
+         <div class="col-12">
+          <label class="form-label mb-1">
+           Keyword
+          </label>
+          <div class="input-group">
+           <span class="input-group-text bg-white">
+            <i class="fa-solid fa-magnifying-glass text-muted">
+            </i>
+           </span>
+           <input class="form-control" id="keywordSearch" placeholder="Search by title or content keywords (press Enter to apply)" type="text"/>
+           <button class="btn btn-primary" id="applyFiltersBtn">
+            <i class="fa-solid fa-filter me-1">
+            </i>
+            Apply
+           </button>
+          </div>
+         </div>
+        </div>
+        <!-- Alerts List -->
+        <div class="list-group list-scroll" id="alertsList">
+         <!-- dynamically populated -->
+        </div>
+        <!-- Pagination/meta -->
+        <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+         <div id="paginationInfo">
+          Page 1 of 4
+         </div>
+         <div>
+          <button class="btn btn-sm btn-light me-1" disabled="" id="prevPageBtn">
+           <i class="fa-solid fa-chevron-left">
+           </i>
+          </button>
+          <button class="btn btn-sm btn-light" id="nextPageBtn">
+           <i class="fa-solid fa-chevron-right">
+           </i>
+          </button>
+         </div>
+        </div>
+       </div>
+      </section>
+      <!-- Right: Analytics Dashboard -->
+      <section class="analytics-panel flex-grow-1">
+       <!-- Key Metrics -->
+       <div class="grid auto-fit-lg mb-3" id="metricsRow">
+        <div class="metric-card">
+         <div class="metric-title">
+          Total Recipients
+         </div>
+         <div class="metric-value" id="metricRecipients">
+          <span class="skeleton">
+          </span>
+         </div>
+        </div>
+        <div class="metric-card">
+         <div class="metric-title">
+          Delivery Success Rate
+         </div>
+         <div class="metric-value" id="metricSuccess">
+          <span class="skeleton">
+          </span>
+         </div>
+        </div>
+        <div class="metric-card">
+         <div class="metric-title">
+          User Acknowledgements
+         </div>
+         <div class="metric-value" id="metricAck">
+          <span class="skeleton">
+          </span>
+         </div>
+        </div>
+       </div>
+       <!-- Delivery Breakdown Chart -->
+       <div class="card mb-3">
+        <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-chart-column text-danger">
+          </i>
+          <span class="fw-semibold">
+           Delivery Breakdown by Channel
+          </span>
+         </div>
+         <div class="d-flex align-items-center gap-2">
+          <span class="text-muted small">
+           Stacked
+          </span>
+          <div class="form-check form-switch mb-0">
+           <input checked="" class="form-check-input" id="stackedToggle" type="checkbox"/>
+          </div>
+         </div>
+        </div>
+        <div class="card-body">
+         <canvas height="120" id="deliveryChart">
+         </canvas>
+        </div>
+       </div>
+       <!-- Alert Impact Map -->
+       <div class="card mb-3">
+        <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-map-location-dot text-danger">
+          </i>
+          <span class="fw-semibold">
+           Alert Impact Map
+          </span>
+         </div>
+         <div class="d-flex align-items-center gap-3 small">
+          <div class="form-check form-switch mb-0">
+           <input checked="" class="form-check-input" id="toggleHeat" type="checkbox"/>
+           <label class="form-check-label" for="toggleHeat">
+            Show Response Heatmap
+           </label>
+          </div>
+          <button class="btn btn-light btn-sm" id="recenterMapBtn">
+           <i class="fa-solid fa-crosshairs">
+           </i>
+           Recenter
+          </button>
+         </div>
+        </div>
+        <div class="card-body p-0">
+         <div class="map-area" id="impactMap">
+         </div>
+        </div>
+        <div class="card-footer small text-muted">
+         Target area is approximate; response points are anonymized and aggregated for privacy.
+        </div>
+       </div>
+       <!-- Channel Delivery Details table -->
+       <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-list-ul text-danger">
+          </i>
+          <span class="fw-semibold">
+           Channel Delivery Details
+          </span>
+         </div>
+         <div class="input-group input-group-sm" style="max-width: 260px;">
+          <span class="input-group-text bg-white">
+           <i class="fa-solid fa-magnifying-glass">
+           </i>
+          </span>
+          <input class="form-control" id="tableSearch" placeholder="Search channel/status" type="text">
+          </input>
+         </div>
+        </div>
+        <div class="card-body p-0">
+         <div class="table-responsive">
+          <table class="table-theme mb-0" id="detailsTable">
+           <thead>
+            <tr>
+             <th scope="col">
+              Channel
+             </th>
+             <th class="text-end" scope="col">
+              Sent
+             </th>
+             <th class="text-end" scope="col">
+              Delivered
+             </th>
+             <th class="text-end" scope="col">
+              Failed
+             </th>
+             <th class="text-end" scope="col">
+              Delivery Rate
+             </th>
+             <th class="text-center" scope="col">
+              Action
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <!-- rows injected -->
+           </tbody>
+          </table>
+         </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center small text-muted">
+         <span id="tableMeta">
+          Showing 0 of 0 rows
+         </span>
+         <div>
+          <button class="btn btn-sm btn-light me-1" disabled="" id="tablePrev">
+           <i class="fa-solid fa-chevron-left">
+           </i>
+          </button>
+          <button class="btn btn-sm btn-light" id="tableNext">
+           <i class="fa-solid fa-chevron-right">
+           </i>
+          </button>
+         </div>
+        </div>
+       </div>
+      </section>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer -->
+  <footer class="border-top bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/brandfooter/36/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./alert_monitoring.html">
+      <i class="fa-solid fa-chart-bar me-1">
+      </i>
+      Monitor
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./safety_guides.html">
+        Safety Guides
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./profile_settings.html">
+        Profile
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast container (Bootstrap) -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1060">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-primary border-0" id="liveToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+      Filters applied successfully.
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- JS: Libraries -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr">
+  </script>
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
+  </script>
+  <!-- Page Script -->
+  <script>
+   // Utilities
+const fmtInt = (n) => n.toLocaleString();
+const fmtPct = (p) => p.toFixed(1) + '%';
+const formatDate = (iso) => new Date(iso).toLocaleString();
+
+// Mock Alerts Data (would come from /api/v1/alerts/issued)
+const mockAlertsAll = [{
+    id: 'AL-1024',
+    title: 'Flood Warning - Riverside District',
+    issueDate: '2025-02-10T14:35:00Z',
+    type: 'Flood',
+    severity: 'High',
+    recipients: 48230
+}, {
+    id: 'AL-1025',
+    title: 'Wildfire Evacuation Advisory - Pine Hills',
+    issueDate: '2025-02-08T09:10:00Z',
+    type: 'Fire',
+    severity: 'Critical',
+    recipients: 19340
+}, {
+    id: 'AL-1026',
+    title: 'Storm Surge Alert - Coastal Ward 3',
+    issueDate: '2025-02-05T19:25:00Z',
+    type: 'Storm',
+    severity: 'Medium',
+    recipients: 31120
+}, {
+    id: 'AL-1027',
+    title: 'Earthquake Aftershock Advisory - Central',
+    issueDate: '2025-02-01T06:30:00Z',
+    type: 'Earthquake',
+    severity: 'High',
+    recipients: 52890
+}, {
+    id: 'AL-1028',
+    title: 'Landslide Risk Notice - Highland Road',
+    issueDate: '2025-01-28T17:40:00Z',
+    type: 'Landslide',
+    severity: 'Low',
+    recipients: 8420
+}, {
+    id: 'AL-1029',
+    title: 'Flood Watch - East Bank',
+    issueDate: '2025-01-20T11:05:00Z',
+    type: 'Flood',
+    severity: 'Medium',
+    recipients: 22010
+}, {
+    id: 'AL-1030',
+    title: 'Severe Thunderstorm Warning - North Zone',
+    issueDate: '2025-01-17T13:55:00Z',
+    type: 'Storm',
+    severity: 'High',
+    recipients: 26440
+}, {
+    id: 'AL-1031',
+    title: 'Urban Fire Containment Update - Downtown',
+    issueDate: '2025-01-12T00:45:00Z',
+    type: 'Fire',
+    severity: 'Medium',
+    recipients: 15770
+}, ];
+
+// Pagination state for alerts list
+const state = {
+    page: 1,
+    pageSize: 6,
+    filtered: [],
+    selectedAlertId: null,
+    sortOrder: 'newest',
+    dateRange: [],
+    filterType: '',
+    keyword: ''
+};
+
+// Elements
+const alertsListEl = document.getElementById('alertsList');
+const alertsCountLabel = document.getElementById('alertsCountLabel');
+const paginationInfo = document.getElementById('paginationInfo');
+const prevPageBtn = document.getElementById('prevPageBtn');
+const nextPageBtn = document.getElementById('nextPageBtn');
+
+const dateRangeEl = document.getElementById('dateRange');
+const filterTypeEl = document.getElementById('filterType');
+const sortOrderEl = document.getElementById('sortOrder');
+const keywordSearchEl = document.getElementById('keywordSearch');
+const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+
+const metricRecipientsEl = document.getElementById('metricRecipients');
+const metricSuccessEl = document.getElementById('metricSuccess');
+const metricAckEl = document.getElementById('metricAck');
+const lastUpdatedEl = document.getElementById('lastUpdated');
+
+const tableEl = document.getElementById('detailsTable').querySelector('tbody');
+const tableMetaEl = document.getElementById('tableMeta');
+const tablePrevBtn = document.getElementById('tablePrev');
+const tableNextBtn = document.getElementById('tableNext');
+const tableSearchEl = document.getElementById('tableSearch');
+
+const refreshDataBtn = document.getElementById('refreshDataBtn');
+const stackedToggle = document.getElementById('stackedToggle');
+
+// Initialize date range picker
+const fp = flatpickr(dateRangeEl, {
+    mode: 'range',
+    dateFormat: 'Y-m-d',
+    onChange: (selected) => {
+        state.dateRange = selected; // array of Date
+    }
+});
+
+// Filtering & Sorting
+function applyFilters() {
+    const type = filterTypeEl.value || '';
+    const keyword = (keywordSearchEl.value || '').toLowerCase();
+    let result = [...mockAlertsAll];
+
+    // Date filter
+    if (state.dateRange && state.dateRange.length === 2) {
+        const [start, end] = state.dateRange;
+        if (end < start) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Date Range',
+                text: 'End date cannot be before start date.'
+            });
+        } else {
+            result = result.filter(a => {
+                const d = new Date(a.issueDate);
+                return d >= start && d <= new Date(end.getTime() + 86399000);
+            });
+        }
+    }
+
+    // Type filter
+    if (type) result = result.filter(a => a.type === type);
+
+    // Keyword filter
+    if (keyword) result = result.filter(a => a.title.toLowerCase().includes(keyword));
+
+    // Sort
+    const order = sortOrderEl.value || 'newest';
+    state.sortOrder = order;
+    if (order === 'newest') {
+        result.sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate));
+    } else if (order === 'oldest') {
+        result.sort((a, b) => new Date(a.issueDate) - new Date(b.issueDate));
+    } else if (order === 'severity') {
+        const rank = {
+            Critical: 3,
+            High: 2,
+            Medium: 1,
+            Low: 0
+        };
+        result.sort((a, b) => (rank[b.severity] || 0) - (rank[a.severity] || 0));
+    }
+
+    state.filtered = result;
+    state.page = 1;
+    renderAlertsList();
+
+    // Toast feedback
+    const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+    toast.show();
+}
+
+function renderAlertsList() {
+    const {
+        page,
+        pageSize,
+        filtered
+    } = state;
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    state.page = Math.min(page, totalPages);
+    const start = (state.page - 1) * pageSize;
+    const items = filtered.slice(start, start + pageSize);
+
+    alertsListEl.innerHTML = '';
+    items.forEach(a => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'list-group-item list-group-item-action d-flex align-items-center gap-2';
+        item.dataset.id = a.id;
+        item.innerHTML = `
+          <div class="flex-grow-1 text-start">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fw-semibold">${a.title}</span>
+              ${a.severity === 'Critical' ? '<span class="badge bg-danger">Critical</span>' : ''}
+            </div>
+            <div class="small text-muted">${formatDate(a.issueDate)} • ${a.type} • Recipients: ${fmtInt(a.recipients)}</div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-muted"></i>
+        `;
+        item.addEventListener('click', () => {
+            state.selectedAlertId = a.id;
+            selectAlert(a.id);
+        });
+        alertsListEl.appendChild(item);
+    });
+
+    alertsCountLabel.textContent = `Showing ${Math.min(total, start + items.length)} of ${total}`;
+    paginationInfo.textContent = `Page ${state.page} of ${totalPages}`;
+    prevPageBtn.disabled = state.page <= 1;
+    nextPageBtn.disabled = state.page >= totalPages;
+
+    // Auto-select first if none selected
+    if (!state.selectedAlertId && items[0]) {
+        state.selectedAlertId = items[0].id;
+        selectAlert(items[0].id);
+    } else {
+        highlightSelected();
+    }
+}
+
+prevPageBtn.addEventListener('click', () => {
+    if (state.page > 1) {
+        state.page--;
+        renderAlertsList();
+    }
+});
+nextPageBtn.addEventListener('click', () => {
+    const totalPages = Math.ceil(state.filtered.length / state.pageSize);
+    if (state.page < totalPages) {
+        state.page++;
+        renderAlertsList();
+    }
+});
+
+applyFiltersBtn.addEventListener('click', applyFilters);
+keywordSearchEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') applyFilters();
+});
+
+// Highlight selected list item
+function highlightSelected() {
+    const buttons = alertsListEl.querySelectorAll('.list-group-item');
+    buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.id === state.selectedAlertId);
+    });
+}
+
+// Generate mock metrics and details for selected alert
+function mockMetricsFor(alert) {
+    // Base on recipients & severity
+    const base = alert.recipients;
+    const severityFactor = {
+        Critical: 0.98,
+        High: 0.96,
+        Medium: 0.93,
+        Low: 0.9
+    } [alert.severity] || 0.92;
+    const delivered = Math.round(base * severityFactor);
+    const failed = base - delivered;
+    const successRate = (delivered / base) * 100;
+    const ack = Math.round(delivered * (alert.type === 'Flood' ? 0.21 : alert.type === 'Fire' ? 0.27 : 0.18));
+    return {
+        base,
+        delivered,
+        failed,
+        successRate,
+        ack
+    };
+}
+
+// Chart.js setup
+let chart;
+
+function renderChart(data) {
+    const ctx = document.getElementById('deliveryChart');
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Delivered',
+                data: data.delivered,
+                backgroundColor: 'rgba(40, 167, 69, 0.75)',
+                stack: 'stack1'
+            }, {
+                label: 'Failed',
+                data: data.failed,
+                backgroundColor: 'rgba(220, 53, 69, 0.75)',
+                stack: 'stack1'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    enabled: true
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: stackedToggle.checked
+                },
+                y: {
+                    stacked: stackedToggle.checked,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+stackedToggle.addEventListener('change', () => {
+    if (!chart) return;
+    chart.options.scales.x.stacked = stackedToggle.checked;
+    chart.options.scales.y.stacked = stackedToggle.checked;
+    chart.update();
+});
+
+// Leaflet Map
+let map, areaLayer, heatLayer;
+
+function initMap() {
+    map = L.map('impactMap');
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    });
+    tiles.addTo(map);
+    areaLayer = L.geoJSON(null, {
+        style: {
+            color: '#FF0000',
+            weight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15
+        }
+    }).addTo(map);
+    heatLayer = L.heatLayer([], {
+        radius: 18,
+        blur: 15,
+        maxZoom: 17,
+        gradient: {
+            0.3: '#0099D2',
+            0.6: '#28A745',
+            0.9: '#FF0000'
+        }
+    });
+    heatLayer.addTo(map);
+    map.setView([37.7749, -122.4194], 11);
+}
+
+const toggleHeatEl = document.getElementById('toggleHeat');
+const recenterMapBtn = document.getElementById('recenterMapBtn');
+toggleHeatEl.addEventListener('change', () => {
+    if (toggleHeatEl.checked) heatLayer.addTo(map);
+    else heatLayer.remove();
+});
+recenterMapBtn.addEventListener('click', () => {
+    if (areaLayer && areaLayer.getBounds && areaLayer.getBounds().isValid()) {
+        map.fitBounds(areaLayer.getBounds(), {
+            padding: [12, 12]
+        });
+    }
+});
+
+function updateMapForAlert(alert) {
+    // Simple polygon mock around a center point varied by alert id
+    const seed = parseInt(alert.id.replace(/\D/g, '')) % 1000;
+    const baseLat = 37.77 + (seed % 10) * 0.01;
+    const baseLng = -122.42 + (seed % 7) * 0.01;
+    const poly = {
+        type: 'Feature',
+        geometry: {
+            type: 'Polygon',
+            coordinates: [
+                [
+                    [baseLng - 0.03, baseLat - 0.02],
+                    [baseLng + 0.03, baseLat - 0.02],
+                    [baseLng + 0.04, baseLat + 0.02],
+                    [baseLng - 0.02, baseLat + 0.03],
+                    [baseLng - 0.03, baseLat - 0.02]
+                ]
+            ]
+        }
+    };
+    areaLayer.clearLayers();
+    areaLayer.addData(poly);
+    if (areaLayer.getBounds && areaLayer.getBounds().isValid()) {
+        map.fitBounds(areaLayer.getBounds(), {
+            padding: [12, 12]
+        });
+    }
+
+    // Heat points (mock responses)
+    const points = [];
+    for (let i = 0; i < 120; i++) {
+        const lat = baseLat + (Math.random() - 0.5) * 0.07;
+        const lng = baseLng + (Math.random() - 0.5) * 0.08;
+        const intensity = 0.5 + Math.random() * 0.5;
+        points.push([lat, lng, intensity]);
+    }
+    heatLayer.setLatLngs(points);
+    if (!toggleHeatEl.checked) heatLayer.remove();
+}
+
+// Table data renderer (mock per alert)
+let tableState = {
+    page: 1,
+    pageSize: 6,
+    rows: [],
+    filtered: []
+};
+
+function generateTableData(alert) {
+    // Channel-level breakdown with statuses
+    const metrics = mockMetricsFor(alert);
+    const sentPush = Math.round(metrics.base * 0.65);
+    const sentSMS = metrics.base - sentPush;
+    const delPush = Math.round(sentPush * (0.92 + Math.random() * 0.05));
+    const failPush = sentPush - delPush;
+    const delSMS = Math.round(sentSMS * (0.9 + Math.random() * 0.06));
+    const failSMS = sentSMS - delSMS;
+    const rows = [{
+        channel: 'Push',
+        sent: sentPush,
+        delivered: delPush,
+        failed: failPush
+    }, {
+        channel: 'SMS',
+        sent: sentSMS,
+        delivered: delSMS,
+        failed: failSMS
+    }, {
+        channel: 'Email',
+        sent: Math.round(metrics.base * 0.15),
+        delivered: Math.round(metrics.base * 0.14),
+        failed: Math.round(metrics.base * 0.01)
+    }, {
+        channel: 'Push (Retry)',
+        sent: Math.round(sentPush * 0.08),
+        delivered: Math.round(sentPush * 0.07),
+        failed: Math.round(sentPush * 0.01)
+    }, {
+        channel: 'SMS (International)',
+        sent: Math.round(sentSMS * 0.12),
+        delivered: Math.round(sentSMS * 0.1),
+        failed: Math.round(sentSMS * 0.02)
+    }, {
+        channel: 'Email (Digest)',
+        sent: Math.round(metrics.base * 0.08),
+        delivered: Math.round(metrics.base * 0.07),
+        failed: Math.round(metrics.base * 0.01)
+    }];
+    tableState.rows = rows;
+    tableState.filtered = rows;
+    tableState.page = 1;
+    renderTable();
+}
+
+function renderTable() {
+    const {
+        page,
+        pageSize,
+        filtered
+    } = tableState;
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    tableState.page = Math.min(page, totalPages);
+    const start = (tableState.page - 1) * pageSize;
+    const items = filtered.slice(start, start + pageSize);
+
+    tableEl.innerHTML = items.map(r => {
+        const rate = r.sent ? (r.delivered / r.sent) * 100 : 0;
+        const rateColor = rate > 95 ? 'text-success' : (rate < 80 ? 'text-danger' : '');
+        return `
+          <tr>
+            <td>${r.channel}</td>
+            <td class="text-end">${fmtInt(r.sent)}</td>
+            <td class="text-end">${fmtInt(r.delivered)}</td>
+            <td class="text-end">${fmtInt(r.failed)}</td>
+            <td class="text-end ${rateColor}">${fmtPct(rate)}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-light" title="View breakdown" onclick="viewBreakdown('${r.channel}')"><i class="fa-solid fa-eye"></i></button>
+            </td>
+          </tr>`;
+    }).join('');
+
+    tableMetaEl.textContent = `Showing ${Math.min(total, start + items.length)} of ${total} rows`;
+    tablePrevBtn.disabled = tableState.page <= 1;
+    tableNextBtn.disabled = tableState.page >= totalPages;
+}
+
+tablePrevBtn.addEventListener('click', () => {
+    if (tableState.page > 1) {
+        tableState.page--;
+        renderTable();
+    }
+});
+tableNextBtn.addEventListener('click', () => {
+    const totalPages = Math.ceil(tableState.filtered.length / tableState.pageSize);
+    if (tableState.page < totalPages) {
+        tableState.page++;
+        renderTable();
+    }
+});
+
+tableSearchEl.addEventListener('input', () => {
+    const q = (tableSearchEl.value || '').toLowerCase();
+    tableState.filtered = tableState.rows.filter(r => `${r.channel}`.toLowerCase().includes(q));
+    tableState.page = 1;
+    renderTable();
+});
+
+// Global for action buttons used in inline onclick
+window.viewBreakdown = function(channel) {
+    Swal.fire({
+        icon: 'info',
+        title: `${channel} — Status Breakdown`,
+        html: '<div class="text-start">\n' +
+            '<div class="badge-soft info mb-2">Delivered vs Failed in the last hour</div>\n' +
+            '<ul class="mb-0">\n' +
+            '<li>Delivered peaks around 10–15 minutes post-issue</li>\n' +
+            '<li>Retry mechanisms reduced failure rate by ~3%</li>\n' +
+            '</ul></div>',
+        confirmButtonText: 'Close'
+    });
+}
+
+// Select alert -> update metrics, chart, map, table
+function selectAlert(alertId) {
+    highlightSelected();
+    const alert = state.filtered.find(a => a.id === alertId) || mockAlertsAll.find(a => a.id === alertId);
+    if (!alert) return;
+
+    // Loading state
+    metricRecipientsEl.innerHTML = '<span class="skeleton">&nbsp;</span>';
+    metricSuccessEl.innerHTML = '<span class="skeleton">&nbsp;</span>';
+    metricAckEl.innerHTML = '<span class="skeleton">&nbsp;</span>';
+
+    setTimeout(() => {
+        const m = mockMetricsFor(alert);
+        metricRecipientsEl.textContent = fmtInt(m.base);
+        const rateColor = m.successRate > 95 ? 'text-success' : (m.successRate < 80 ? 'text-danger' : '');
+        metricSuccessEl.innerHTML = `<span class="${rateColor}">${fmtPct(m.successRate)}</span>`;
+        metricAckEl.textContent = fmtInt(m.ack);
+
+        // Chart data: Push, SMS, Email
+        const chartData = {
+            labels: ['Push', 'SMS', 'Email'],
+            delivered: [Math.round(m.base * 0.58), Math.round(m.base * 0.34), Math.round(m.base * 0.14)],
+            failed: [Math.round(m.base * 0.04), Math.round(m.base * 0.06), Math.round(m.base * 0.01)]
+        };
+        renderChart(chartData);
+
+        // Map
+        updateMapForAlert(alert);
+
+        // Table
+        generateTableData(alert);
+
+        // Update info
+        lastUpdatedEl.textContent = 'moments ago';
+    }, 600);
+}
+
+// Refresh button
+refreshDataBtn.addEventListener('click', () => {
+    Swal.fire({
+        title: 'Refreshing Data',
+        text: 'Fetching latest metrics and analytics…',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    setTimeout(() => {
+        Swal.close();
+        Swal.fire({
+            icon: 'success',
+            title: 'Data Refreshed',
+            timer: 1400,
+            showConfirmButton: false
+        });
+        // Re-select current alert to "refresh" visuals
+        if (state.selectedAlertId) selectAlert(state.selectedAlertId);
+    }, 1000);
+});
+
+// Init everything
+window.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    state.filtered = [...mockAlertsAll];
+    renderAlertsList();
+    // Defaults
+    sortOrderEl.value = 'newest';
+});
+  </script>
+ </body>
+</html>

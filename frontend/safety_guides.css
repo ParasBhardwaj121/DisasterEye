@@ -1,0 +1,59 @@
+/* Safety Guides - Page Specific Styles */
+/* Brand typography */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout: ensure main content uses available width next to sidebar */
+@media (min-width: 768px) {
+    #sidebarMenu {
+        flex: 0 0 280px
+        }
+    }
+/* Disaster cards */
+.disaster-card {
+    border: 1px solid var(--border-color);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease
+    }
+.disaster-card:hover {
+    transform: translatey(-2px);
+    box-shadow: var(--shadow-2)
+    }
+.disaster-card .disaster-icon-wrap {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-soft);
+    color: var(--color-primary);
+    border-radius: var(--radius-pill)
+    }
+.disaster-card img {
+    max-height: 140px;
+    object-fit: cover
+    }
+/* Guide section content spacing */
+.guide-section-content ul {
+    padding-left: 1.1rem
+    }
+.guide-section-content li {
+    line-height: 1.5
+    }
+/* Table sorting buttons */
+.sort-btn {
+    font-weight: 600
+    }
+.sort-btn[data-dir="asc"] i {
+    transform: rotate(180deg)
+    }
+/* Utilities overrides for this page */
+/* Responsive tweaks */
+@media (max-width: 767.98px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start
+        }
+    .page-header .btn {
+        width: 100%
+        }
+    }

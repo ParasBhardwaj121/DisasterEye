@@ -1,0 +1,42 @@
+/* Report Generator - page specific styles (report_generator.css) */
+/* Ensure the left config card stays visible on large screens */
+@media (min-width: 992px) {
+    .config-sticky {
+        position: sticky;
+        top: 76px
+        }
+    }
+/* Map height */
+#areaMap {
+    height: 260px;
+    background: #f7f9fb
+    }
+/* Preview card minimum height for better balance */
+.preview-card {
+    min-height: 420px
+    }
+/* Tweak badges and header spacing */
+.page-title {
+    letter-spacing: 0.2px
+    }
+/* Grid.js integration with theme */
+.gridjs-container {
+    --gridjs-border: var(--border-color)
+    }
+.gridjs-table {
+    border-radius: var(--radius-1);
+    overflow: hidden
+    }
+.gridjs-tr:hover {
+    background: rgba(0, 0, 0, 0.02)
+    }
+/* SweetAlert2 button match brand */
+.swal2-styled.swal2-confirm {
+    background-color: var(--color-success) !important
+    }
+/* Mobile adjustments for filters button spacing */
+@media (max-width: 991.98px) {
+    #configPanel.collapse {
+        margin-bottom: 12px
+        }
+    }

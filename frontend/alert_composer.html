@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye • Alert Composer
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Font Awesome 6 -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+   <!-- SweetAlert2 -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet"/>
+   <!-- Leaflet & Leaflet Draw -->
+   <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" rel="stylesheet"/>
+   <!-- Quill Rich Text Editor -->
+   <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"/>
+   <!-- Global Theme Styles -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific Styles -->
+   <link href="alert_composer.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Needed on this page) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./authority_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/56/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:#FF0000">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:420px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search incidents, infrastructure, overlays..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./report_generator.html">
+      <i class="fa-solid fa-file-lines me-1">
+      </i>
+      Generate Report
+     </a>
+     <a class="btn btn-light position-relative" href="./notification_settings.html" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+       5
+      </span>
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-tie me-1">
+       </i>
+       Alex Morgan
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row g-0">
+    <!-- Left Sidebar (Needed on this page) -->
+    <div class="col-auto d-none d-md-block">
+     <!-- Component: Local Authority Sidebar -->
+     <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:290px;">
+      <div class="position-sticky">
+       <div class="p-3 border-bottom d-flex align-items-center gap-2">
+        <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/64/32'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+        <span class="fw-bold">
+         DisasterEye
+        </span>
+       </div>
+       <div class="p-3">
+        <div class="d-flex align-items-center gap-2 mb-3">
+         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+          <i class="fa-solid fa-user-tie text-secondary">
+          </i>
+         </div>
+         <div>
+          <div class="fw-semibold">
+           Alex Morgan
+          </div>
+          <div class="badge" style="background-color:#FFD700; color:#000;">
+           Local Authority
+          </div>
+         </div>
+        </div>
+        <ul class="nav nav-pills flex-column gap-1">
+         <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="./authority_dashboard.html">
+           <i class="fa-solid fa-city me-2 text-danger">
+           </i>
+           Command Center
+          </a>
+         </li>
+         <li class="nav-item">
+          <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#publicAlerts" data-bs-toggle="collapse">
+           <i class="fa-solid fa-bullhorn me-2 text-danger">
+           </i>
+           Public Alerts
+           <i class="fa-solid fa-chevron-down ms-auto small">
+           </i>
+          </button>
+          <div class="collapse show ps-3" id="publicAlerts">
+           <ul class="nav flex-column gap-1">
+            <li class="nav-item">
+             <a class="nav-link" href="./alert_composer.html">
+              <i class="fa-solid fa-bolt me-2 text-muted">
+              </i>
+              Issue Alert
+             </a>
+            </li>
+            <li class="nav-item">
+             <a class="nav-link" href="./alert_monitoring.html">
+              <i class="fa-solid fa-chart-bar me-2 text-muted">
+              </i>
+              Alert Monitoring
+             </a>
+            </li>
+           </ul>
+          </div>
+         </li>
+         <li class="nav-item">
+          <button aria-expanded="false" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#analytics" data-bs-toggle="collapse">
+           <i class="fa-solid fa-list-check me-2 text-danger">
+           </i>
+           Analytics &amp; Reports
+           <i class="fa-solid fa-chevron-down ms-auto small">
+           </i>
+          </button>
+          <div class="collapse ps-3" id="analytics">
+           <ul class="nav flex-column gap-1">
+            <li class="nav-item">
+             <a class="nav-link" href="./report_generator.html">
+              <i class="fa-solid fa-file-lines me-2 text-muted">
+              </i>
+              Report Generator
+             </a>
+            </li>
+           </ul>
+          </div>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="./incident_details.html">
+           <i class="fa-solid fa-sitemap me-2 text-danger">
+           </i>
+           Incident Details
+          </a>
+         </li>
+        </ul>
+        <div class="mt-3 p-2 bg-light rounded small">
+         <div class="text-uppercase fw-bold mb-1" style="color:#555;">
+          Quick Actions
+         </div>
+         <a class="btn btn-danger w-100 mb-2" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+          <i class="fa-solid fa-bullhorn me-2">
+          </i>
+          Issue Official Alert
+         </a>
+         <a class="btn btn-outline-danger w-100" href="./report_generator.html">
+          <i class="fa-solid fa-file-lines me-2">
+          </i>
+          Generate Report
+         </a>
+        </div>
+       </div>
+      </div>
+     </nav>
+    </div>
+    <!-- Main Content -->
+    <main class="col">
+     <div class="container-fluid py-3 py-lg-4">
+      <!-- Breadcrumbs and Page Header -->
+      <nav aria-label="breadcrumb" class="breadcrumb mb-2">
+       <span class="breadcrumb-item">
+        <a href="./authority_dashboard.html">
+         Command Center
+        </a>
+       </span>
+       <span aria-current="page" class="breadcrumb-item active">
+        Alert Composer
+       </span>
+      </nav>
+      <div class="page-header">
+       <div class="d-flex align-items-center gap-3">
+        <h1 class="page-title mb-0">
+         Issue Public Alert
+        </h1>
+        <span class="badge-soft warning">
+         <i class="fa-solid fa-bolt">
+         </i>
+         High Priority Workflow
+        </span>
+       </div>
+       <div>
+        <div aria-label="View options" class="view-switcher" role="group">
+         <div class="option active">
+          <i class="fa-solid fa-pen-to-square me-1">
+          </i>
+          Compose
+         </div>
+         <div class="option">
+          <i class="fa-solid fa-eye me-1">
+          </i>
+          Preview
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- System Feedback Area -->
+      <div aria-live="polite" class="mb-3" id="systemFeedbackArea">
+      </div>
+      <div class="row g-3 g-lg-4">
+       <!-- Left Column: Alert Content Editor -->
+       <div class="col-12 col-lg-5">
+        <!-- Templates -->
+        <div class="card mb-3">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-file-lines text-muted">
+           </i>
+           <span class="widget-title">
+            Predefined Templates
+           </span>
+          </div>
+          <button class="btn btn-light btn-sm" id="btnLoadTemplates">
+           <i class="fa-solid fa-rotate">
+           </i>
+          </button>
+         </div>
+         <div class="card-body">
+          <div class="mb-3">
+           <label class="form-label" for="templateSelect">
+            Choose Template
+           </label>
+           <select class="form-select" id="templateSelect">
+            <option value="">
+             -- Select a template --
+            </option>
+           </select>
+           <div class="form-text">
+            Selecting a template may pre-fill the alert content.
+           </div>
+          </div>
+         </div>
+        </div>
+        <!-- Alert Content -->
+        <div class="card mb-3">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-pen-to-square text-muted">
+           </i>
+           <span class="widget-title">
+            Alert Content
+           </span>
+          </div>
+         </div>
+         <div class="card-body">
+          <div class="row g-3">
+           <div class="col-12">
+            <label class="form-label" for="disasterType">
+             Disaster Type
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <select class="form-select" id="disasterType" required="">
+             <option value="">
+              Loading types...
+             </option>
+            </select>
+           </div>
+           <div class="col-12">
+            <label class="form-label" for="severityLevel">
+             Severity Level
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <select class="form-select" id="severityLevel" required="">
+             <option value="">
+              Loading levels...
+             </option>
+            </select>
+            <div class="form-text">
+             High severity may bypass Quiet Hours per policy.
+            </div>
+           </div>
+           <div class="col-12">
+            <label class="form-label" for="alertTitle">
+             Alert Title
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <input class="form-control" id="alertTitle" maxlength="100" placeholder="e.g., Flood Warning for Riverside District" required="" type="text">
+             <div class="d-flex justify-content-between mt-1">
+              <small class="text-muted">
+               Max 100 characters
+              </small>
+              <small class="text-muted" id="titleCounter">
+               0/100
+              </small>
+             </div>
+            </input>
+           </div>
+           <div class="col-12">
+            <label class="form-label">
+             Alert Message
+             <span class="text-danger">
+              *
+             </span>
+            </label>
+            <div class="rounded border" id="messageEditor">
+            </div>
+            <div class="d-flex justify-content-between mt-1">
+             <small class="text-muted">
+              Provide clear safety instructions and details.
+             </small>
+             <small class="text-muted" id="messageCounter">
+              0/1000
+             </small>
+            </div>
+           </div>
+           <div class="col-12">
+            <label class="form-label">
+             Delivery Channels
+            </label>
+            <div class="row g-2">
+             <div class="col-6">
+              <div class="form-check">
+               <input checked="" class="form-check-input channel-input" id="chSms" type="checkbox" value="SMS"/>
+               <label class="form-check-label" for="chSms">
+                <i class="fa-solid fa-comment-sms me-1 text-muted">
+                </i>
+                SMS
+               </label>
+              </div>
+             </div>
+             <div class="col-6">
+              <div class="form-check">
+               <input checked="" class="form-check-input channel-input" id="chPush" type="checkbox" value="Push"/>
+               <label class="form-check-label" for="chPush">
+                <i class="fa-solid fa-mobile-screen me-1 text-muted">
+                </i>
+                Push Notification
+               </label>
+              </div>
+             </div>
+             <div class="col-6">
+              <div class="form-check">
+               <input class="form-check-input channel-input" id="chEmail" type="checkbox" value="Email"/>
+               <label class="form-check-label" for="chEmail">
+                <i class="fa-solid fa-envelope me-1 text-muted">
+                </i>
+                Email
+               </label>
+              </div>
+             </div>
+             <div class="col-6">
+              <div class="form-check">
+               <input class="form-check-input channel-input" id="chVoice" type="checkbox" value="Voice"/>
+               <label class="form-check-label" for="chVoice">
+                <i class="fa-solid fa-volume-high me-1 text-muted">
+                </i>
+                Voice Call
+               </label>
+              </div>
+             </div>
+            </div>
+            <div class="form-text">
+             Select the channels to notify affected users.
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <!-- Recent Drafts (sample table for reference) -->
+        <div class="card">
+         <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-floppy-disk text-muted">
+           </i>
+           <span class="widget-title">
+            Recent Drafts
+           </span>
+          </div>
+          <div class="small text-muted">
+           Showing 6 of 6
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div class="table-responsive">
+           <table class="table table-theme mb-0" id="draftsTable">
+            <thead>
+             <tr>
+              <th data-sort="title" role="button">
+               Title
+               <i class="fa-solid fa-sort ms-1">
+               </i>
+              </th>
+              <th data-sort="type" role="button">
+               Type
+               <i class="fa-solid fa-sort ms-1">
+               </i>
+              </th>
+              <th data-sort="severity" role="button">
+               Severity
+               <i class="fa-solid fa-sort ms-1">
+               </i>
+              </th>
+              <th data-sort="date" role="button">
+               Last Updated
+               <i class="fa-solid fa-sort ms-1">
+               </i>
+              </th>
+              <th>
+               Action
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               Flood Watch - Riverside
+              </td>
+              <td>
+               Flood
+              </td>
+              <td>
+               <span class="badge-soft warning">
+                Warning
+               </span>
+              </td>
+              <td>
+               2025-01-10 14:22
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+             <tr>
+              <td>
+               Heat Advisory - Westside
+              </td>
+              <td>
+               Heatwave
+              </td>
+              <td>
+               <span class="badge-soft secondary">
+                Advisory
+               </span>
+              </td>
+              <td>
+               2025-01-09 09:10
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+             <tr>
+              <td>
+               Wildfire Smoke - Uptown
+              </td>
+              <td>
+               Wildfire
+              </td>
+              <td>
+               <span class="badge-soft warning">
+                Warning
+               </span>
+              </td>
+              <td>
+               2025-01-08 16:45
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+             <tr>
+              <td>
+               Power Outage - Central
+              </td>
+              <td>
+               Infrastructure
+              </td>
+              <td>
+               <span class="badge-soft info">
+                Watch
+               </span>
+              </td>
+              <td>
+               2025-01-08 08:05
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+             <tr>
+              <td>
+               Coastal Storm Surge
+              </td>
+              <td>
+               Severe Storm
+              </td>
+              <td>
+               <span class="badge-soft error">
+                Critical
+               </span>
+              </td>
+              <td>
+               2025-01-07 22:31
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+             <tr>
+              <td>
+               Air Quality Alert - North
+              </td>
+              <td>
+               Air Quality
+              </td>
+              <td>
+               <span class="badge-soft secondary">
+                Advisory
+               </span>
+              </td>
+              <td>
+               2025-01-06 10:18
+              </td>
+              <td>
+               <button class="btn btn-sm btn-light load-draft">
+                Load
+               </button>
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="p-2 border-top d-flex justify-content-between align-items-center small text-muted">
+           <div>
+            Sorted by:
+            <span id="sortedBy">
+             Last Updated
+            </span>
+           </div>
+           <div>
+            Page 1 of 1
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- Right Column: Geographic Targeting Map -->
+       <div class="col-12 col-lg-7">
+        <div class="card map-card h-100">
+         <div class="card-header flex-wrap">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-map-location-dot text-muted">
+           </i>
+           <span class="widget-title">
+            Geographic Targeting
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2 drawing-toolbar">
+           <div aria-label="Drawing tools" class="btn-group" role="group">
+            <button class="btn btn-light btn-sm" id="toolPolygon">
+             <i class="fa-solid fa-draw-polygon">
+             </i>
+             Polygon
+            </button>
+            <button class="btn btn-light btn-sm" id="toolCircle">
+             <i class="fa-solid fa-circle-notch">
+             </i>
+             Circle
+            </button>
+            <button class="btn btn-light btn-sm" id="toolClear">
+             <i class="fa-solid fa-eraser">
+             </i>
+             Clear
+            </button>
+           </div>
+           <div class="ms-2">
+            <select class="form-select form-select-sm" id="zoneSelect">
+             <option value="">
+              Select Predefined Zone
+             </option>
+             <option value="downtown">
+              Downtown District
+             </option>
+             <option value="riverside">
+              Riverside Area
+             </option>
+             <option value="uptown">
+              Uptown Zone
+             </option>
+            </select>
+           </div>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div class="position-relative">
+           <div class="map-container" id="alertMap">
+           </div>
+           <div class="position-absolute top-0 start-0 m-2 p-2 bg-white rounded border small shadow-sm">
+            <div class="text-muted">
+             Estimated Recipients
+            </div>
+            <div class="d-flex align-items-center gap-2">
+             <div aria-hidden="true" class="spinner-border spinner-border-sm text-danger d-none" id="recipientsSpinner" role="status">
+             </div>
+             <div class="fw-bold" id="recipientCount">
+              -
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="card-footer d-flex flex-wrap align-items-center gap-3">
+          <div class="small text-muted">
+           <i class="fa-solid fa-maximize me-1">
+           </i>
+           Map constrained to jurisdiction boundary.
+          </div>
+          <div class="small" id="selectionSummary">
+           No area selected.
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Bottom Persistent Action Bar (Needed on this page) -->
+  <div class="bottom-bar border-top" id="actionBar">
+   <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-3">
+     <div class="small text-muted">
+      <i class="fa-regular fa-clock me-1">
+      </i>
+      <span id="lastSaved">
+       Not saved
+      </span>
+     </div>
+     <span class="badge-soft info">
+      <i class="fa-solid fa-users me-1">
+      </i>
+      <span id="barRecipientCount">
+       -
+      </span>
+      recipients
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <button class="btn btn-light" id="btnCancel">
+      <i class="fa-solid fa-xmark me-1">
+      </i>
+      Cancel
+     </button>
+     <button class="btn btn-outline-danger" id="btnSaveDraft">
+      <i class="fa-regular fa-floppy-disk me-1">
+      </i>
+      Save Draft
+     </button>
+     <button class="btn btn-light" id="btnPreview">
+      <i class="fa-regular fa-eye me-1">
+      </i>
+      Preview
+     </button>
+     <button class="btn btn-danger" disabled="" id="btnSendAlert">
+      <i class="fa-solid fa-paper-plane me-1">
+      </i>
+      Send Alert
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Footer (Needed on this page) -->
+  <footer class="border-top bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/36/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./alert_monitoring.html">
+      <i class="fa-solid fa-chart-bar me-1">
+      </i>
+      Monitor
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Terms
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Privacy
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer">
+  </div>
+  <!-- JS: Bootstrap, SweetAlert2, Leaflet, Leaflet Draw, Quill, App Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js">
+  </script>
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js">
+  </script>
+  <script>
+   // Basic debounce implementation
+function debounce(fn, delay) {
+    let t;
+    return function(...args) {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
+const state = {
+    alertType: '',
+    severityLevel: '',
+    alertTitle: '',
+    alertMessage: '',
+    targetAreaGeometry: null,
+    selectedChannels: new Set(['SMS', 'Push']),
+    templates: [],
+    submissionStatus: 'idle',
+    estimatedRecipients: null
+};
+
+// Initialize selects with mock API data
+const disasterTypes = [
+    'Flood', 'Wildfire', 'Earthquake', 'Severe Storm', 'Tornado', 'Heatwave', 'Landslide', 'Tsunami', 'Chemical Spill', 'Air Quality', 'Infrastructure'
+];
+const severityLevels = ['Advisory', 'Watch', 'Warning', 'Critical'];
+
+const sampleTemplates = [{
+    id: 'tpl1',
+    name: 'Flood Warning - Riverside',
+    type: 'Flood',
+    severity: 'Warning',
+    title: 'Flood Warning in Riverside District',
+    message: 'Heavy rainfall has caused water levels to rise. Move to higher ground immediately. Avoid driving through flooded roads. Stay tuned for official updates.'
+}, {
+    id: 'tpl2',
+    name: 'Heat Advisory - Citywide',
+    type: 'Heatwave',
+    severity: 'Advisory',
+    title: 'Heat Advisory in Effect',
+    message: 'High temperatures expected. Stay hydrated, limit outdoor activity during peak hours, and check on vulnerable neighbors.'
+}, {
+    id: 'tpl3',
+    name: 'Wildfire Smoke Alert - Uptown',
+    type: 'Wildfire',
+    severity: 'Warning',
+    title: 'Smoke Advisory for Uptown Area',
+    message: 'Poor air quality due to wildfire smoke. Limit outdoor exposure, close windows, and use masks if available.'
+}];
+
+// Quill Editor setup
+const quill = new Quill('#messageEditor', {
+    theme: 'snow',
+    placeholder: 'Compose the detailed alert message (safety instructions, location details, timing, and resources)...',
+    modules: {
+        toolbar: [
+            [{
+                header: [false, 2, 3]
+            }],
+            ['bold', 'italic', 'underline'],
+            [{
+                list: 'ordered'
+            }, {
+                list: 'bullet'
+            }],
+            ['link'],
+            ['clean']
+        ]
+    }
+});
+
+function updateMessageCounter() {
+    // Quill getLength includes trailing newline; we cap at 1001 to allow exactly 1000 chars
+    let len = quill.getLength() - 1;
+    if (len < 0) len = 0;
+    document.getElementById('messageCounter').textContent = `${len}/1000`;
+    if (len > 1000) {
+        // Trim extra input
+        quill.deleteText(1000, len);
+        document.getElementById('messageCounter').textContent = `1000/1000`;
+    }
+    state.alertMessage = quill.root.innerHTML.trim();
+    validateForm();
+}
+
+quill.on('text-change', updateMessageCounter);
+
+// Title counter and binding
+const titleInput = document.getElementById('alertTitle');
+const titleCounter = document.getElementById('titleCounter');
+titleInput.addEventListener('input', () => {
+    const len = titleInput.value.length;
+    titleCounter.textContent = `${len}/100`;
+    state.alertTitle = titleInput.value;
+    validateForm();
+});
+
+// Channels selection
+document.querySelectorAll('.channel-input').forEach(cb => {
+    cb.addEventListener('change', (e) => {
+        if (e.target.checked) state.selectedChannels.add(e.target.value);
+        else state.selectedChannels.delete(e.target.value);
+    });
+});
+
+// Populate selects (simulate API)
+function loadDisasterTypes() {
+    const sel = document.getElementById('disasterType');
+    sel.innerHTML = '<option value="">Select type...</option>' + disasterTypes.map(d => `<option value="${d}">${d}</option>`).join('');
+}
+
+function loadSeverityLevels() {
+    const sel = document.getElementById('severityLevel');
+    sel.innerHTML = '<option value="">Select level...</option>' + severityLevels.map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+document.getElementById('disasterType').addEventListener('change', (e) => {
+    state.alertType = e.target.value;
+    validateForm();
+});
+document.getElementById('severityLevel').addEventListener('change', (e) => {
+    state.severityLevel = e.target.value;
+    validateForm();
+});
+
+// Templates
+function loadTemplates() {
+    const sel = document.getElementById('templateSelect');
+    sel.innerHTML = '<option value="">-- Select a template --</option>' + sampleTemplates.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+function applyTemplate(tplId) {
+    const tpl = sampleTemplates.find(t => t.id === tplId);
+    if (!tpl) return;
+    // Set fields
+    document.getElementById('disasterType').value = tpl.type;
+    state.alertType = tpl.type;
+    document.getElementById('severityLevel').value = tpl.severity;
+    state.severityLevel = tpl.severity;
+    titleInput.value = tpl.title;
+    titleCounter.textContent = `${titleInput.value.length}/100`;
+    state.alertTitle = tpl.title;
+    quill.setText('');
+    quill.clipboard.dangerouslyPasteHTML(0, `<p>${tpl.message}</p>`);
+    updateMessageCounter();
+    validateForm();
+    showToast('Template applied', 'success');
+}
+
+document.getElementById('templateSelect').addEventListener('change', (e) => applyTemplate(e.target.value));
+document.getElementById('btnLoadTemplates').addEventListener('click', () => {
+    loadTemplates();
+    showToast('Templates refreshed', 'info');
+});
+
+// Recent drafts sorting (basic)
+const draftsTable = document.getElementById('draftsTable');
+const sortedBy = document.getElementById('sortedBy');
+let sortDir = 1; // 1 asc, -1 desc
+draftsTable.querySelectorAll('thead th[role="button"]').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.getAttribute('data-sort');
+        const tbody = draftsTable.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const idx = Array.from(th.parentNode.children).indexOf(th);
+        rows.sort((a, b) => {
+            const av = a.children[idx].innerText.trim();
+            const bv = b.children[idx].innerText.trim();
+            if (key === 'date') return sortDir * (av.localeCompare(bv));
+            return sortDir * av.localeCompare(bv);
+        });
+        tbody.innerHTML = '';
+        rows.forEach(r => tbody.appendChild(r));
+        sortedBy.textContent = th.textContent.trim();
+        sortDir *= -1;
+    });
+});
+
+// Map setup
+let map, drawControl, drawnItems;
+const recipientCountEl = document.getElementById('recipientCount');
+const barRecipientCountEl = document.getElementById('barRecipientCount');
+const recipientsSpinner = document.getElementById('recipientsSpinner');
+const selectionSummary = document.getElementById('selectionSummary');
+
+function initMap() {
+    const sfBounds = L.latLngBounds([
+        [37.60, -122.60],
+        [37.88, -122.28]
+    ]);
+    map = L.map('alertMap', {
+        center: [37.7749, -122.4194],
+        zoom: 12,
+        minZoom: 9,
+        maxZoom: 18,
+        maxBounds: sfBounds,
+        maxBoundsViscosity: 1.0
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    drawControl = new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems
+        },
+        draw: {
+            marker: false,
+            polyline: false,
+            rectangle: false,
+            circlemarker: false,
+            polygon: {
+                allowIntersection: false,
+                showArea: true
+            },
+            circle: {
+                showRadius: true
+            }
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, function(e) {
+        drawnItems.clearLayers();
+        drawnItems.addLayer(e.layer);
+        state.targetAreaGeometry = e.layer.toGeoJSON();
+        updateSelectionSummary();
+        debouncedEstimate();
+        validateForm();
+    });
+    map.on('draw:edited', function() {
+        const layer = drawnItems.getLayers()[0];
+        if (layer) {
+            state.targetAreaGeometry = layer.toGeoJSON();
+        }
+        updateSelectionSummary();
+        debouncedEstimate();
+    });
+    map.on('draw:deleted', function() {
+        state.targetAreaGeometry = null;
+        updateSelectionSummary();
+        updateRecipients(null);
+        validateForm();
+    });
+}
+
+// Predefined zones (simple sample polygons)
+const zones = {
+    downtown: L.polygon([
+        [37.79, -122.42],
+        [37.79, -122.40],
+        [37.77, -122.40],
+        [37.77, -122.42]
+    ], {
+        color: '#FF0000'
+    }),
+    riverside: L.circle([37.76, -122.44], {
+        radius: 1200,
+        color: '#FF0000'
+    }),
+    uptown: L.polygon([
+        [37.80, -122.45],
+        [37.80, -122.43],
+        [37.78, -122.43],
+        [37.78, -122.45]
+    ], {
+        color: '#FF0000'
+    })
+};
+
+document.getElementById('zoneSelect').addEventListener('change', (e) => {
+    const val = e.target.value;
+    drawnItems.clearLayers();
+    state.targetAreaGeometry = null;
+    if (val && zones[val]) {
+        const layer = zones[val].clone ? zones[val].clone() : zones[val];
+        drawnItems.addLayer(layer);
+        if (layer.getBounds) map.fitBounds(layer.getBounds());
+        state.targetAreaGeometry = layer.toGeoJSON();
+        updateSelectionSummary();
+        debouncedEstimate();
+        validateForm();
+    } else {
+        updateSelectionSummary();
+        updateRecipients(null);
+        validateForm();
+    }
+});
+
+// Drawing toolbar buttons
+document.getElementById('toolPolygon').addEventListener('click', () => {
+    new L.Draw.Polygon(map, drawControl.options.draw.polygon).enable();
+});
+document.getElementById('toolCircle').addEventListener('click', () => {
+    new L.Draw.Circle(map, drawControl.options.draw.circle).enable();
+});
+document.getElementById('toolClear').addEventListener('click', () => {
+    drawnItems.clearLayers();
+    state.targetAreaGeometry = null;
+    updateSelectionSummary();
+    updateRecipients(null);
+    validateForm();
+});
+
+function updateSelectionSummary() {
+    if (!state.targetAreaGeometry) {
+        selectionSummary.textContent = 'No area selected.';
+        return;
+    }
+    const g = state.targetAreaGeometry;
+    const type = g.geometry ? g.geometry.type : (g.type || 'Area');
+    selectionSummary.innerHTML = `<span class="text-muted">Selected:</span> <strong>${type}</strong>`;
+}
+
+function updateRecipients(count) {
+    state.estimatedRecipients = count;
+    const txt = (count == null ? '-' : count.toLocaleString());
+    recipientCountEl.textContent = txt;
+    barRecipientCountEl.textContent = txt;
+}
+
+const debouncedEstimate = debounce(() => {
+    if (!state.targetAreaGeometry) {
+        updateRecipients(null);
+        return;
+    }
+    recipientsSpinner.classList.remove('d-none');
+    // Mock API call with geometry influence
+    setTimeout(() => {
+        let base = 5000 + Math.floor(Math.random() * 15000);
+        // simple bias: circle radius increases count, polygon vertices increases count
+        try {
+            const g = state.targetAreaGeometry.geometry;
+            if (g && g.type === 'Polygon') {
+                const verts = (g.coordinates && g.coordinates[0] ? g.coordinates[0].length : 4);
+                base += verts * 150;
+            }
+            if (g && g.type === 'Point' && state.targetAreaGeometry.properties && state.targetAreaGeometry.properties.radius) {
+                base += Math.floor(state.targetAreaGeometry.properties.radius / 10);
+            }
+        } catch (e) {}
+        recipientsSpinner.classList.add('d-none');
+        updateRecipients(base);
+        validateForm();
+    }, 600);
+}, 400);
+
+// Action bar buttons
+const btnCancel = document.getElementById('btnCancel');
+const btnSaveDraft = document.getElementById('btnSaveDraft');
+const btnPreview = document.getElementById('btnPreview');
+const btnSendAlert = document.getElementById('btnSendAlert');
+const lastSaved = document.getElementById('lastSaved');
+
+btnCancel.addEventListener('click', () => {
+    Swal.fire({
+        title: 'Cancel Alert Composition?',
+        text: 'Your unsaved changes will be lost.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Discard',
+        cancelButtonText: 'Keep Editing',
+        confirmButtonColor: '#FF0000'
+    }).then(res => {
+        if (res.isConfirmed) window.location.href = './authority_dashboard.html';
+    });
+});
+
+btnSaveDraft.addEventListener('click', () => {
+    if (!hasAnyContent()) {
+        showToast('Nothing to save yet. Add some content first.', 'warning');
+        return;
+    }
+    setSaving(true);
+    setTimeout(() => {
+        setSaving(false);
+        const ts = new Date().toLocaleString();
+        lastSaved.textContent = `Draft saved at ${ts}`;
+        showToast('Draft saved successfully', 'success');
+        // Redirect to monitoring after a short delay
+        setTimeout(() => {
+            window.location.href = './alert_monitoring.html';
+        }, 900);
+    }, 900);
+});
+
+btnPreview.addEventListener('click', () => {
+    if (!hasAnyContent()) {
+        showToast('Nothing to preview. Add content first.', 'info');
+        return;
+    }
+    const summaryHtml = buildSummaryHtml();
+    Swal.fire({
+        title: 'Preview Alert',
+        html: summaryHtml,
+        width: 720,
+        confirmButtonText: 'Close'
+    });
+});
+
+btnSendAlert.addEventListener('click', () => {
+    if (!isFormValid()) {
+        showValidationMessage();
+        return;
+    }
+    const summaryHtml = buildSummaryHtml(true);
+    Swal.fire({
+        title: 'Confirm and Send Alert',
+        html: summaryHtml,
+        icon: 'warning',
+        width: 760,
+        showCancelButton: true,
+        confirmButtonText: 'Confirm & Send',
+        cancelButtonText: 'Review Again',
+        confirmButtonColor: '#FF0000'
+    }).then(res => {
+        if (res.isConfirmed) {
+            Swal.fire({
+                title: 'Sending Alert...',
+                html: '<div class="text-muted">Dispatching to selected channels</div>',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Alert Sent',
+                    text: 'Your alert has been issued successfully.',
+                    confirmButtonText: 'Go to Monitoring'
+                }).then(() => {
+                    window.location.href = './alert_monitoring.html';
+                });
+            }, 1500);
+        }
+    });
+});
+
+function buildSummaryHtml(includeChannels) {
+    const channels = Array.from(state.selectedChannels).join(', ') || 'None';
+    const recipients = state.estimatedRecipients != null ? state.estimatedRecipients.toLocaleString() : '-';
+    const severityBadge = `<span class="badge-soft warning">${state.severityLevel || '-'}</span>`;
+    const type = state.alertType || '-';
+    const area = state.targetAreaGeometry ? (state.targetAreaGeometry.geometry.type || 'Area') : 'Not selected';
+    return `
+        <div class="text-start">
+          <div class="mb-2"><strong>Title:</strong> ${escapeHtml(state.alertTitle || '-')}</div>
+          <div class="mb-2"><strong>Severity:</strong> ${severityBadge} &nbsp; <strong>Type:</strong> ${escapeHtml(type)}</div>
+          <div class="mb-2"><strong>Target Area:</strong> ${escapeHtml(area)} &nbsp; <strong>Recipients:</strong> ${recipients}</div>
+          ${includeChannels ? `<div class="mb-2"><strong>Channels:</strong> ${escapeHtml(channels)}</div>` : ''}
+          <div class="mb-2"><strong>Message:</strong></div>
+          <div class="border rounded p-2" style="max-height:240px; overflow:auto;">${state.alertMessage || '<em>No message</em>'}</div>
+        </div>`;
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"]/g, s => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;'
+    } [s]));
+}
+
+function hasAnyContent() {
+    return (state.alertType || state.severityLevel || (state.alertTitle && state.alertTitle.trim()) || (quill.getLength() - 1) > 0 || state.targetAreaGeometry);
+}
+
+function setSaving(isSaving) {
+    btnSaveDraft.disabled = isSaving;
+    btnSendAlert.disabled = isSaving || !isFormValid();
+}
+
+function isFormValid() {
+    const titleOk = state.alertTitle && state.alertTitle.trim().length > 0;
+    const msgLen = Math.max(0, quill.getLength() - 1);
+    return Boolean(state.alertType && state.severityLevel && titleOk && msgLen > 0 && msgLen <= 1000 && state.targetAreaGeometry && state.estimatedRecipients != null);
+}
+
+function validateForm() {
+    const ok = isFormValid();
+    document.getElementById('btnSendAlert').disabled = !ok;
+    // basic invalid marks
+    document.getElementById('disasterType').classList.toggle('is-invalid', !state.alertType);
+    document.getElementById('severityLevel').classList.toggle('is-invalid', !state.severityLevel);
+    titleInput.classList.toggle('is-invalid', !(state.alertTitle && state.alertTitle.trim()));
+    // feedback area
+    const area = document.getElementById('systemFeedbackArea');
+    if (!ok) {
+        area.innerHTML = '<div class="alert alert-warning d-flex align-items-center gap-2 mb-0"><i class="fa-solid fa-triangle-exclamation"></i><div>Complete all required fields and select a target area to enable sending.</div></div>';
+    } else {
+        area.innerHTML = '';
+    }
+}
+
+function showValidationMessage() {
+    Swal.fire({
+        icon: 'info',
+        title: 'Incomplete Alert',
+        html: 'Please complete all required fields and define a target area before sending.',
+        confirmButtonText: 'OK'
+    });
+}
+
+function showToast(message, variant = 'info') {
+    const id = 't' + Date.now();
+    const color = variant === 'success' ? 'bg-success text-white' : variant === 'warning' ? 'bg-warning' : variant === 'danger' ? 'bg-danger text-white' : 'bg-info text-white';
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center border-0';
+    toast.id = id;
+    toast.role = 'alert';
+    toast.ariaLive = 'assertive';
+    toast.ariaAtomic = 'true';
+    toast.innerHTML = `
+        <div class="d-flex ${color} rounded">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>`;
+    document.getElementById('toastContainer').appendChild(toast);
+    const t = new bootstrap.Toast(toast, {
+        delay: 2500
+    });
+    t.show();
+    toast.addEventListener('hidden.bs.toast', () => toast.remove());
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    loadDisasterTypes();
+    loadSeverityLevels();
+    loadTemplates();
+    initMap();
+    updateMessageCounter();
+    validateForm();
+});
+  </script>
+ </body>
+</html>

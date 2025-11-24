@@ -1,0 +1,56 @@
+/* registration_page.css — Page-specific styles for Registration Page */
+/* Use brand typography */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout tweaks to ensure sidebar + main content play nicely */
+@media (min-width: 768px) {
+    #sidebarMenu {
+        position: sticky;
+        top: 0
+        }
+    }
+/* Role cards (radio as buttons) */
+.role-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-1);
+    background: var(--surface-0);
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease
+    }
+.btn-check:checked + .role-card {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-1);
+    background: var(--primary-soft)
+    }
+.role-card i {
+    color: var(--color-primary)
+    }
+.role-card:hover {
+    background: var(--neutral-soft)
+    }
+/* Strength meter spacing */
+#passwordStrengthText {
+    display: inline-block;
+    margin-top: 6px
+    }
+/* Make the form container slightly wider on large screens */
+@media (min-width: 992px) {
+    .login-form-container {
+        max-width: 720px
+        }
+    }
+/* Ensure the active item in the auth sidebar looks intentional */
+#sidebarMenu .nav-link.active {
+    background-color: rgba(255, 0, 0, 0.08);
+    border-left: 3px solid var(--color-primary)
+    }
+/* Adjust footer link hover */
+footer .nav-link:hover {
+    text-decoration: underline
+    }

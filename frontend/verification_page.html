@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye — Account Verification
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Font Awesome 6 -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+   <!-- SweetAlert2 -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet"/>
+   <!-- Global Theme Styles -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="verification_page.css" rel="stylesheet"/>
+   <style>
+    /* Ensure the whole site uses Poppins */
+    body { font-family: 'Poppins', var(--font-sans); }
+   </style>
+  </link>
+ </head>
+ <body class="d-flex flex-column min-vh-100">
+  <!-- Public/Common Auth Header -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./login_page.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/28/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./login_page.html">
+      <i class="fa-solid fa-right-to-bracket me-1">
+      </i>
+      Log In
+     </a>
+     <a class="btn btn-danger btn-sm" href="./registration_page.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-user-plus me-1">
+      </i>
+      Sign Up
+     </a>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid flex-grow-1">
+   <div class="row g-0">
+    <!-- Public/Common Auth Sidebar (Applicable here for verification_page) -->
+    <nav class="collapse d-md-block bg-light border-end" id="sidebarMenu" style="min-height:100vh; width:260px;">
+     <div class="position-sticky">
+      <div class="p-3 border-bottom d-flex align-items-center gap-2">
+       <img alt="DisasterEye Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/authsidebar/32/32';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+       <span class="fw-bold">
+        DisasterEye
+       </span>
+      </div>
+      <div class="p-3">
+       <div class="mb-3 small text-muted">
+        Welcome. Please sign in or create an account.
+       </div>
+       <ul class="nav nav-pills flex-column gap-1">
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./login_page.html">
+          <i class="fa-solid fa-right-to-bracket me-2 text-danger">
+          </i>
+          Log In
+         </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./registration_page.html">
+          <i class="fa-solid fa-user-plus me-2 text-danger">
+          </i>
+          Register
+         </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./password_reset.html">
+          <i class="fa-solid fa-key me-2 text-danger">
+          </i>
+          Password Reset
+         </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center active" href="./verification_page.html">
+          <i class="fa-solid fa-envelope-circle-check me-2 text-danger">
+          </i>
+          Verify Account
+         </a>
+        </li>
+       </ul>
+       <hr/>
+       <div class="small text-muted d-flex align-items-center">
+        <i class="fa-solid fa-circle-question me-2 text-warning">
+        </i>
+        Need help? See FAQs after sign-in
+       </div>
+      </div>
+     </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="col p-3 p-md-4">
+     <!-- Breadcrumbs for context -->
+     <nav aria-label="breadcrumb" class="breadcrumb mb-3">
+      <ol class="breadcrumb m-0">
+       <li class="breadcrumb-item">
+        <a href="./login_page.html">
+         Home
+        </a>
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        Account Verification
+       </li>
+      </ol>
+     </nav>
+     <div class="verification-wrapper d-flex align-items-center justify-content-center">
+      <section aria-atomic="true" aria-live="polite" class="verification-shell app-card card w-100">
+       <div class="card-body p-4 p-md-5">
+        <!-- Status Message Display -->
+        <div class="text-center mb-3">
+         <div aria-hidden="true" class="status-icon text-muted" id="statusIcon">
+          <i class="fa-solid fa-spinner fa-spin">
+          </i>
+         </div>
+         <h1 class="mt-3 h4" id="statusHeading">
+          Verifying your account…
+         </h1>
+         <p class="text-muted mb-2" id="statusBody">
+          Please wait while we validate your verification link.
+         </p>
+         <span class="badge-soft info" id="statusBadge">
+          Loading
+         </span>
+        </div>
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap" id="actionButtons">
+         <!-- Buttons will be toggled by JS based on status -->
+         <a class="btn btn-primary d-none" href="./login_page.html" id="btnProceedLogin">
+          <i class="fa-solid fa-right-to-bracket me-1">
+          </i>
+          Proceed to Login
+         </a>
+         <button class="btn btn-secondary d-none" id="btnResend" type="button">
+          <i class="fa-solid fa-paper-plane me-1">
+          </i>
+          Resend Verification Email
+         </button>
+        </div>
+        <!-- Inline Feedback Area (hidden until needed) -->
+        <div class="alert alert-info mt-3 d-none" id="inlineFeedback" role="alert">
+         <i class="fa-solid fa-circle-info me-2">
+         </i>
+         <span class="feedback-text">
+          We have sent a new verification email.
+         </span>
+        </div>
+        <!-- Helpful tips -->
+        <div class="mt-4 small text-muted text-center">
+         Didn’t receive the email? Check your spam folder or contact support. You can safely close this page once verified.
+        </div>
+       </div>
+      </section>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Public/Common Auth Footer -->
+  <footer class="border-top mt-auto bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/footer/20/20';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:20px;"/>
+     <span class="text-muted">
+      © 2025 DisasterEye
+     </span>
+    </div>
+    <ul class="nav">
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Terms
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Privacy
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Contact
+      </a>
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Toast container for optional system notifications -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1060">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-success border-0" id="verifyToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+      <i class="fa-solid fa-circle-check me-2">
+      </i>
+      Your account is verified. You can now log in.
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+    const statusIcon = document.getElementById('statusIcon');
+    const statusHeading = document.getElementById('statusHeading');
+    const statusBody = document.getElementById('statusBody');
+    const statusBadge = document.getElementById('statusBadge');
+    const btnProceedLogin = document.getElementById('btnProceedLogin');
+    const btnResend = document.getElementById('btnResend');
+    const inlineFeedback = document.getElementById('inlineFeedback');
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const presetStatus = urlParams.get('status');
+    const token = urlParams.get('token');
+
+    let verificationStatus = 'loading';
+    let resendCountdown = 0;
+    let resendTimerId = null;
+
+    function setStatus(newStatus, message) {
+        verificationStatus = newStatus;
+        // Reset UI
+        statusIcon.className = 'status-icon';
+        btnProceedLogin.classList.add('d-none');
+        btnResend.classList.add('d-none');
+        inlineFeedback.classList.add('d-none');
+
+        if (newStatus === 'loading') {
+            statusIcon.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            statusHeading.textContent = 'Verifying your account…';
+            statusBody.textContent = message || 'Please wait while we validate your verification link.';
+            statusBadge.className = 'badge-soft info';
+            statusBadge.textContent = 'Loading';
+        }
+        if (newStatus === 'success') {
+            statusIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            statusIcon.classList.add('status-success');
+            statusHeading.textContent = 'Verification Successful!';
+            statusBody.textContent = message || 'Your account is now active. You can proceed to log in.';
+            statusBadge.className = 'badge-soft success';
+            statusBadge.textContent = 'Verified';
+            btnProceedLogin.classList.remove('d-none');
+            // Show a success toast
+            const toastEl = document.getElementById('verifyToast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl, {
+                    delay: 5000
+                });
+                toast.show();
+            }
+        }
+        if (newStatus === 'failed') {
+            statusIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            statusIcon.classList.add('status-error');
+            statusHeading.textContent = 'Verification Failed';
+            statusBody.textContent = message || 'This link may be invalid. Please request a new verification email.';
+            statusBadge.className = 'badge-soft error';
+            statusBadge.textContent = 'Invalid';
+            btnResend.classList.remove('d-none');
+        }
+        if (newStatus === 'expired') {
+            statusIcon.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>';
+            statusIcon.classList.add('status-warning');
+            statusHeading.textContent = 'Verification Link Expired';
+            statusBody.textContent = message || 'Your verification link has expired. Please request a new one.';
+            statusBadge.className = 'badge-soft warning';
+            statusBadge.textContent = 'Expired';
+            btnResend.classList.remove('d-none');
+        }
+    }
+
+    // Simulated verification request
+    function verifyTokenSimulated(tokenValue, preset) {
+        setStatus('loading');
+        setTimeout(() => {
+            if (preset && ['success', 'failed', 'expired'].includes(preset)) {
+                setStatus(preset);
+                return;
+            }
+            if (!tokenValue) {
+                setStatus('failed');
+                return;
+            }
+            // Simple heuristic to vary outcomes
+            const len = tokenValue.length;
+            if (len % 5 === 0) {
+                setStatus('expired');
+            } else if (len % 2 === 0) {
+                setStatus('success');
+            } else {
+                setStatus('failed');
+            }
+        }, 1100);
+    }
+
+    // Resend logic with countdown and SweetAlert2
+    function startResendCountdown(seconds) {
+        resendCountdown = seconds;
+        updateResendButtonState();
+        resendTimerId = setInterval(() => {
+            resendCountdown--;
+            updateResendButtonState();
+            if (resendCountdown <= 0) {
+                clearInterval(resendTimerId);
+                resendTimerId = null;
+                btnResend.disabled = false;
+                btnResend.innerHTML = '<i class="fa-solid fa-paper-plane me-1"></i> Resend Verification Email';
+            }
+        }, 1000);
+    }
+
+    function updateResendButtonState() {
+        if (resendCountdown > 0) {
+            btnResend.disabled = true;
+            btnResend.innerHTML = '<i class="fa-solid fa-hourglass-half me-1"></i> Resend in ' + resendCountdown + 's';
+        }
+    }
+
+    btnResend.addEventListener('click', async () => {
+        try {
+            // Simulate API call
+            btnResend.disabled = true;
+            btnResend.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Sending…';
+            await new Promise(res => setTimeout(res, 900));
+            // Show success feedback
+            inlineFeedback.classList.remove('d-none');
+            inlineFeedback.classList.replace('alert-info', 'alert-success');
+            inlineFeedback.querySelector('.feedback-text').textContent = 'A new verification email has been sent.';
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Email Sent',
+                text: 'Please check your inbox (and spam folder).',
+                confirmButtonColor: '#28A745'
+            });
+
+            startResendCountdown(60);
+        } catch (e) {
+            inlineFeedback.classList.remove('d-none');
+            inlineFeedback.classList.replace('alert-info', 'alert-danger');
+            inlineFeedback.querySelector('.feedback-text').textContent = 'Unable to send email. Please try again later.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Send Failed',
+                text: 'Could not send verification email. Try again later.',
+                confirmButtonColor: '#DC3545'
+            });
+            btnResend.disabled = false;
+            btnResend.innerHTML = '<i class="fa-solid fa-paper-plane me-1"></i> Resend Verification Email';
+        }
+    });
+
+    // Kick off verification on load
+    verifyTokenSimulated(token, presetStatus);
+});
+  </script>
+ </body>
+</html>

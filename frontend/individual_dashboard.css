@@ -1,0 +1,94 @@
+/* Individual Dashboard - Page-specific styles */
+/* Typography: prioritize Poppins */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Map sizing and overlay */
+#map {
+    height: 68vh;
+    min-height: 420px;
+    width: 100%
+    }
+@media (min-width: 1200px) {
+    #map {
+        height: 72vh
+        }
+    }
+.map-card {
+    overflow: hidden
+    }
+.map-loading-overlay {
+    position: absolute;
+    inset: 56px 0 0 0;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(2px);
+    z-index: 10
+    }
+/* Legend dot */
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1)
+    }
+/* Alerts feed */
+.alerts-feed {
+    max-height: 360px;
+    overflow: auto
+    }
+.alerts-feed-item:hover {
+    background: var(--neutral-soft)
+    }
+/* Quick Actions floating panel */
+.quick-actions-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1070
+    }
+.quick-actions-panel .btn-group .btn {
+    padding: 10px 14px;
+    font-weight: 600
+    }
+@media (max-width: 575.98px) {
+    .quick-actions-panel {
+        left: 16px;
+        right: 16px
+        }
+    .quick-actions-panel .btn-group {
+        width: 100%
+        }
+    .quick-actions-panel .btn-group .btn {
+        flex: 1 1 auto
+        }
+    }
+/* Table adjustments */
+#sheltersTable thead th {
+    white-space: nowrap
+    }
+#sheltersTable tbody td {
+    vertical-align: middle
+    }
+#sheltersTable thead th.sortable i {
+    opacity: 0.55;
+    margin-left: 4px
+    }
+#sheltersTable thead th.sortable:hover i {
+    opacity: 0.9
+    }
+/* Minor alignment tweaks */
+.page-header .badge-soft {
+    padding: 4px 10px
+    }
+/* Ensure sidebar + main layout coherence on mobile */
+@media (max-width: 991.98px) {
+    #sidebarMenu {
+        position: fixed;
+        z-index: var(--z-sidebar)
+        }
+    .main-panel {
+        padding-bottom: 72px
+        }
+    }

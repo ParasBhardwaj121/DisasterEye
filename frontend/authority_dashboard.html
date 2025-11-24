@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye — Authority Command Center
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- Leaflet CSS -->
+   <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet"/>
+    <!-- Choices.js (enhanced selects) -->
+    <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
+     <!-- Global theme CSS -->
+     <link href="style.css" rel="stylesheet"/>
+     <!-- Page-specific CSS -->
+     <link href="authority_dashboard.css" rel="stylesheet"/>
+     <style>
+      /* Ensure Poppins is applied */
+    body { font-family: 'Poppins', var(--font-sans); }
+     </style>
+    </link>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Header: Local Authority Header with role-specific actions -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./authority_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-logo/28/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:#FF0000">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:420px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search incidents, infrastructure, overlays..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./report_generator.html">
+      <i class="fa-solid fa-file-lines me-1">
+      </i>
+      Generate Report
+     </a>
+     <a class="btn btn-light position-relative" href="./authority_dashboard.html#notifications" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+       5
+      </span>
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-tie me-1">
+       </i>
+       {{UserName}}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="d-flex" id="appLayout">
+   <!-- Left Sidebar (only on dashboard pages) -->
+   <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:290px;">
+    <div class="position-sticky">
+     <div class="p-3 border-bottom d-flex align-items-center gap-2">
+      <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-logo2/32/32';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+      <span class="fw-bold">
+       DisasterEye
+      </span>
+     </div>
+     <div class="p-3">
+      <div class="d-flex align-items-center gap-2 mb-3">
+       <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+        <i class="fa-solid fa-user-tie text-secondary">
+        </i>
+       </div>
+       <div>
+        <div class="fw-semibold">
+         {{UserName}}
+        </div>
+        <div class="badge" style="background-color:#FFD700; color:#000;">
+         Local Authority
+        </div>
+       </div>
+      </div>
+      <ul class="nav nav-pills flex-column gap-1">
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center active" href="./authority_dashboard.html">
+         <i class="fa-solid fa-city me-2 text-danger">
+         </i>
+         Command Center
+        </a>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#publicAlerts" data-bs-toggle="collapse">
+         <i class="fa-solid fa-bullhorn me-2 text-danger">
+         </i>
+         Public Alerts
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="publicAlerts">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./alert_composer.html">
+            <i class="fa-solid fa-bolt me-2 text-muted">
+            </i>
+            Issue Alert
+           </a>
+          </li>
+          <li class="nav-item">
+           <a class="nav-link" href="./alert_monitoring.html">
+            <i class="fa-solid fa-chart-bar me-2 text-muted">
+            </i>
+            Alert Monitoring
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="false" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#analytics" data-bs-toggle="collapse">
+         <i class="fa-solid fa-list-check me-2 text-danger">
+         </i>
+         Analytics &amp; Reports
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse ps-3" id="analytics">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./report_generator.html">
+            <i class="fa-solid fa-file-lines me-2 text-muted">
+            </i>
+            Report Generator
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./incident_details.html">
+         <i class="fa-solid fa-sitemap me-2 text-danger">
+         </i>
+         Incident Details
+        </a>
+       </li>
+      </ul>
+      <div class="mt-3 p-2 bg-light rounded small">
+       <div class="text-uppercase fw-bold mb-1" style="color:#555;">
+        Quick Actions
+       </div>
+       <a class="btn btn-danger w-100 mb-2" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Issue Official Alert
+       </a>
+       <a class="btn btn-outline-danger w-100" href="./report_generator.html">
+        <i class="fa-solid fa-file-lines me-2">
+        </i>
+        Generate Report
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Main Content + Right Control Panel -->
+   <main class="flex-grow-1">
+    <!-- Page header / metrics -->
+    <div class="container-fluid py-3">
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+       <h1 class="page-title mb-0">
+        Authority Command Center
+       </h1>
+       <span class="badge-soft info">
+        <i class="fa-solid fa-wifi me-1">
+        </i>
+        Live Feed
+       </span>
+       <span class="badge-soft success">
+        <i class="fa-regular fa-circle-check me-1">
+        </i>
+        Connected
+       </span>
+      </div>
+      <div class="navigation-controls">
+       <a class="btn btn-danger" href="./alert_composer.html">
+        <i class="fa-solid fa-bullhorn me-1">
+        </i>
+        Issue Official Alert
+       </a>
+       <a class="btn btn-outline-danger" href="./report_generator.html">
+        <i class="fa-solid fa-file-lines me-1">
+        </i>
+        Generate Report
+       </a>
+      </div>
+     </div>
+     <!-- Metrics Row -->
+     <div class="row g-3 mb-3">
+      <div class="col-12 col-sm-6 col-xl-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Active Incidents
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+         <div class="metric-value">
+          14
+         </div>
+         <div class="text-success fw-semibold">
+          <i class="fa-solid fa-arrow-up me-1">
+          </i>
+          8%
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Population in Alert Zones
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+         <div class="metric-value">
+          38.2K
+         </div>
+         <div class="text-warning fw-semibold">
+          <i class="fa-solid fa-triangle-exclamation me-1">
+          </i>
+          Watch
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Resources Deployed
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+         <div class="metric-value">
+          72
+         </div>
+         <div class="text-info fw-semibold">
+          <i class="fa-solid fa-truck-medical me-1">
+          </i>
+          12 standby
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+       <div class="metric-card h-100">
+        <div class="metric-title">
+         Avg Response Time
+        </div>
+        <div class="d-flex align-items-end justify-content-between">
+         <div class="metric-value">
+          11.8m
+         </div>
+         <div class="text-success fw-semibold">
+          <i class="fa-solid fa-arrow-down me-1">
+          </i>
+          -1.2m
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Map + right panel layout -->
+     <div class="d-lg-flex gap-3">
+      <!-- Map Card -->
+      <div class="card flex-grow-1 mb-3 mb-lg-0">
+       <div class="card-header">
+        <div class="title d-flex align-items-center gap-2">
+         <i class="fa-solid fa-map-location-dot text-danger">
+         </i>
+         <span class="widget-title">
+          Operational Map
+         </span>
+        </div>
+        <div class="d-flex gap-2">
+         <button class="btn btn-light d-lg-none" id="btnOpenFilters">
+          <i class="fa-solid fa-sliders">
+          </i>
+          Filters &amp; Layers
+         </button>
+         <div class="view-switcher d-none d-md-inline-flex">
+          <div class="option active" data-view="map">
+           <i class="fa-solid fa-map">
+           </i>
+          </div>
+          <div class="option" data-view="satellite">
+           <i class="fa-solid fa-globe">
+           </i>
+          </div>
+          <div class="option" data-view="terrain">
+           <i class="fa-solid fa-mountain">
+           </i>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="card-body p-0">
+        <div class="map-container" id="map">
+         <div class="d-flex align-items-center justify-content-center h-100" id="mapLoading">
+          <div class="text-center p-4">
+           <div class="spinner-border text-danger" role="status">
+           </div>
+           <div class="mt-2 text-muted">
+            Loading map data…
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="card-footer d-flex align-items-center justify-content-between small">
+        <div class="text-muted" id="viewportInfo">
+         <i class="fa-regular fa-compass me-1">
+         </i>
+         Center: —, Zoom: —
+        </div>
+        <div class="text-muted" id="selectionInfo">
+         <i class="fa-regular fa-hand-pointer me-1">
+         </i>
+         Select a marker to view details
+        </div>
+       </div>
+      </div>
+      <!-- Right Control Panel (sticky on lg+, offcanvas on sm) -->
+      <aside class="control-panel d-none d-lg-block">
+       <div class="card h-100">
+        <div class="card-header">
+         <div class="title">
+          <i class="fa-solid fa-sliders text-danger me-2">
+          </i>
+          Control Panel
+         </div>
+        </div>
+        <div class="card-body">
+         <!-- Data Filters -->
+         <div class="mb-3">
+          <label class="form-label fw-semibold">
+           Disaster Type
+          </label>
+          <select class="form-select" id="filterDisasterTypes" multiple="">
+           <option selected="" value="flood">
+            Flood
+           </option>
+           <option selected="" value="wildfire">
+            Wildfire
+           </option>
+           <option value="earthquake">
+            Earthquake
+           </option>
+           <option selected="" value="storm">
+            Storm
+           </option>
+           <option value="landslide">
+            Landslide
+           </option>
+          </select>
+          <small class="form-text">
+           Use to include/exclude incident types.
+          </small>
+         </div>
+         <div class="mb-3">
+          <label class="form-label fw-semibold" for="confidenceRange">
+           Minimum Confidence Score:
+           <span id="confidenceValue">
+            60
+           </span>
+          </label>
+          <input class="form-range" id="confidenceRange" max="100" min="0" step="5" type="range" value="60"/>
+         </div>
+         <div class="mb-3">
+          <label class="form-label fw-semibold">
+           Timeframe
+          </label>
+          <input class="form-control" id="dateRange" placeholder="Select date range">
+          </input>
+         </div>
+         <hr/>
+         <!-- Data Layers -->
+         <div class="mb-2 fw-semibold">
+          Data Layers
+         </div>
+         <div class="form-check mb-2">
+          <input checked="" class="form-check-input" id="layerRisk" type="checkbox" value="risk"/>
+          <label class="form-check-label" for="layerRisk">
+           Predictive Risk Zones
+          </label>
+         </div>
+         <div class="form-check mb-2">
+          <input checked="" class="form-check-input" id="layerInfra" type="checkbox" value="infra"/>
+          <label class="form-check-label" for="layerInfra">
+           Critical Infrastructure
+          </label>
+         </div>
+         <div class="d-grid mt-3">
+          <button class="btn btn-primary" id="applyFilters">
+           <i class="fa-solid fa-filter me-1">
+           </i>
+           Apply Filters
+          </button>
+         </div>
+         <hr/>
+         <!-- Mini chart -->
+         <div>
+          <div class="fw-semibold mb-1">
+           Incidents (last 24h)
+          </div>
+          <canvas height="120" id="miniChart">
+          </canvas>
+         </div>
+        </div>
+       </div>
+      </aside>
+     </div>
+     <!-- Recent Incidents Table -->
+     <div class="card mt-3">
+      <div class="card-header">
+       <div class="title d-flex align-items-center gap-2">
+        <i class="fa-solid fa-list text-danger">
+        </i>
+        Recent Incidents
+       </div>
+       <div class="d-flex align-items-center gap-2">
+        <input class="form-control form-control-sm" id="tableSearch" placeholder="Search incidents…"/>
+        <select class="form-select form-select-sm" id="tableFilterType" style="max-width:180px;">
+         <option value="">
+          All Types
+         </option>
+         <option value="Flood">
+          Flood
+         </option>
+         <option value="Wildfire">
+          Wildfire
+         </option>
+         <option value="Earthquake">
+          Earthquake
+         </option>
+         <option value="Storm">
+          Storm
+         </option>
+         <option value="Landslide">
+          Landslide
+         </option>
+        </select>
+       </div>
+      </div>
+      <div class="table-responsive">
+       <table class="table table-theme" id="incidentsTable">
+        <thead>
+         <tr>
+          <th data-sort="id" role="button">
+           ID
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th>
+           Type
+          </th>
+          <th data-sort="severity" role="button">
+           Severity
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th data-sort="time" role="button">
+           Reported At
+           <i class="fa-solid fa-sort ms-1">
+           </i>
+          </th>
+          <th>
+           Location
+          </th>
+          <th>
+           Status
+          </th>
+          <th class="text-end">
+           Actions
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <!-- Mock rows -->
+         <tr>
+          <td>
+           #A-1027
+          </td>
+          <td>
+           <span class="badge-soft info">
+            Storm
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft warning">
+            Moderate
+           </span>
+          </td>
+          <td data-time="2025-09-11T09:14:00Z">
+           2025-09-11 09:14
+          </td>
+          <td>
+           Ward 8, Riverside
+          </td>
+          <td>
+           <span class="badge-soft success">
+            Validated
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1027">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           #A-1026
+          </td>
+          <td>
+           <span class="badge-soft primary">
+            Flood
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft error">
+            Severe
+           </span>
+          </td>
+          <td data-time="2025-09-11T08:52:00Z">
+           2025-09-11 08:52
+          </td>
+          <td>
+           Canal Rd, Eastview
+          </td>
+          <td>
+           <span class="badge-soft warning">
+            Under Review
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1026">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           #A-1025
+          </td>
+          <td>
+           <span class="badge-soft secondary">
+            Wildfire
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft warning">
+            Moderate
+           </span>
+          </td>
+          <td data-time="2025-09-11T08:30:00Z">
+           2025-09-11 08:30
+          </td>
+          <td>
+           Hillcrest Reserve
+          </td>
+          <td>
+           <span class="badge-soft success">
+            Validated
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1025">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           #A-1024
+          </td>
+          <td>
+           <span class="badge-soft info">
+            Storm
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft success">
+            Low
+           </span>
+          </td>
+          <td data-time="2025-09-11T08:05:00Z">
+           2025-09-11 08:05
+          </td>
+          <td>
+           North Loop
+          </td>
+          <td>
+           <span class="badge-soft success">
+            Validated
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1024">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           #A-1023
+          </td>
+          <td>
+           <span class="badge-soft primary">
+            Flood
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft error">
+            Severe
+           </span>
+          </td>
+          <td data-time="2025-09-11T07:54:00Z">
+           2025-09-11 07:54
+          </td>
+          <td>
+           Old Wharf
+          </td>
+          <td>
+           <span class="badge-soft warning">
+            Under Review
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1023">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           #A-1022
+          </td>
+          <td>
+           <span class="badge-soft secondary">
+            Wildfire
+           </span>
+          </td>
+          <td>
+           <span class="badge-soft warning">
+            Moderate
+           </span>
+          </td>
+          <td data-time="2025-09-11T07:35:00Z">
+           2025-09-11 07:35
+          </td>
+          <td>
+           Redwood Park
+          </td>
+          <td>
+           <span class="badge-soft success">
+            Validated
+           </span>
+          </td>
+          <td class="text-end">
+           <button class="btn btn-sm btn-light btn-view" data-id="A-1022">
+            <i class="fa-regular fa-eye">
+            </i>
+           </button>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="card-footer d-flex flex-wrap align-items-center justify-content-between gap-2 small">
+       <div>
+        Showing
+        <strong>
+         1–6
+        </strong>
+        of
+        <strong>
+         42
+        </strong>
+       </div>
+       <nav aria-label="Table pagination">
+        <ul class="pagination pagination-sm mb-0">
+         <li class="page-item disabled">
+          <a class="page-link" href="#">
+           Previous
+          </a>
+         </li>
+         <li class="page-item active">
+          <a class="page-link" href="#">
+           1
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" href="#">
+           2
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" href="#">
+           3
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" href="#">
+           Next
+          </a>
+         </li>
+        </ul>
+       </nav>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer: Local Authority Footer -->
+  <footer class="border-top bg-light mt-auto">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-logo3/18/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./alert_monitoring.html">
+      <i class="fa-solid fa-chart-bar me-1">
+      </i>
+      Monitor
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./authority_dashboard.html#terms">
+        Terms
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./authority_dashboard.html#privacy">
+        Privacy
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Offcanvas: Filters & Layers (mobile) -->
+  <div aria-labelledby="offcanvasFiltersLabel" class="offcanvas offcanvas-end" id="offcanvasFilters" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasFiltersLabel">
+     <i class="fa-solid fa-sliders text-danger me-2">
+     </i>
+     Control Panel
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <div class="mb-3">
+     <label class="form-label fw-semibold">
+      Disaster Type
+     </label>
+     <select class="form-select" id="filterDisasterTypesM" multiple="">
+      <option selected="" value="flood">
+       Flood
+      </option>
+      <option selected="" value="wildfire">
+       Wildfire
+      </option>
+      <option value="earthquake">
+       Earthquake
+      </option>
+      <option selected="" value="storm">
+       Storm
+      </option>
+      <option value="landslide">
+       Landslide
+      </option>
+     </select>
+     <small class="form-text">
+      Use to include/exclude incident types.
+     </small>
+    </div>
+    <div class="mb-3">
+     <label class="form-label fw-semibold" for="confidenceRangeM">
+      Minimum Confidence Score:
+      <span id="confidenceValueM">
+       60
+      </span>
+     </label>
+     <input class="form-range" id="confidenceRangeM" max="100" min="0" step="5" type="range" value="60"/>
+    </div>
+    <div class="mb-3">
+     <label class="form-label fw-semibold">
+      Timeframe
+     </label>
+     <input class="form-control" id="dateRangeM" placeholder="Select date range">
+     </input>
+    </div>
+    <hr/>
+    <div class="mb-2 fw-semibold">
+     Data Layers
+    </div>
+    <div class="form-check mb-2">
+     <input checked="" class="form-check-input" id="layerRiskM" type="checkbox" value="risk"/>
+     <label class="form-check-label" for="layerRiskM">
+      Predictive Risk Zones
+     </label>
+    </div>
+    <div class="form-check mb-2">
+     <input checked="" class="form-check-input" id="layerInfraM" type="checkbox" value="infra"/>
+     <label class="form-check-label" for="layerInfraM">
+      Critical Infrastructure
+     </label>
+    </div>
+    <div class="d-grid mt-3">
+     <button class="btn btn-primary" data-bs-dismiss="offcanvas" id="applyFiltersM">
+      <i class="fa-solid fa-filter me-1">
+      </i>
+      Apply Filters
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Offcanvas: Incident Details Panel -->
+  <div aria-labelledby="incidentDetailsLabel" class="offcanvas offcanvas-end" id="incidentDetails" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="incidentDetailsLabel">
+     <i class="fa-solid fa-circle-info text-danger me-2">
+     </i>
+     Incident Details
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <div id="detailsContent">
+     <div class="mb-2 d-flex align-items-center gap-2">
+      <span class="tag" id="detailType">
+       —
+      </span>
+      <span class="badge-soft warning" id="detailSeverity">
+       —
+      </span>
+      <span class="badge-soft info" id="detailStatus">
+       —
+      </span>
+     </div>
+     <div class="mb-2 small text-muted" id="detailTimestamp">
+      <i class="fa-regular fa-clock me-1">
+      </i>
+      —
+     </div>
+     <div class="mb-2" id="detailLocation">
+      <i class="fa-solid fa-location-dot text-danger me-1">
+      </i>
+      —
+     </div>
+     <div class="mb-3">
+      <div class="fw-semibold mb-1">
+       AI Confidence
+      </div>
+      <div aria-label="Confidence" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress" role="progressbar">
+       <div class="progress-bar" id="detailConfidence" style="width: 0%">
+        0%
+       </div>
+      </div>
+      <div class="small mt-1">
+       <a class="link-info" href="#">
+        View evidence
+       </a>
+      </div>
+     </div>
+     <div class="mb-3">
+      <div class="fw-semibold mb-2">
+       Media
+      </div>
+      <div class="row g-2" id="detailMedia">
+       <div class="col-6">
+        <img alt="media" class="w-100 rounded border" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback1/400/240';" src="https://picsum.photos/seed/incident1/400/240"/>
+       </div>
+       <div class="col-6">
+        <img alt="media" class="w-100 rounded border" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback2/400/240';" src="https://picsum.photos/seed/incident2/400/240"/>
+       </div>
+      </div>
+     </div>
+     <div class="mb-3">
+      <div class="fw-semibold mb-1">
+       Fields
+      </div>
+      <div class="table-responsive">
+       <table class="table table-sm">
+        <tbody>
+         <tr>
+          <th class="w-25">
+           Source
+          </th>
+          <td id="detailSource">
+           —
+          </td>
+         </tr>
+         <tr>
+          <th>
+           Reporter
+          </th>
+          <td id="detailReporter">
+           —
+          </td>
+         </tr>
+         <tr>
+          <th>
+           Notes
+          </th>
+          <td id="detailNotes">
+           —
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <div class="d-flex gap-2">
+      <a class="btn btn-danger" href="./alert_composer.html">
+       <i class="fa-solid fa-bullhorn me-1">
+       </i>
+       Issue Alert
+      </a>
+      <a class="btn btn-light" href="./incident_details.html">
+       <i class="fa-regular fa-file-lines me-1">
+       </i>
+       Full Details
+      </a>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Toasts -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1060">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center" id="liveToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+      <i class="fa-solid fa-signal text-success me-2">
+      </i>
+      Connected to realtime data stream.
+     </div>
+     <button aria-label="Close" class="btn-close me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <script>
+   // Enhance selects
+const disasterChoices = new Choices('#filterDisasterTypes', {
+    removeItemButton: true,
+    searchEnabled: false
+});
+const disasterChoicesM = new Choices('#filterDisasterTypesM', {
+    removeItemButton: true,
+    searchEnabled: false
+});
+
+// Sliders value sync
+const confidenceRange = document.getElementById('confidenceRange');
+const confidenceValue = document.getElementById('confidenceValue');
+confidenceRange.addEventListener('input', () => confidenceValue.textContent = confidenceRange.value);
+
+const confidenceRangeM = document.getElementById('confidenceRangeM');
+const confidenceValueM = document.getElementById('confidenceValueM');
+confidenceRangeM.addEventListener('input', () => confidenceValueM.textContent = confidenceRangeM.value);
+
+// Date range pickers
+const dateRange = flatpickr('#dateRange', {
+    mode: 'range',
+    enableTime: true
+});
+const dateRangeM = flatpickr('#dateRangeM', {
+    mode: 'range',
+    enableTime: true
+});
+
+// Open mobile filters
+document.getElementById('btnOpenFilters').addEventListener('click', () => {
+    const offcanvas = new bootstrap.Offcanvas('#offcanvasFilters');
+    offcanvas.show();
+});
+
+// Leaflet Map Init
+let map, riskLayer, infraLayer;
+const mapContainer = document.getElementById('map');
+const mapLoading = document.getElementById('mapLoading');
+
+function initMap() {
+    map = L.map('map').setView([28.6139, 77.2090], 11); // Example center
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    });
+    tiles.addTo(map);
+    map.once('load', () => mapLoading?.remove());
+
+    // Risk polygon (sample)
+    riskLayer = L.polygon([
+        [28.69, 77.12],
+        [28.74, 77.22],
+        [28.66, 77.30],
+        [28.60, 77.18]
+    ], {
+        color: '#FF0000',
+        weight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.15
+    }).bindPopup('Predictive Risk Zone: High');
+    riskLayer.addTo(map);
+
+    // Critical Infra markers (sample)
+    infraLayer = L.layerGroup([
+        L.marker([28.64, 77.20]).bindTooltip('Hospital: City Care'),
+        L.marker([28.62, 77.16]).bindTooltip('Shelter: North Gymnasium'),
+        L.marker([28.67, 77.26]).bindTooltip('Fire Station: East District')
+    ]);
+    infraLayer.addTo(map);
+
+    // Incident Data Points (sample)
+    const incidents = [{
+        id: 'A-1026',
+        type: 'Flood',
+        severity: 'Severe',
+        coords: [28.63, 77.19],
+        status: 'Under Review',
+        confidence: 68,
+        time: '2025-09-11 08:52',
+        location: 'Canal Rd, Eastview',
+        source: 'Community + Sensor',
+        reporter: 'Auto/Anon',
+        notes: 'Water level rising rapidly.'
+    }, {
+        id: 'A-1027',
+        type: 'Storm',
+        severity: 'Moderate',
+        coords: [28.61, 77.22],
+        status: 'Validated',
+        confidence: 84,
+        time: '2025-09-11 09:14',
+        location: 'Ward 8, Riverside',
+        source: 'Official',
+        reporter: 'Met Office',
+        notes: 'Strong winds expected in next 2h.'
+    }, {
+        id: 'A-1025',
+        type: 'Wildfire',
+        severity: 'Moderate',
+        coords: [28.70, 77.24],
+        status: 'Validated',
+        confidence: 79,
+        time: '2025-09-11 08:30',
+        location: 'Hillcrest Reserve',
+        source: 'Community + Drone',
+        reporter: 'Ranger Unit',
+        notes: 'Contained to 2ha perimeter.'
+    }];
+
+    function iconFor(incident) {
+        const color = incident.type === 'Flood' ? '#0d6efd' : incident.type === 'Wildfire' ? '#dc3545' : '#ffc107';
+        const iconHtml = `<div class="incident-icon" style="background:${color}"><i class="fa-solid ${incident.type==='Flood'?'fa-water':incident.type==='Wildfire'?'fa-fire':'fa-cloud-bolt'}"></i></div>`;
+        return L.divIcon({
+            html: iconHtml,
+            className: 'custom-div-icon',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+        });
+    }
+
+    incidents.forEach(inc => {
+        const marker = L.marker(inc.coords, {
+                icon: iconFor(inc)
+            })
+            .addTo(map)
+            .bindTooltip(`${inc.type} • ${inc.severity}`)
+            .on('click', () => openDetails(inc));
+    });
+
+    // Update viewport info
+    const viewportInfo = document.getElementById('viewportInfo');
+
+    function updateViewport() {
+        const c = map.getCenter();
+        viewportInfo.textContent = `Center: ${c.lat.toFixed(3)}, ${c.lng.toFixed(3)} • Zoom: ${map.getZoom()}`;
+    }
+    map.on('moveend zoomend', updateViewport);
+    updateViewport();
+}
+
+// Toggle layers
+document.getElementById('layerRisk').addEventListener('change', (e) => {
+    if (!map) return;
+    e.target.checked ? riskLayer.addTo(map) : map.removeLayer(riskLayer);
+});
+document.getElementById('layerInfra').addEventListener('change', (e) => {
+    if (!map) return;
+    e.target.checked ? infraLayer.addTo(map) : map.removeLayer(infraLayer);
+});
+document.getElementById('layerRiskM').addEventListener('change', (e) => {
+    if (!map) return;
+    e.target.checked ? riskLayer.addTo(map) : map.removeLayer(riskLayer);
+});
+document.getElementById('layerInfraM').addEventListener('change', (e) => {
+    if (!map) return;
+    e.target.checked ? infraLayer.addTo(map) : map.removeLayer(infraLayer);
+});
+
+// Apply filters (demo)
+function collectFilters() {
+    return {
+        types: disasterChoices.getValue(true),
+        confidence: parseInt(confidenceRange.value, 10),
+        dateRange: document.getElementById('dateRange').value
+    };
+}
+document.getElementById('applyFilters').addEventListener('click', () => {
+    const f = collectFilters();
+    Swal.fire({
+        icon: 'success',
+        title: 'Filters Applied',
+        text: `Types: ${f.types.join(', ') || 'All'} • Min Confidence: ${f.confidence}`
+    });
+});
+document.getElementById('applyFiltersM').addEventListener('click', () => {
+    const f = {
+        types: disasterChoicesM.getValue(true),
+        confidence: parseInt(confidenceRangeM.value, 10),
+        dateRange: document.getElementById('dateRangeM').value
+    };
+    Swal.fire({
+        icon: 'success',
+        title: 'Filters Applied',
+        text: `Types: ${f.types.join(', ') || 'All'} • Min Confidence: ${f.confidence}`
+    });
+});
+
+// Map view switcher (demo only)
+document.querySelectorAll('.view-switcher .option').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.view-switcher .option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        const view = opt.dataset.view;
+        Swal.fire({
+            icon: 'info',
+            title: 'Map Style',
+            text: `Switched to ${view} view (demo)`,
+            timer: 1400,
+            showConfirmButton: false
+        });
+    });
+});
+
+// Incident details offcanvas
+const detailsOffcanvas = new bootstrap.Offcanvas('#incidentDetails');
+
+function openDetails(inc) {
+    document.getElementById('selectionInfo').innerHTML = `<span class="text-strong">Selected:</span> ${inc.id} • ${inc.type}`;
+    document.getElementById('detailType').textContent = inc.type;
+    document.getElementById('detailSeverity').textContent = inc.severity;
+    document.getElementById('detailStatus').textContent = inc.status;
+    document.getElementById('detailTimestamp').innerHTML = `<i class="fa-regular fa-clock me-1"></i> ${inc.time}`;
+    document.getElementById('detailLocation').innerHTML = `<i class="fa-solid fa-location-dot text-danger me-1"></i> ${inc.location}`;
+    const bar = document.getElementById('detailConfidence');
+    bar.style.width = inc.confidence + '%';
+    bar.textContent = inc.confidence + '%';
+    document.getElementById('detailSource').textContent = inc.source;
+    document.getElementById('detailReporter').textContent = inc.reporter;
+    document.getElementById('detailNotes').textContent = inc.notes;
+    detailsOffcanvas.show();
+}
+
+// Table: search filter and simple sorting
+const table = document.getElementById('incidentsTable');
+const rows = Array.from(table.tBodies[0].rows);
+document.getElementById('tableSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    rows.forEach(r => {
+        const txt = r.innerText.toLowerCase();
+        r.style.display = txt.includes(q) ? '' : 'none';
+    });
+});
+document.getElementById('tableFilterType').addEventListener('change', function() {
+    const v = this.value.toLowerCase();
+    rows.forEach(r => {
+        const type = r.cells[1].innerText.toLowerCase();
+        r.style.display = (!v || type.includes(v)) ? '' : 'none';
+    });
+});
+table.tHead.addEventListener('click', (e) => {
+    const th = e.target.closest('th');
+    if (!th || !th.dataset.sort) return;
+    const key = th.dataset.sort;
+    const idx = key === 'id' ? 0 : key === 'severity' ? 2 : key === 'time' ? 3 : 0;
+    const dir = th.dataset.dir === 'asc' ? 'desc' : 'asc';
+    th.dataset.dir = dir;
+    const sorted = rows.slice().sort((a, b) => {
+        const av = a.cells[idx].innerText.trim();
+        const bv = b.cells[idx].innerText.trim();
+        if (key === 'time') return dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+        return dir === 'asc' ? av.localeCompare(bv, undefined, {
+            numeric: true
+        }) : bv.localeCompare(av, undefined, {
+            numeric: true
+        });
+    });
+    table.tBodies[0].append(...sorted);
+});
+
+// Table: view action -> open details demo
+document.querySelectorAll('.btn-view').forEach(btn => btn.addEventListener('click', () => {
+    Swal.fire({
+            title: 'Open Incident?',
+            text: 'View details in panel?',
+            icon: 'question',
+            showCancelButton: true
+        })
+        .then(r => {
+            if (r.isConfirmed) {
+                // Simulate selecting first marker
+                openDetails({
+                    id: btn.dataset.id,
+                    type: 'Flood',
+                    severity: 'Moderate',
+                    status: 'Validated',
+                    confidence: 76,
+                    time: '2025-09-11 08:20',
+                    location: 'Sample Location',
+                    source: 'Community',
+                    reporter: 'User #422',
+                    notes: 'Mock details for demo.'
+                });
+            }
+        });
+}));
+
+// Mini Chart
+const ctx = document.getElementById('miniChart');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['-24h', '-20h', '-16h', '-12h', '-8h', '-4h', 'Now'],
+        datasets: [{
+            label: 'Incidents',
+            data: [4, 6, 5, 9, 7, 12, 14],
+            borderColor: '#FF0000',
+            backgroundColor: 'rgba(255,0,0,0.08)',
+            tension: 0.35,
+            fill: true,
+            pointRadius: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 2
+                }
+            }
+        }
+    }
+});
+
+// Toast on load
+const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+toast.show();
+
+// Initialize map after small delay to allow layout
+window.addEventListener('load', initMap);
+  </script>
+  <style>
+   /* Inline minimal styles for custom Leaflet markers */
+    .incident-icon { width: 28px; height: 28px; border-radius: 50%; color: #111; display:flex; align-items:center; justify-content:center; border:2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  </style>
+ </body>
+</html>

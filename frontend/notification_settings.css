@@ -1,0 +1,102 @@
+:root {
+    --primary: #F00;
+    --secondary: #FFD700
+    }
+/* Use Poppins as primary font via theme variable to avoid duplication */
+:root {
+    --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+    }
+/* Layout: ensure main grows and footer sits at bottom */
+html, body {
+    height: 100%
+    }
+body {
+    display: flex;
+    flex-direction: column
+    }
+body > .d-flex {
+    flex: 1 0 auto
+    }
+footer {
+    flex-shrink: 0
+    }
+/* Page: Notification Settings */
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px
+    }
+/* Sticky form action footer inside main content */
+.form-sticky-footer {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface-0);
+    border-top: 1px solid var(--border-color);
+    padding: 10px 12px;
+    border-radius: 0 0 var(--radius-2) var(--radius-2);
+    box-shadow: var(--shadow-1);
+    z-index: 5
+    }
+/* Chart container responsive height */
+.chart-container {
+    position: relative;
+    height: 260px
+    }
+@media (max-width: 575.98px) {
+    .chart-container {
+        height: 220px
+        }
+    }
+/* Sortable headers */
+th.sortable {
+    cursor: pointer;
+    user-select: none
+    }
+th.sortable:hover {
+    background: var(--neutral-soft)
+    }
+/* Location Actions */
+.btn-group .btn-light {
+    background: var(--surface-muted)
+    }
+/* Segmented control visual tweaks */
+.segmented-control .btn {
+    min-width: 140px
+    }
+.segmented-control .btn-check:checked + .btn {
+    color: #fff
+    }
+.segmented-control #sevAdvisory.btn-check:checked + label {
+    background-color: #6c757d;
+    border-color: #6c757d
+    }
+.segmented-control #sevWarning.btn-check:checked + label {
+    background-color: #FFC107;
+    border-color: #FFC107;
+    color: #111
+    }
+.segmented-control #sevCritical.btn-check:checked + label {
+    background-color: #DC3545;
+    border-color: #DC3545
+    }
+/* Loading and error blocks align with theme */
+.loading-state, .error-state {
+    grid-template-rows: auto auto
+    }
+/* Active link hint in sidebar (when duplicate class not applied) */
+#sidebarMenu .nav-link.active {
+    font-weight: 600;
+    color: var(--text-strong)
+    }
+/* Ensure collapse buttons look like nav links */
+#sidebarMenu .nav-link.btn {
+    text-align: left
+    }
+/* Improve table cell wrapping on small screens */
+@media (max-width: 767.98px) {
+    #locationsTable td:nth-child(1) {
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis
+        }
+    }

@@ -1,0 +1,34 @@
+/* login_page.css - page-specific styles for the DisasterEye Login page */
+/* Brand typography override for this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Page title spacing for compact top section */
+.page-title {
+    margin-bottom: var(--space-2)
+    }
+/* Login container alignment tweaks on small screens */
+@media (max-width: 575.98px) {
+    .login-form-container {
+        padding: var(--space-4)
+        }
+    }
+/* Improve visibility of the alert area */
+#formAlert {
+    margin-bottom: var(--space-3)
+    }
+/* Tooltip button subtle border to blend with input group */
+#togglePassword {
+    border-color: var(--border-color)
+    }
+/* Demo credentials table: tighter row spacing for readability */
+.table-theme td code {
+    color: var(--text)
+    }
+.table-theme tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02)
+    }
+/* Ensure footer sticks to bottom when content is short (paired with body flex) */
+footer {
+    margin-top: auto
+    }

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye – Log In
+  </title>
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- SweetAlert2 -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+  <!-- Global Theme Stylesheet -->
+  <link href="style.css" rel="stylesheet"/>
+  <!-- Page-specific Stylesheet -->
+  <link href="login_page.css" rel="stylesheet"/>
+ </head>
+ <body class="d-flex flex-column min-vh-100">
+  <!-- Public/Common Auth Header (included on login page, sidebar omitted) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./login_page.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye-logo/28/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./login_page.html">
+      <i class="fa-solid fa-right-to-bracket me-1">
+      </i>
+      Log In
+     </a>
+     <a class="btn btn-danger btn-sm" href="./registration_page.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-user-plus me-1">
+      </i>
+      Sign Up
+     </a>
+    </div>
+   </div>
+  </header>
+  <!-- Main Content -->
+  <main class="flex-grow-1">
+   <div class="container py-5">
+    <div class="row justify-content-center">
+     <div class="col-12 col-md-10 col-lg-8">
+      <div class="text-center mb-4">
+       <h1 class="page-title">
+        Welcome back
+       </h1>
+       <p class="text-muted mb-0">
+        Sign in to access disaster alerts, community coordination, and incident reporting.
+       </p>
+      </div>
+      <!-- System Feedback Area (hidden until needed) -->
+      <div class="alert d-none" id="formAlert" role="alert">
+      </div>
+      <!-- Login Form Card -->
+      <div class="login-form-container">
+       <form id="loginForm" novalidate="">
+        <div class="mb-3">
+         <label class="form-label" for="email">
+          Email Address
+         </label>
+         <input autocomplete="email" class="form-control" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+         <div class="invalid-feedback" id="emailError">
+          Please enter a valid email address.
+         </div>
+        </div>
+        <div class="mb-3 position-relative">
+         <label class="form-label" for="password">
+          Password
+         </label>
+         <div class="input-group">
+          <input autocomplete="current-password" class="form-control" id="password" name="password" placeholder="Enter your password" required="" type="password"/>
+          <button aria-label="Toggle password visibility" class="btn btn-light" data-bs-title="Show/Hide password" data-bs-toggle="tooltip" id="togglePassword" type="button">
+           <i class="fa-regular fa-eye toggle-visibility-icon" id="togglePasswordIcon">
+           </i>
+          </button>
+         </div>
+         <div class="invalid-feedback" id="passwordError">
+          Password is required.
+         </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+         <div class="form-check">
+          <input class="form-check-input" id="rememberMe" type="checkbox" value=""/>
+          <label class="form-check-label" for="rememberMe">
+           Remember me
+          </label>
+         </div>
+         <a class="link-primary" href="./password_reset.html">
+          Forgot Password?
+         </a>
+        </div>
+        <div class="d-grid">
+         <button class="btn btn-danger" id="loginBtn" type="submit">
+          <span class="btn-text">
+           <i class="fa-solid fa-right-to-bracket me-2">
+           </i>
+           Log In
+          </span>
+          <span class="btn-loading d-none">
+           <span aria-hidden="true" class="spinner-border spinner-border-sm me-2" role="status">
+           </span>
+           Signing in...
+          </span>
+         </button>
+        </div>
+       </form>
+      </div>
+      <!-- Registration Redirect -->
+      <div class="text-center mt-3">
+       <span class="text-muted">
+        Don't have an account?
+       </span>
+       <a class="fw-semibold" href="./registration_page.html">
+        Sign Up
+       </a>
+      </div>
+      <!-- Demo Credentials for Testing -->
+      <div class="card mt-4 shadow-sm">
+       <div class="card-header bg-light">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-flask text-info">
+         </i>
+         <span class="fw-semibold">
+          Test Accounts
+         </span>
+        </div>
+       </div>
+       <div class="card-body">
+        <p class="mb-3 text-muted">
+         Use these credentials to explore role-based dashboards. All passwords are case-sensitive.
+        </p>
+        <div class="table-responsive">
+         <table class="table table-theme align-middle mb-0">
+          <thead>
+           <tr>
+            <th scope="col">
+             Role
+            </th>
+            <th scope="col">
+             Email
+            </th>
+            <th scope="col">
+             Password
+            </th>
+            <th scope="col">
+             Redirects To
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td>
+             <span class="badge-soft success">
+              Individual
+             </span>
+            </td>
+            <td>
+             <code>
+              individual_user@example.com
+             </code>
+            </td>
+            <td>
+             <code>
+              Passw0rd!
+             </code>
+            </td>
+            <td>
+             <a href="./individual_dashboard.html">
+              individual_dashboard
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft info">
+              Community Leader
+             </span>
+            </td>
+            <td>
+             <code>
+              community_lead@example.com
+             </code>
+            </td>
+            <td>
+             <code>
+              Passw0rd!
+             </code>
+            </td>
+            <td>
+             <a href="./community_dashboard.html">
+              community_dashboard
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft warning">
+              Local Authority
+             </span>
+            </td>
+            <td>
+             <code>
+              authority_admin@example.com
+             </code>
+            </td>
+            <td>
+             <code>
+              Passw0rd!
+             </code>
+            </td>
+            <td>
+             <a href="./authority_dashboard.html">
+              authority_dashboard
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft secondary">
+              Alert Analyst
+             </span>
+            </td>
+            <td>
+             <code>
+              analyst@example.com
+             </code>
+            </td>
+            <td>
+             <code>
+              Passw0rd!
+             </code>
+            </td>
+            <td>
+             <a href="./alert_monitoring.html">
+              alert_monitoring
+             </a>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+        <small class="text-muted d-block mt-2">
+         Tip: Invalid credentials will show an error. Use the accounts above to test success paths and redirects.
+        </small>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <!-- Public/Common Auth Footer -->
+  <footer class="border-top mt-auto bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye-footer/20/20'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:20px;"/>
+     <span class="text-muted">
+      © 2025 DisasterEye
+     </span>
+    </div>
+    <ul class="nav">
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Terms
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Privacy
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="./contact.html" onclick="return false;">
+       Contact
+      </a>
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Bootstrap JS (Bundle) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   (function() {
+    'use strict';
+
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Demo users mapping
+    const users = {
+        'individual_user@example.com': {
+            password: 'Passw0rd!',
+            role: 'Individual',
+            redirect: './individual_dashboard.html'
+        },
+        'community_lead@example.com': {
+            password: 'Passw0rd!',
+            role: 'Community Leader',
+            redirect: './community_dashboard.html'
+        },
+        'authority_admin@example.com': {
+            password: 'Passw0rd!',
+            role: 'Local Authority',
+            redirect: './authority_dashboard.html'
+        },
+        'analyst@example.com': {
+            password: 'Passw0rd!',
+            role: 'Alert Analyst',
+            redirect: './alert_monitoring.html'
+        }
+    };
+
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoading = loginBtn.querySelector('.btn-loading');
+    const alertBox = document.getElementById('formAlert');
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+    // Focus email on load
+    window.setTimeout(() => emailInput && emailInput.focus(), 250);
+
+    // Basic email validation
+    function isValidEmail(value) {
+        const re = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+        return re.test(String(value).toLowerCase());
+    }
+
+    function setLoading(loading) {
+        if (loading) {
+            loginBtn.setAttribute('disabled', 'disabled');
+            btnText.classList.add('d-none');
+            btnLoading.classList.remove('d-none');
+        } else {
+            loginBtn.removeAttribute('disabled');
+            btnText.classList.remove('d-none');
+            btnLoading.classList.add('d-none');
+        }
+    }
+
+    function showAlert(type, message) {
+        alertBox.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-info', 'alert-warning');
+        alertBox.classList.add('alert', 'alert-' + type);
+        alertBox.textContent = message;
+    }
+
+    function clearAlert() {
+        alertBox.classList.add('d-none');
+        alertBox.textContent = '';
+    }
+
+    // Toggle password visibility
+    togglePasswordBtn.addEventListener('click', function() {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        togglePasswordIcon.classList.toggle('fa-eye');
+        togglePasswordIcon.classList.toggle('fa-eye-slash');
+    });
+
+    // Per-field validation on blur
+    emailInput.addEventListener('blur', () => {
+        if (!isValidEmail(emailInput.value)) {
+            emailInput.classList.add('is-invalid');
+        } else {
+            emailInput.classList.remove('is-invalid');
+        }
+    });
+
+    passwordInput.addEventListener('blur', () => {
+        if (!passwordInput.value) {
+            passwordInput.classList.add('is-invalid');
+        } else {
+            passwordInput.classList.remove('is-invalid');
+        }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        clearAlert();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        let hasError = false;
+        if (!isValidEmail(email)) {
+            emailInput.classList.add('is-invalid');
+            hasError = true;
+        } else {
+            emailInput.classList.remove('is-invalid');
+        }
+        if (!password) {
+            passwordInput.classList.add('is-invalid');
+            hasError = true;
+        } else {
+            passwordInput.classList.remove('is-invalid');
+        }
+
+        if (hasError) {
+            showAlert('warning', 'Please correct the highlighted fields and try again.');
+            return;
+        }
+
+        // Simulate API call
+        setLoading(true);
+        setTimeout(() => {
+            const user = users[email];
+            if (user && user.password === password) {
+                // Success feedback
+                Swal.fire({
+                    icon: 'success',
+                    title: `Welcome back`,
+                    text: `Signed in as ${user.role}. Redirecting to your dashboard...`,
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = user.redirect;
+                });
+            } else {
+                // Error feedback
+                showAlert('danger', 'Invalid email or password. Please try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sign-in failed',
+                    text: 'Invalid email or password.'
+                });
+            }
+            setLoading(false);
+        }, 900);
+    });
+})();
+  </script>
+ </body>
+</html>

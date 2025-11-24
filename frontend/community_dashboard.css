@@ -1,0 +1,61 @@
+/* Community Dashboard Page Specific Styles */
+/* Use Poppins for this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout wrapper ensures sidebar + main stretch full height */
+.dashboard-wrapper {
+    min-height: calc(100vh - 56px - 56px);
+    /* approximate header+footer */
+    }
+/* Map height */
+#incidentMap {
+    height: 520px;
+    width: 100%
+    }
+@media (max-width: 576px) {
+    #incidentMap {
+        height: 360px
+        }
+    }
+/* Sticky filter card on large screens */
+.sticky-filters {
+    position: sticky;
+    top: 16px
+    }
+/* Selected card in feed */
+.card-selected {
+    border-color: var(--color-primary)
+    }
+/* Offcanvas panel width */
+.offcanvas-end {
+    width: 460px
+    }
+@media (max-width: 576px) {
+    .offcanvas-end {
+        width: 100%
+        }
+    }
+/* Sortable headers affordance */
+th.sortable {
+    cursor: pointer;
+    user-select: none
+    }
+th.sortable:hover {
+    color: var(--color-primary)
+    }
+/* Small adjustments */
+.incident-card .badge {
+    vertical-align: middle
+    }
+/* Ensure footer sticks after content */
+html, body {
+    height: 100%
+    }
+footer {
+    margin-top: auto
+    }
+/* Chart canvas responsive fix inside card */
+#typeBarChart {
+    width: 100% !important
+    }

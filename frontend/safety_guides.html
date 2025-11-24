@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Safety Guides - DisasterEye
+  </title>
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+   <!-- Global Theme Styles -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page Specific CSS -->
+   <link href="safety_guides.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Common Component) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./individual_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null; this.src='https://picsum.photos/seed/logo/56/56'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:360px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search incidents, alerts, guides..." type="search"/>
+     </div>
+    </form>
+    <ul class="navbar-nav ms-auto align-items-center">
+     <li class="nav-item me-2">
+      <a class="nav-link position-relative" href="#" title="Notifications">
+       <i class="fa-solid fa-bell">
+       </i>
+       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+        3
+       </span>
+      </a>
+     </li>
+     <li class="nav-item dropdown">
+      <a aria-expanded="false" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-circle me-2">
+       </i>
+       Jane Doe
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main class="container-fluid p-0">
+   <div class="d-flex">
+    <!-- Sidebar (Common Component) -->
+    <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:280px;">
+     <div class="position-sticky">
+      <div class="p-3 border-bottom d-flex align-items-center gap-2">
+       <img alt="Logo" onerror="this.onerror=null; this.src='https://picsum.photos/seed/logo2/64/64'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+       <span class="fw-bold">
+        DisasterEye
+       </span>
+      </div>
+      <div class="p-3">
+       <div class="d-flex align-items-center gap-2 mb-3">
+        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+         <i class="fa-solid fa-user text-secondary">
+         </i>
+        </div>
+        <div>
+         <div class="fw-semibold">
+          Jane Doe
+         </div>
+         <div class="badge" style="background-color:#FFD700; color:#000;">
+          Citizen
+         </div>
+        </div>
+       </div>
+       <ul class="nav nav-pills flex-column gap-1">
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./profile_settings.html">
+          <i class="fa-solid fa-user-gear me-2 text-danger">
+          </i>
+          Profile Settings
+         </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center active" href="./safety_guides.html">
+          <i class="fa-solid fa-shield-heart me-2 text-danger">
+          </i>
+          Safety Guides
+         </a>
+        </li>
+        <li class="nav-item">
+         <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#alertsMenu" data-bs-toggle="collapse">
+          <i class="fa-solid fa-triangle-exclamation me-2 text-danger">
+          </i>
+          Alerts &amp; Incidents
+          <i class="fa-solid fa-chevron-down ms-auto small">
+          </i>
+         </button>
+         <div class="collapse show ps-3" id="alertsMenu">
+          <ul class="nav flex-column gap-1">
+           <li class="nav-item">
+            <a class="nav-link" href="./alert_details.html">
+             <i class="fa-solid fa-map me-2 text-muted">
+             </i>
+             Alert Details
+            </a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="./incident_details.html">
+             <i class="fa-solid fa-clipboard-list me-2 text-muted">
+             </i>
+             Incident Details
+            </a>
+           </li>
+          </ul>
+         </div>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </nav>
+    <!-- Main Content -->
+    <section class="flex-grow-1 main-panel">
+     <div class="container-max">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="breadcrumb">
+       <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item">
+         <a href="./individual_dashboard.html">
+          Home
+         </a>
+        </li>
+        <li aria-current="page" class="breadcrumb-item active">
+         Safety Guides
+        </li>
+       </ol>
+      </nav>
+      <!-- Page Header -->
+      <div class="page-header">
+       <div class="d-flex align-items-center gap-3">
+        <h1 class="page-title mb-0">
+         Safety Guides
+        </h1>
+        <span class="badge-soft info">
+         <i class="fa-solid fa-circle-info me-1">
+         </i>
+         Learn what to do before, during, and after disasters
+        </span>
+       </div>
+       <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-light" id="btnOffline">
+         <i class="fa-solid fa-cloud-arrow-down me-1 text-info">
+         </i>
+         Pre-cache for offline
+        </button>
+        <button class="btn btn-outline-primary" disabled="" id="btnDownloadPDF">
+         <i class="fa-solid fa-file-pdf me-1">
+         </i>
+         Download PDF
+        </button>
+        <button class="btn btn-info text-white" disabled="" id="btnShare">
+         <i class="fa-solid fa-share-nodes me-1">
+         </i>
+         Share
+        </button>
+       </div>
+      </div>
+      <!-- Notification area -->
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+       <i class="fa-solid fa-triangle-exclamation me-2">
+       </i>
+       Monsoon advisory: Expect heavy rainfall this week. Review Flood safety tips.
+       <a class="ms-2 fw-semibold" href="#" onclick="filterDisasters('flood'); return false;">
+        View Flood Guide
+       </a>
+      </div>
+      <!-- Safety Guides Container -->
+      <div class="app-card mb-4" id="safetyGuidesContainer">
+       <div class="card-body">
+        <!-- Selection View -->
+        <div id="selectionView">
+         <div class="d-flex align-items-center justify-content-between mb-3">
+          <h2 class="h4 mb-0">
+           Select a Disaster Type
+          </h2>
+          <div class="input-group" style="max-width:320px;">
+           <span class="input-group-text bg-white">
+            <i class="fa-solid fa-filter text-muted">
+            </i>
+           </span>
+           <input class="form-control" id="disasterSearch" placeholder="Filter disasters (e.g., flood)" type="text"/>
+          </div>
+         </div>
+         <div class="row g-3" id="disasterGrid">
+          <!-- Cards injected by JS -->
+         </div>
+        </div>
+        <!-- Guide Content View -->
+        <div class="d-none" id="guideView">
+         <div class="d-flex align-items-center justify-content-between mb-3">
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-light" id="btnBack">
+            <i class="fa-solid fa-arrow-left">
+            </i>
+           </button>
+           <div>
+            <div class="small text-muted">
+             Selected Guide
+            </div>
+            <h2 class="h4 mb-0" id="guideTitle">
+             Guide Title
+            </h2>
+           </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <span class="badge-soft primary" id="activeDisasterBadge">
+            Loading...
+           </span>
+          </div>
+         </div>
+         <!-- Loading State -->
+         <div class="loading-state d-none" id="guideLoading">
+          <div class="skeleton" style="height:18px; width:40%;">
+          </div>
+          <div class="skeleton mt-2" style="height:12px;">
+          </div>
+          <div class="skeleton mt-2" style="height:12px; width:80%;">
+          </div>
+          <div class="skeleton mt-2" style="height:200px;">
+          </div>
+         </div>
+         <!-- Guide Content -->
+         <div class="d-none" id="guideContent">
+          <div class="row g-3 align-items-stretch mb-3">
+           <div class="col-12 col-lg-7">
+            <div class="card h-100">
+             <div class="card-header">
+              <div class="d-flex align-items-center gap-2">
+               <i class="fa-solid fa-book-open text-danger" id="guideIcon">
+               </i>
+               <span class="widget-title">
+                Action Steps
+               </span>
+              </div>
+             </div>
+             <div class="card-body">
+              <ul class="nav nav-tabs" id="guideTabs" role="tablist">
+               <li class="nav-item" role="presentation">
+                <button aria-controls="paneBefore" aria-selected="true" class="nav-link active" data-bs-target="#paneBefore" data-bs-toggle="tab" id="tabBefore" role="tab" type="button">
+                 Before
+                </button>
+               </li>
+               <li class="nav-item" role="presentation">
+                <button aria-controls="paneDuring" aria-selected="false" class="nav-link" data-bs-target="#paneDuring" data-bs-toggle="tab" id="tabDuring" role="tab" type="button">
+                 During
+                </button>
+               </li>
+               <li class="nav-item" role="presentation">
+                <button aria-controls="paneAfter" aria-selected="false" class="nav-link" data-bs-target="#paneAfter" data-bs-toggle="tab" id="tabAfter" role="tab" type="button">
+                 After
+                </button>
+               </li>
+              </ul>
+              <div class="tab-content pt-3" id="guideTabContent">
+               <div aria-labelledby="tabBefore" class="tab-pane fade show active" id="paneBefore" role="tabpanel">
+                <div class="guide-section-content" id="contentBefore">
+                </div>
+               </div>
+               <div aria-labelledby="tabDuring" class="tab-pane fade" id="paneDuring" role="tabpanel">
+                <div class="guide-section-content" id="contentDuring">
+                </div>
+               </div>
+               <div aria-labelledby="tabAfter" class="tab-pane fade" id="paneAfter" role="tabpanel">
+                <div class="guide-section-content" id="contentAfter">
+                </div>
+               </div>
+              </div>
+             </div>
+            </div>
+           </div>
+           <div class="col-12 col-lg-5">
+            <div class="card h-100">
+             <div class="card-header d-flex align-items-center gap-2">
+              <i class="fa-solid fa-image text-danger">
+              </i>
+              <span class="widget-title">
+               Guide Visual
+              </span>
+             </div>
+             <div class="card-body">
+              <img alt="Guide visual" class="rounded w-100" id="guideImage" onerror="this.onerror=null; this.src='https://picsum.photos/seed/guide-fallback/800/400';" src="https://picsum.photos/seed/guide/800/400"/>
+              <p class="small text-muted mt-2">
+               Illustrative image for the selected disaster type.
+              </p>
+              <div class="d-grid gap-2 mt-3">
+               <button class="btn btn-success" id="btnChecklist">
+                <i class="fa-solid fa-clipboard-check me-2">
+                </i>
+                Open Quick Checklist
+               </button>
+               <button class="btn btn-warning" id="btnSimulate">
+                <i class="fa-solid fa-person-running me-2">
+                </i>
+                Simulate Drill
+               </button>
+              </div>
+             </div>
+            </div>
+           </div>
+          </div>
+          <div class="row g-3">
+           <div class="col-12 col-xl-7">
+            <div class="card h-100">
+             <div class="card-header d-flex align-items-center gap-2">
+              <i class="fa-solid fa-link text-danger">
+              </i>
+              <span class="widget-title">
+               Trusted Resources
+              </span>
+             </div>
+             <div class="card-body">
+              <div class="row g-2 align-items-center mb-2">
+               <div class="col-auto">
+                <div class="input-group input-group-sm">
+                 <span class="input-group-text bg-white">
+                  <i class="fa-solid fa-magnifying-glass text-muted">
+                  </i>
+                 </span>
+                 <input class="form-control" id="resourceFilter" placeholder="Filter resources..." type="text"/>
+                </div>
+               </div>
+               <div class="col-auto small text-muted" id="resourceInfo">
+                Showing 1–6 of 6
+               </div>
+              </div>
+              <div class="table-responsive">
+               <table class="table table-theme table-hover table-hover-reveal" id="resourcesTable">
+                <thead>
+                 <tr>
+                  <th>
+                   <button class="btn btn-sm btn-light sort-btn" data-col="name">
+                    Name
+                    <i class="fa-solid fa-sort ms-1">
+                    </i>
+                   </button>
+                  </th>
+                  <th>
+                   <button class="btn btn-sm btn-light sort-btn" data-col="type">
+                    Type
+                    <i class="fa-solid fa-sort ms-1">
+                    </i>
+                   </button>
+                  </th>
+                  <th>
+                   Region
+                  </th>
+                  <th>
+                   Updated
+                  </th>
+                  <th class="text-end">
+                   Action
+                  </th>
+                 </tr>
+                </thead>
+                <tbody>
+                 <!-- Rows injected by JS -->
+                </tbody>
+               </table>
+              </div>
+             </div>
+            </div>
+           </div>
+           <div class="col-12 col-xl-5">
+            <div class="card h-100">
+             <div class="card-header d-flex align-items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-danger">
+              </i>
+              <span class="widget-title">
+               Recent Alerts by Disaster Type
+              </span>
+             </div>
+             <div class="card-body">
+              <canvas aria-label="Recent alerts distribution" height="220" id="alertsChart" role="img">
+              </canvas>
+              <p class="small text-muted mt-2">
+               Distribution of recent alerts in your area. Hover to see details.
+              </p>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+  </main>
+  <!-- Footer (Common Component) -->
+  <footer class="border-top bg-light mt-auto">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null; this.src='https://picsum.photos/seed/logo3/36/36'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <ul class="nav align-items-center">
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Terms
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Privacy
+      </a>
+     </li>
+     <li class="nav-item d-none d-md-block">
+      <a class="btn btn-outline-danger btn-sm ms-2" href="./incident_report.html">
+       <i class="fa-solid fa-flag me-1">
+       </i>
+       Report Issue
+      </a>
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Page Script -->
+  <script>
+   // Data for disasters
+const disasters = [{
+    key: 'flood',
+    name: 'Flood',
+    icon: 'fa-water',
+    image: 'https://picsum.photos/seed/flood/800/400'
+}, {
+    key: 'earthquake',
+    name: 'Earthquake',
+    icon: 'fa-house-crack',
+    image: 'https://picsum.photos/seed/earthquake/800/400'
+}, {
+    key: 'wildfire',
+    name: 'Wildfire',
+    icon: 'fa-fire',
+    image: 'https://picsum.photos/seed/wildfire/800/400'
+}, {
+    key: 'hurricane',
+    name: 'Hurricane',
+    icon: 'fa-wind',
+    image: 'https://picsum.photos/seed/hurricane/800/400'
+}, {
+    key: 'tornado',
+    name: 'Tornado',
+    icon: 'fa-tornado',
+    image: 'https://picsum.photos/seed/tornado/800/400'
+}, {
+    key: 'tsunami',
+    name: 'Tsunami',
+    icon: 'fa-water',
+    image: 'https://picsum.photos/seed/tsunami/800/400'
+}];
+
+// Mock guide content
+const guidesData = {
+    flood: {
+        title: 'Flood Safety Guide',
+        icon: 'fa-water',
+        sections: {
+            before: [
+                'Know your flood risk and local evacuation routes.',
+                'Prepare an emergency kit with water, food, and medication for 72 hours.',
+                'Move valuables to higher floors; secure important documents in waterproof containers.',
+                'Purchase flood insurance where applicable.'
+            ],
+            during: [
+                'Do not walk, swim, or drive through floodwaters.',
+                'Stay informed via local alerts and weather radio.',
+                'Move to higher ground immediately when flooding occurs.'
+            ],
+            after: [
+                'Return home only when authorities say it is safe.',
+                'Avoid wading in floodwater; it may be contaminated or electrically charged.',
+                'Document damage and contact your insurer.'
+            ]
+        }
+    },
+    earthquake: {
+        title: 'Earthquake Safety Guide',
+        icon: 'fa-house-crack',
+        sections: {
+            before: [
+                'Secure heavy furniture and appliances to walls.',
+                'Prepare a family communication plan and emergency kit.',
+                'Identify safe spots in each room (under sturdy furniture).'
+            ],
+            during: [
+                'Drop, Cover, and Hold On until shaking stops.',
+                'Stay away from windows and heavy objects that could fall.',
+                'If outdoors, move to a clear area away from buildings.'
+            ],
+            after: [
+                'Be prepared for aftershocks.',
+                'Check for gas leaks and structural damage; turn off utilities if needed.',
+                'Use text messages or social media to communicate.'
+            ]
+        }
+    },
+    wildfire: {
+        title: 'Wildfire Safety Guide',
+        icon: 'fa-fire',
+        sections: {
+            before: [
+                'Create defensible space by clearing dry vegetation around your home.',
+                'Prepare a “go-bag” and keep your vehicle fueled.',
+                'Sign up for community alerts.'
+            ],
+            during: [
+                'Evacuate immediately when instructed by authorities.',
+                'Wear N95 masks if air quality is poor.',
+                'Keep windows and doors closed; run AC on recirculate.'
+            ],
+            after: [
+                'Avoid hotspots and ash pits; use protective equipment during cleanup.',
+                'Document damage and monitor air quality.',
+                'Support local recovery efforts.'
+            ]
+        }
+    },
+    hurricane: {
+        title: 'Hurricane Safety Guide',
+        icon: 'fa-wind',
+        sections: {
+            before: [
+                'Know your evacuation zone and prepare a plan.',
+                'Install storm shutters; bring outdoor items inside.',
+                'Stock up on water, non-perishables, and batteries.'
+            ],
+            during: [
+                'Stay indoors, away from windows; shelter in a small interior room.',
+                'Keep devices charged and follow official updates.',
+                'Do not go outside during the eye of the storm.'
+            ],
+            after: [
+                'Avoid downed power lines and floodwaters.',
+                'Take photos of damage and contact your insurer.',
+                'Boil water advisories may be in effect—follow local guidance.'
+            ]
+        }
+    },
+    tornado: {
+        title: 'Tornado Safety Guide',
+        icon: 'fa-tornado',
+        sections: {
+            before: [
+                'Identify a safe room (basement or interior room on lowest floor).',
+                'Have helmets or head protection for all family members.',
+                'Monitor weather alerts closely.'
+            ],
+            during: [
+                'Shelter immediately in a small, windowless interior room.',
+                'Protect your head and neck.',
+                'If outside, lie flat in a ditch and cover your head.'
+            ],
+            after: [
+                'Beware of debris and exposed nails.',
+                'Check on neighbors and render aid if safe.',
+                'Report gas leaks and damaged power lines.'
+            ]
+        }
+    },
+    tsunami: {
+        title: 'Tsunami Safety Guide',
+        icon: 'fa-water',
+        sections: {
+            before: [
+                'Know tsunami evacuation routes if you live near the coast.',
+                'Prepare an emergency kit and plan for pets.',
+                'Recognize natural warning signs (strong or long earthquake, sudden ocean drawdown).'
+            ],
+            during: [
+                'Move inland or to higher ground without delay.',
+                'Do not wait for official warnings if you observe natural signs.',
+                'Avoid coastal areas until authorities declare them safe.'
+            ],
+            after: [
+                'Stay away from debris in the water—it can be dangerous.',
+                'Return home only when officials say it is safe.',
+                'Be mindful of multiple waves; danger may last for hours.'
+            ]
+        }
+    }
+};
+
+// Resources mock data
+const resources = [{
+    name: 'FEMA Ready',
+    type: 'Federal',
+    region: 'USA',
+    updated: '2025-08-12',
+    url: 'https://www.ready.gov/'
+}, {
+    name: 'Red Cross',
+    type: 'NGO',
+    region: 'Global',
+    updated: '2025-06-30',
+    url: 'https://www.redcross.org/'
+}, {
+    name: 'USGS Earthquake',
+    type: 'Agency',
+    region: 'USA',
+    updated: '2025-05-20',
+    url: 'https://earthquake.usgs.gov/'
+}, {
+    name: 'CDC Disaster Prep',
+    type: 'Health',
+    region: 'USA',
+    updated: '2025-07-05',
+    url: 'https://www.cdc.gov/disasters/'
+}, {
+    name: 'NOAA Weather',
+    type: 'Agency',
+    region: 'USA',
+    updated: '2025-07-18',
+    url: 'https://www.weather.gov/'
+}, {
+    name: 'UNDRR',
+    type: 'UN',
+    region: 'Global',
+    updated: '2025-03-10',
+    url: 'https://www.undrr.org/'
+}];
+
+let selectedDisaster = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderDisasterCards(disasters);
+    setupSearch();
+    setupButtons();
+    renderResources(resources);
+    initChart();
+});
+
+function renderDisasterCards(list) {
+    const grid = document.getElementById('disasterGrid');
+    grid.innerHTML = '';
+    list.forEach(d => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4';
+        col.innerHTML = `
+          <div class="card disaster-card h-100" role="button" data-key="${d.key}">
+            <div class="card-body d-flex gap-3 align-items-center">
+              <div class="disaster-icon-wrap flex-shrink-0">
+                <i class="fa-solid ${d.icon} text-danger"></i>
+              </div>
+              <div class="flex-grow-1">
+                <div class="h5 mb-1">${d.name}</div>
+                <div class="small text-muted">Tap to view guide</div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-muted"></i>
+            </div>
+            <img class="card-img-bottom" src="${d.image}" alt="${d.name} image"
+                 onerror="this.onerror=null; this.src='https://picsum.photos/seed/${d.key}-fallback/800/400';">
+          </div>`;
+        grid.appendChild(col);
+    });
+    grid.querySelectorAll('.disaster-card').forEach(card => {
+        card.addEventListener('click', () => onDisasterSelect(card.getAttribute('data-key')));
+    });
+}
+
+function setupSearch() {
+    const input = document.getElementById('disasterSearch');
+    input.addEventListener('input', () => {
+        const term = input.value.trim().toLowerCase();
+        const filtered = disasters.filter(d => d.name.toLowerCase().includes(term) || d.key.includes(term));
+        renderDisasterCards(filtered);
+    });
+}
+
+function onDisasterSelect(key) {
+    selectedDisaster = key;
+    const data = guidesData[key];
+    // Switch views
+    document.getElementById('selectionView').classList.add('d-none');
+    document.getElementById('guideView').classList.remove('d-none');
+    document.getElementById('guideLoading').classList.remove('d-none');
+    document.getElementById('guideContent').classList.add('d-none');
+    document.getElementById('btnDownloadPDF').disabled = false;
+    document.getElementById('btnShare').disabled = false;
+
+    // Simulate loading
+    setTimeout(() => {
+        // Populate header
+        document.getElementById('guideTitle').textContent = data.title;
+        document.getElementById('activeDisasterBadge').textContent = data.title.split(' ')[0];
+        document.getElementById('activeDisasterBadge').className = 'badge-soft primary';
+        document.getElementById('guideIcon').className = `fa-solid ${data.icon} text-danger`;
+        const img = disasters.find(d => d.key === key)?.image || 'https://picsum.photos/seed/guide/800/400';
+        const guideImage = document.getElementById('guideImage');
+        guideImage.src = img;
+
+        // Populate sections
+        setSectionList('contentBefore', data.sections.before);
+        setSectionList('contentDuring', data.sections.during);
+        setSectionList('contentAfter', data.sections.after);
+
+        // Show content
+        document.getElementById('guideLoading').classList.add('d-none');
+        document.getElementById('guideContent').classList.remove('d-none');
+    }, 700);
+}
+
+function setSectionList(containerId, items) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    const ul = document.createElement('ul');
+    ul.className = 'mb-0';
+    items.forEach(t => {
+        const li = document.createElement('li');
+        li.className = 'mb-2';
+        li.textContent = t;
+        ul.appendChild(li);
+    });
+    container.appendChild(ul);
+}
+
+function setupButtons() {
+    document.getElementById('btnBack').addEventListener('click', () => {
+        document.getElementById('guideView').classList.add('d-none');
+        document.getElementById('selectionView').classList.remove('d-none');
+        document.getElementById('btnDownloadPDF').disabled = true;
+        document.getElementById('btnShare').disabled = true;
+    });
+
+    document.getElementById('btnOffline').addEventListener('click', () => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Offline Ready',
+            text: 'Selected guides will be pre-cached for offline use.',
+            confirmButtonColor: '#FF0000'
+        });
+    });
+
+    document.getElementById('btnChecklist').addEventListener('click', () => {
+        if (!selectedDisaster) return;
+        const list = guidesData[selectedDisaster].sections.before.slice(0, 3);
+        const html = `<ul class="text-start">${list.map(i => `<li>${i}</li>`).join('')}</ul>`;
+        Swal.fire({
+            icon: 'info',
+            title: 'Quick Checklist',
+            html,
+            confirmButtonText: 'Got it',
+            confirmButtonColor: '#FF0000'
+        });
+    });
+
+    document.getElementById('btnSimulate').addEventListener('click', () => {
+        Swal.fire({
+            icon: 'question',
+            title: 'Start Drill?',
+            text: 'This will guide you through a 2-minute safety drill.',
+            showCancelButton: true,
+            confirmButtonText: 'Start',
+            confirmButtonColor: '#FF0000'
+        }).then(res => {
+            if (res.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Drill Complete',
+                    text: 'Great job! Practice regularly to stay prepared.',
+                    confirmButtonColor: '#FF0000'
+                });
+            }
+        });
+    });
+
+    document.getElementById('btnDownloadPDF').addEventListener('click', () => {
+        if (!selectedDisaster) return;
+        Swal.fire({
+            icon: 'success',
+            title: 'Download Ready',
+            text: `${guidesData[selectedDisaster].title} PDF is being prepared...`,
+            confirmButtonColor: '#FF0000'
+        });
+    });
+
+    document.getElementById('btnShare').addEventListener('click', async () => {
+        if (!selectedDisaster) return;
+        const title = guidesData[selectedDisaster].title;
+        const url = window.location.href.split('#')[0] + `#${selectedDisaster}`;
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title,
+                    text: title,
+                    url
+                });
+            } catch (e) {}
+        } else {
+            navigator.clipboard.writeText(url);
+            Swal.fire({
+                icon: 'info',
+                title: 'Link Copied',
+                text: 'Guide link copied to clipboard.',
+                confirmButtonColor: '#FF0000'
+            });
+        }
+    });
+
+    document.getElementById('resourceFilter').addEventListener('input', (e) => {
+        const term = e.target.value.trim().toLowerCase();
+        const filtered = resources.filter(r => r.name.toLowerCase().includes(term) || r.type.toLowerCase().includes(term) || r.region.toLowerCase().includes(term));
+        renderResources(filtered);
+    });
+
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const col = btn.getAttribute('data-col');
+            const current = btn.getAttribute('data-dir') || 'asc';
+            const next = current === 'asc' ? 'desc' : 'asc';
+            document.querySelectorAll('.sort-btn').forEach(b => b.removeAttribute('data-dir'));
+            btn.setAttribute('data-dir', next);
+            const sorted = [...resources].sort((a, b) => {
+                const A = a[col].toLowerCase();
+                const B = b[col].toLowerCase();
+                if (A < B) return next === 'asc' ? -1 : 1;
+                if (A > B) return next === 'asc' ? 1 : -1;
+                return 0;
+            });
+            renderResources(sorted);
+        });
+    });
+}
+
+function renderResources(rows) {
+    const tbody = document.querySelector('#resourcesTable tbody');
+    tbody.innerHTML = '';
+    rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.name}</td>
+          <td>${r.type}</td>
+          <td>${r.region}</td>
+          <td>${formatDate(r.updated)}</td>
+          <td class="text-end">
+            <a href="${r.url}" target="_blank" class="btn btn-sm btn-outline-info"><i class="fa-solid fa-up-right-from-square me-1"></i>Open</a>
+          </td>`;
+        tbody.appendChild(tr);
+    });
+    document.getElementById('resourceInfo').textContent = `Showing 1–${rows.length} of ${rows.length}`;
+}
+
+function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit'
+    });
+}
+
+function initChart() {
+    const ctx = document.getElementById('alertsChart');
+    // Mock data
+    const labels = ['Flood', 'Earthquake', 'Wildfire', 'Hurricane', 'Tornado', 'Tsunami'];
+    const data = [18, 12, 9, 7, 5, 3];
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels,
+            datasets: [{
+                data,
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.85)',
+                    'rgba(0, 153, 210, 0.85)',
+                    'rgba(255, 193, 7, 0.85)',
+                    'rgba(40, 167, 69, 0.85)',
+                    'rgba(108,117,125,0.85)',
+                    'rgba(220, 53, 69, 0.85)'
+                ],
+                borderWidth: 1,
+                borderColor: 'rgba(255,255,255,0.9)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.label}: ${ctx.formattedValue}`
+                    }
+                }
+            }
+        }
+    });
+}
+
+function filterDisasters(key) {
+    document.getElementById('disasterSearch').value = key;
+    const filtered = disasters.filter(d => d.key.includes(key));
+    renderDisasterCards(filtered);
+}
+
+// Deep-link support via hash (e.g., #flood)
+window.addEventListener('load', () => {
+    const hash = (location.hash || '').replace('#', '');
+    if (hash && guidesData[hash]) {
+        onDisasterSelect(hash);
+    }
+});
+  </script>
+ </body>
+</html>

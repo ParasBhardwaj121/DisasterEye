@@ -1,0 +1,69 @@
+/* authority_dashboard.css — Page-specific styles (kept minimal, no duplication with style.css) */
+/* Layout wrapper ensures sidebar (left), main content (middle), and right control panel align correctly */
+#appLayout {
+    min-height: calc(100vh - 56px - 56px);
+    /* approx header+footer */
+    }
+/* Map container height and responsiveness */
+.map-container {
+    height: 540px;
+    width: 100%;
+    background: var(--surface-muted)
+    }
+@media (min-height: 900px) {
+    .map-container {
+        height: 640px
+        }
+    }
+/* Right control panel (visible on lg+) */
+.control-panel {
+    width: 360px
+    }
+.control-panel .card {
+    position: sticky;
+    top: 76px;
+    /* below header */
+    max-height: calc(100vh - 96px);
+    overflow: auto
+    }
+/* Offcanvas widths for better reading */
+#incidentDetails.offcanvas-end {
+    width: 420px
+    }
+#offcanvasFilters.offcanvas-end {
+    width: 360px
+    }
+/* Page header alignments */
+.page-header {
+    gap: var(--space-3)
+    }
+.page-header .navigation-controls .btn + .btn {
+    margin-left: 8px
+    }
+/* Table refinements */
+#incidentsTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02)
+    }
+#incidentsTable th[role="button"] {
+    user-select: none
+    }
+/* Badge color tweaks to align with types */
+.badge-soft.primary {
+    background: var(--primary-soft);
+    color: #7a0f12
+    }
+.badge-soft.secondary {
+    background: var(--secondary-soft);
+    color: #6a4f00
+    }
+/* Ensure footer sticks after content */
+footer {
+    margin-top: auto
+    }
+/* Compact offcanvas form elements on small screens */
+@media (max-width: 991.98px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start
+        }
+    }

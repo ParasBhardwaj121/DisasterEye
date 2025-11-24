@@ -1,0 +1,65 @@
+/* Alert Composer - Page Specific Styles */
+/* Brand typography for this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Ensure main area accounts for sticky bottom action bar */
+@media (min-width: 768px) {
+    main {
+        padding-bottom: 88px
+        }
+    }
+/* Map container sizing */
+.map-card .map-container {
+    width: 100%;
+    min-height: 420px;
+    height: 60vh;
+    /* reasonable default */
+    }
+@media (min-width: 992px) {
+    .map-card .map-container {
+        height: calc(100vh - 260px)
+        }
+    }
+/* Drawing toolbar tweaks */
+.drawing-toolbar .btn {
+    min-width: 96px
+    }
+.drawing-toolbar .btn i {
+    margin-right: 6px
+    }
+/* Counters */
+#titleCounter, #messageCounter {
+    font-variant-numeric: tabular-nums
+    }
+/* Table header sort affordance */
+#draftsTable thead th[role="button"] {
+    cursor: pointer;
+    user-select: none
+    }
+#draftsTable thead th[role="button"]:hover {
+    color: var(--color-info)
+    }
+/* Action bar alignment on small screens */
+@media (max-width: 575.98px) {
+    #actionBar .container-fluid {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px
+        }
+    #actionBar .btn {
+        width: 100%
+        }
+    }
+/* Feedback area spacing */
+#systemFeedbackArea .alert {
+    border: 1px solid var(--border-color)
+    }
+/* Improve card titles alignment */
+.card-header .title .widget-title {
+    font-weight: 600
+    }
+/* Map summary text */
+#selectionSummary {
+    color: var(--text)
+    }

@@ -1,0 +1,62 @@
+/* incident_details.css - Page-specific styles for Incident Details */
+/* Use Poppins for headings/branding, preserve body font from theme */
+h1, h2, h3, .page-title, .widget-title {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout: ensure sidebar sits as a left column in flex container */
+@media (min-width: 768px) {
+    #sidebarMenu {
+        flex: 0 0 280px
+        }
+    }
+/* Map container height and rounded corners */
+.map-container {
+    height: 380px;
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    border-bottom-left-radius: var(--radius-2);
+    border-bottom-right-radius: var(--radius-2)
+    }
+@media (min-width: 1200px) {
+    .map-container {
+        height: 420px
+        }
+    }
+/* Leaflet marker stack helper */
+.custom-div-icon {
+    transform: translatey(-8px)
+    }
+.incident-pin .fa-location-dot {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25))
+    }
+/* Media area */
+.media-area img, .media-area video {
+    max-height: 420px;
+    object-fit: cover
+    }
+/* Description scroll box */
+.description-box {
+    max-height: 220px;
+    overflow: auto;
+    white-space: pre-wrap
+    }
+/* Sortable header visual cue */
+#relatedTable thead th.sortable {
+    user-select: none
+    }
+#relatedTable thead th.sortable:hover {
+    color: var(--color-info)
+    }
+/* Minor spacing adjustments */
+.page-header .title, .card-header .title {
+    font-weight: 600
+    }
+/* Adjust SweetAlert2 modal for media */
+.swal2-popup {
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2)
+    }
+/* Ensure chart card has minimum height for responsiveness */
+#trendChart {
+    min-height: 220px
+    }

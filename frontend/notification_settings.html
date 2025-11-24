@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Notification Settings • DisasterEye
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Global Theme CSS -->
+  <link href="style.css" rel="stylesheet"/>
+  <!-- Page-specific CSS -->
+  <link href="notification_settings.css" rel="stylesheet"/>
+ </head>
+ <body class="bg-light">
+  <!-- Header: Individual User Header with quick actions -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./individual_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye-logo/28/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:320px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search nearby alerts..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./incident_report.html">
+      <i class="fa-solid fa-pen-to-square me-1">
+      </i>
+      Report
+     </a>
+     <a class="btn btn-danger btn-sm" href="./mark_safe.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-satellite-dish me-1">
+      </i>
+      Mark Safe
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-circle me-1">
+       </i>
+       John D.
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./notification_settings.html">
+         <i class="fa-solid fa-bell me-2">
+         </i>
+         Notification Prefs
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="d-flex min-vh-100">
+   <!-- Sidebar: Individual User Sidebar (left) -->
+   <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:280px;">
+    <div class="position-sticky">
+     <div class="p-3 border-bottom d-flex align-items-center gap-2">
+      <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/side-logo/32/32'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+      <span class="fw-bold">
+       DisasterEye
+      </span>
+     </div>
+     <div class="p-3">
+      <div class="d-flex align-items-center gap-2 mb-3">
+       <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+        <i class="fa-solid fa-user text-secondary">
+        </i>
+       </div>
+       <div>
+        <div class="fw-semibold">
+         John Doe
+        </div>
+        <div class="badge" style="background-color:#FFD700; color:#000;">
+         Individual
+        </div>
+       </div>
+      </div>
+      <a class="btn w-100 mb-3" href="./mark_safe.html" style="background-color:#FF0000; color:#fff;">
+       <i class="fa-solid fa-satellite-dish me-2">
+       </i>
+       Mark Myself Safe
+      </a>
+      <ul class="nav nav-pills flex-column gap-1">
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./individual_dashboard.html">
+         <i class="fa-solid fa-house me-2 text-danger">
+         </i>
+         Dashboard
+        </a>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#alertsPrefs" data-bs-toggle="collapse">
+         <i class="fa-solid fa-bell me-2 text-danger">
+         </i>
+         Alerts &amp; Preferences
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="alertsPrefs">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link active" href="./notification_settings.html">
+            <i class="fa-solid fa-sliders me-2 text-muted">
+            </i>
+            Notification Settings
+           </a>
+          </li>
+          <li class="nav-item">
+           <a class="nav-link" href="./safety_guides.html">
+            <i class="fa-solid fa-shield-heart me-2 text-muted">
+            </i>
+            Safety Guides
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="false" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#reportingMenu" data-bs-toggle="collapse">
+         <i class="fa-solid fa-map-location-dot me-2 text-danger">
+         </i>
+         Reporting
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse ps-3" id="reportingMenu">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./incident_report.html">
+            <i class="fa-solid fa-pen-to-square me-2 text-muted">
+            </i>
+            Report Incident
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </nav>
+   <!-- Main content -->
+   <main class="flex-grow-1">
+    <div class="container-fluid p-3 p-lg-4">
+     <!-- Breadcrumb and Title -->
+     <nav aria-label="breadcrumb" class="breadcrumb mb-2">
+      <ol class="breadcrumb mb-0">
+       <li class="breadcrumb-item">
+        <a href="./individual_dashboard.html">
+         Home
+        </a>
+       </li>
+       <li class="breadcrumb-item">
+        <a href="./profile_settings.html">
+         Profile Settings
+        </a>
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        Notification Settings
+       </li>
+      </ol>
+     </nav>
+     <div class="page-header mb-3">
+      <h1 class="page-title">
+       Notification Settings
+      </h1>
+      <div aria-label="view switch" class="view-switcher" role="group">
+       <div class="option active">
+        <i class="fa-solid fa-sliders">
+        </i>
+        Customize
+       </div>
+       <div class="option">
+        <i class="fa-solid fa-eye">
+        </i>
+        Preview
+       </div>
+      </div>
+     </div>
+     <!-- System Feedback Area -->
+     <div class="mb-3 d-none" id="feedbackArea">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+       <i class="fa-solid fa-triangle-exclamation me-2">
+       </i>
+       <span id="feedbackMessage">
+        Your changes haven’t been saved yet.
+       </span>
+       <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
+       </button>
+      </div>
+     </div>
+     <!-- Loading State -->
+     <div class="loading-state" id="loadingState" style="display:none;">
+      <div aria-hidden="true" class="spinner-border text-danger" role="status">
+      </div>
+      <div>
+       Loading your preferences...
+      </div>
+     </div>
+     <!-- Error State -->
+     <div class="error-state d-none" id="errorState">
+      <i class="fa-solid fa-circle-exclamation fa-2x text-danger">
+      </i>
+      <div class="error-text">
+       We couldn’t load your preferences. Please try again.
+      </div>
+      <button class="btn btn-outline-danger retry-button" id="retryLoad">
+       <i class="fa-solid fa-rotate me-2">
+       </i>
+       Retry
+      </button>
+     </div>
+     <!-- Form Container -->
+     <form class="sign-up-form" id="notificationForm" novalidate="">
+      <!-- Location Settings -->
+      <section class="card mb-4">
+       <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-location-dot text-danger">
+         </i>
+         <h2 class="h5 mb-0">
+          Location Settings
+         </h2>
+        </div>
+        <small class="text-muted">
+         Manage where you’ll receive alerts
+        </small>
+       </div>
+       <div class="card-body">
+        <div class="form-check form-switch mb-3">
+         <input class="form-check-input" id="useCurrentLocation" role="switch" type="checkbox"/>
+         <label class="form-check-label fw-semibold" for="useCurrentLocation">
+          Use My Current Location
+         </label>
+         <div class="form-text">
+          We’ll ask for permission to use your device location for relevant alerts.
+         </div>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+         <div class="input-group" style="max-width:360px;">
+          <span class="input-group-text bg-white">
+           <i class="fa-solid fa-magnifying-glass text-muted">
+           </i>
+          </span>
+          <input class="form-control" id="locationFilter" placeholder="Filter locations by name or address..." type="search"/>
+         </div>
+         <button class="btn btn-outline-primary" id="addLocationBtn" type="button">
+          <i class="fa-solid fa-circle-plus me-1">
+          </i>
+          Add Location
+         </button>
+        </div>
+        <div class="table-responsive">
+         <table class="table table-hover table-theme align-middle" id="locationsTable">
+          <thead>
+           <tr>
+            <th class="sortable" data-sort="name" scope="col">
+             Name
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th class="d-none d-md-table-cell" scope="col">
+             Address
+            </th>
+            <th class="sortable text-center" data-sort="radius" scope="col">
+             Radius (km)
+             <i class="fa-solid fa-sort ms-1">
+             </i>
+            </th>
+            <th class="text-center" scope="col">
+             Updated
+            </th>
+            <th class="text-end" scope="col">
+             Actions
+            </th>
+           </tr>
+          </thead>
+          <tbody id="locationsTbody">
+           <!-- Rows injected by JS -->
+          </tbody>
+         </table>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mt-2 flex-wrap gap-2">
+         <div class="small text-muted" id="locationsPagination">
+          Showing 1–6 of 6
+         </div>
+         <div class="d-flex align-items-center gap-2">
+          <label class="small text-muted">
+           Rows per page
+          </label>
+          <select class="form-select form-select-sm" id="rowsPerPage" style="width:auto;">
+           <option value="5">
+            5
+           </option>
+           <option selected="" value="10">
+            10
+           </option>
+           <option value="20">
+            20
+           </option>
+          </select>
+          <div class="btn-group">
+           <button class="btn btn-light btn-sm" disabled="" id="prevPage">
+            <i class="fa-solid fa-chevron-left">
+            </i>
+           </button>
+           <button class="btn btn-light btn-sm" disabled="" id="nextPage">
+            <i class="fa-solid fa-chevron-right">
+            </i>
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section>
+      <!-- Disaster Types -->
+      <section class="card mb-4">
+       <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-person-shelter text-danger">
+         </i>
+         <h2 class="h5 mb-0">
+          Disaster Types
+         </h2>
+        </div>
+        <small class="text-muted">
+         Choose the types of alerts you care about
+        </small>
+       </div>
+       <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+         <small class="text-muted">
+          Select at least one type
+         </small>
+         <div class="d-flex gap-2">
+          <button class="btn btn-light btn-sm" id="selectAllTypes" type="button">
+           Select All
+          </button>
+          <button class="btn btn-light btn-sm" id="clearAllTypes" type="button">
+           Clear
+          </button>
+         </div>
+        </div>
+        <div class="row g-2" id="disasterTypes">
+         <!-- Checkboxes injected by JS -->
+        </div>
+       </div>
+      </section>
+      <!-- Severity Settings -->
+      <section class="card mb-4">
+       <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-signal text-danger">
+         </i>
+         <h2 class="h5 mb-0">
+          Minimum Severity
+         </h2>
+        </div>
+        <small class="text-muted">
+         Only receive alerts at or above this level
+        </small>
+       </div>
+       <div class="card-body">
+        <div aria-label="Severity selector" class="segmented-control btn-group" role="group">
+         <input autocomplete="off" class="btn-check" id="sevAdvisory" name="severity" type="radio" value="Advisory"/>
+         <label class="btn btn-outline-secondary" for="sevAdvisory">
+          <i class="fa-regular fa-circle me-1">
+          </i>
+          Advisory
+         </label>
+         <input autocomplete="off" class="btn-check" id="sevWarning" name="severity" type="radio" value="Warning"/>
+         <label class="btn btn-outline-warning" for="sevWarning">
+          <i class="fa-solid fa-triangle-exclamation me-1">
+          </i>
+          Warning
+         </label>
+         <input autocomplete="off" class="btn-check" id="sevCritical" name="severity" type="radio" value="Critical"/>
+         <label class="btn btn-outline-danger" for="sevCritical">
+          <i class="fa-solid fa-circle-exclamation me-1">
+          </i>
+          Critical
+         </label>
+        </div>
+       </div>
+      </section>
+      <!-- Channel Settings -->
+      <section class="card mb-4">
+       <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-bell text-danger">
+         </i>
+         <h2 class="h5 mb-0">
+          Delivery Channels
+         </h2>
+        </div>
+        <small class="text-muted">
+         How we’ll notify you
+        </small>
+       </div>
+       <div class="card-body">
+        <div class="row g-3">
+         <div class="col-12 col-md-6">
+          <div class="notification-settings-item">
+           <div>
+            <div class="form-check form-switch">
+             <input class="form-check-input" id="pushToggle" type="checkbox"/>
+             <label class="form-check-label fw-semibold" for="pushToggle">
+              Push Notifications
+             </label>
+            </div>
+            <div class="form-text">
+             Receive alerts on your mobile device.
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="col-12 col-md-6">
+          <div class="notification-settings-item">
+           <div>
+            <div class="form-check form-switch">
+             <input class="form-check-input" id="smsToggle" type="checkbox"/>
+             <label class="form-check-label fw-semibold" for="smsToggle">
+              SMS Alerts
+             </label>
+            </div>
+            <div class="small text-muted" id="smsMeta">
+             Phone on file:
+             <span id="smsPhone">
+              (not set)
+             </span>
+            </div>
+           </div>
+           <div>
+            <a class="btn btn-outline-secondary btn-sm d-none" href="./profile_settings.html" id="managePhoneLink">
+             <i class="fa-solid fa-pen me-1">
+             </i>
+             Manage
+            </a>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section>
+      <!-- Preview: Alerts you’d receive (Chart) -->
+      <section class="card mb-5">
+       <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+         <i class="fa-solid fa-chart-line text-danger">
+         </i>
+         <h2 class="h5 mb-0">
+          Preview: Recent Alerts You’d Receive
+         </h2>
+        </div>
+        <small class="text-muted">
+         Based on your current selections (last 8 weeks, mock data)
+        </small>
+       </div>
+       <div class="card-body">
+        <div class="chart-container">
+         <canvas aria-label="Alerts preview chart" height="140" id="alertsChart" role="img">
+         </canvas>
+        </div>
+       </div>
+      </section>
+      <!-- Sticky Save/Cancel Footer -->
+      <div class="form-sticky-footer submit-action-footer d-flex justify-content-between align-items-center">
+       <div class="text-muted small">
+        <i class="fa-regular fa-floppy-disk me-1">
+        </i>
+        <span id="unsavedHint">
+         All changes saved.
+        </span>
+       </div>
+       <div class="form-actions">
+        <button class="btn btn-light" id="cancelBtn" type="button">
+         Cancel
+        </button>
+        <button class="btn btn-danger" disabled="" id="saveBtn" type="submit">
+         <span class="default-label">
+          <i class="fa-solid fa-save me-1">
+          </i>
+          Save Changes
+         </span>
+         <span class="saving-label d-none">
+          <span aria-hidden="true" class="spinner-border spinner-border-sm me-2" role="status">
+          </span>
+          Saving...
+         </span>
+        </button>
+       </div>
+      </div>
+     </form>
+    </div>
+   </main>
+  </div>
+  <!-- Footer: Individual User Footer -->
+  <footer class="border-top bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/footer-logo/18/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      © 2025 DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./incident_report.html">
+      <i class="fa-solid fa-pen-to-square me-1">
+      </i>
+      Report Incident
+     </a>
+     <a class="btn btn-outline-warning btn-sm" href="./safety_guides.html">
+      <i class="fa-solid fa-shield-heart me-1">
+      </i>
+      Safety Guides
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./terms.html">
+        Terms
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="./privacy.html">
+        Privacy
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Add/Edit Location Modal -->
+  <div aria-hidden="true" aria-labelledby="locationModalLabel" class="modal fade" id="locationModal" tabindex="-1">
+   <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h5 class="modal-title" id="locationModalLabel">
+       <i class="fa-solid fa-location-dot text-danger me-2">
+       </i>
+       <span id="locationModalTitle">
+        Add Location
+       </span>
+      </h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">
+      </button>
+     </div>
+     <div class="modal-body">
+      <form class="row g-3" id="locationForm">
+       <input id="locationId" type="hidden"/>
+       <div class="col-12 col-md-6">
+        <label class="form-label" for="locationName">
+         Location Name
+        </label>
+        <input class="form-control" id="locationName" placeholder="e.g., Home" required="" type="text"/>
+        <div class="form-text">
+         Give this place a label you recognize.
+        </div>
+       </div>
+       <div class="col-12 col-md-6">
+        <label class="form-label" for="locationRadius">
+         Alert Radius (km)
+        </label>
+        <input class="form-control" id="locationRadius" max="200" min="1" placeholder="10" required="" type="number"/>
+       </div>
+       <div class="col-12">
+        <label class="form-label" for="locationAddress">
+         Address
+        </label>
+        <input class="form-control" id="locationAddress" placeholder="123 Main St, City, State" required="" type="text"/>
+        <div class="form-text">
+         We’ll geocode this to latitude/longitude for precise matching.
+        </div>
+       </div>
+      </form>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+       Cancel
+      </button>
+      <button class="btn btn-danger" id="saveLocationBtn" type="button">
+       <i class="fa-solid fa-save me-1">
+       </i>
+       Save
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Mock initial data
+const initialPreferences = {
+    useCurrentLocation: false,
+    locations: [{
+        id: 'loc1',
+        name: 'Home',
+        address: '742 Evergreen Terrace, Springfield',
+        radius: 10,
+        updated: '2025-08-04'
+    }, {
+        id: 'loc2',
+        name: 'Work',
+        address: '1 Infinite Loop, Cupertino, CA',
+        radius: 5,
+        updated: '2025-07-28'
+    }, {
+        id: 'loc3',
+        name: 'Parents',
+        address: '1600 Pennsylvania Ave NW, Washington, DC',
+        radius: 25,
+        updated: '2025-06-12'
+    }, {
+        id: 'loc4',
+        name: 'School',
+        address: '450 Serra Mall, Stanford, CA',
+        radius: 8,
+        updated: '2025-05-19'
+    }, {
+        id: 'loc5',
+        name: 'Gym',
+        address: '10 Downing St, London',
+        radius: 3,
+        updated: '2025-03-03'
+    }, {
+        id: 'loc6',
+        name: 'Vacation Cabin',
+        address: 'Lake Tahoe, CA',
+        radius: 30,
+        updated: '2025-01-26'
+    }, ],
+    disasterTypes: [{
+        id: 'earthquake',
+        label: 'Earthquakes'
+    }, {
+        id: 'flood',
+        label: 'Floods'
+    }, {
+        id: 'wildfire',
+        label: 'Wildfires'
+    }, {
+        id: 'hurricane',
+        label: 'Hurricanes'
+    }, {
+        id: 'tornado',
+        label: 'Tornadoes'
+    }, {
+        id: 'tsunami',
+        label: 'Tsunami'
+    }, {
+        id: 'landslide',
+        label: 'Landslides'
+    }, {
+        id: 'heat',
+        label: 'Extreme Heat'
+    }],
+    selectedDisasterTypes: ['earthquake', 'flood', 'wildfire', 'heat'],
+    severity: 'Warning',
+    channels: {
+        push: true,
+        sms: false,
+        phone: ''
+    }
+};
+
+let state = JSON.parse(JSON.stringify(initialPreferences));
+let isSaving = false;
+let isDirty = false;
+
+// Elements
+const useCurrentLocationEl = document.getElementById('useCurrentLocation');
+const locationsTbody = document.getElementById('locationsTbody');
+const locationFilterEl = document.getElementById('locationFilter');
+const addLocationBtn = document.getElementById('addLocationBtn');
+const locationModalEl = document.getElementById('locationModal');
+const locationModal = new bootstrap.Modal(locationModalEl);
+const locationModalTitle = document.getElementById('locationModalTitle');
+const locationIdEl = document.getElementById('locationId');
+const locationNameEl = document.getElementById('locationName');
+const locationRadiusEl = document.getElementById('locationRadius');
+const locationAddressEl = document.getElementById('locationAddress');
+const saveLocationBtn = document.getElementById('saveLocationBtn');
+
+const disasterTypesContainer = document.getElementById('disasterTypes');
+const selectAllTypesBtn = document.getElementById('selectAllTypes');
+const clearAllTypesBtn = document.getElementById('clearAllTypes');
+
+const sevAdvisory = document.getElementById('sevAdvisory');
+const sevWarning = document.getElementById('sevWarning');
+const sevCritical = document.getElementById('sevCritical');
+
+const pushToggle = document.getElementById('pushToggle');
+const smsToggle = document.getElementById('smsToggle');
+const smsPhoneSpan = document.getElementById('smsPhone');
+const managePhoneLink = document.getElementById('managePhoneLink');
+
+const saveBtn = document.getElementById('saveBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const unsavedHint = document.getElementById('unsavedHint');
+
+const loadingStateEl = document.getElementById('loadingState');
+const errorStateEl = document.getElementById('errorState');
+const retryLoadBtn = document.getElementById('retryLoad');
+
+const rowsPerPageEl = document.getElementById('rowsPerPage');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const locationsPagination = document.getElementById('locationsPagination');
+
+let currentPage = 1;
+
+// Chart
+let alertsChart;
+
+// Utility: deep equal
+function deepEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
+function markDirty() {
+    isDirty = !deepEqual(state, initialPreferences);
+    saveBtn.disabled = !isDirty || isSaving;
+    unsavedHint.textContent = isDirty ? 'You have unsaved changes.' : 'All changes saved.';
+    document.getElementById('feedbackArea').classList.toggle('d-none', !isDirty);
+}
+
+function setSaving(flag) {
+    isSaving = flag;
+    saveBtn.disabled = !isDirty || isSaving;
+    saveBtn.querySelector('.default-label').classList.toggle('d-none', isSaving);
+    saveBtn.querySelector('.saving-label').classList.toggle('d-none', !isSaving);
+}
+
+function renderDisasterTypes() {
+    disasterTypesContainer.innerHTML = '';
+    state.disasterTypes.forEach(dt => {
+        const id = `dt_${dt.id}`;
+        const isChecked = state.selectedDisasterTypes.includes(dt.id);
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4';
+        col.innerHTML = `
+          <div class="form-check">
+            <input class="form-check-input disaster-type" type="checkbox" value="${dt.id}" id="${id}" ${isChecked ? 'checked' : ''}>
+            <label class="form-check-label" for="${id}"><i class="fa-solid fa-square-check text-info me-1"></i>${dt.label}</label>
+          </div>`;
+        disasterTypesContainer.appendChild(col);
+    });
+
+    disasterTypesContainer.querySelectorAll('.disaster-type').forEach(cb => {
+        cb.addEventListener('change', () => {
+            const val = cb.value;
+            if (cb.checked && !state.selectedDisasterTypes.includes(val)) state.selectedDisasterTypes.push(val);
+            if (!cb.checked) state.selectedDisasterTypes = state.selectedDisasterTypes.filter(x => x !== val);
+            markDirty();
+            updateChart();
+        });
+    });
+}
+
+function renderSeverity() {
+    const map = {
+        Advisory: sevAdvisory,
+        Warning: sevWarning,
+        Critical: sevCritical
+    };
+    if (map[state.severity]) map[state.severity].checked = true;
+    [sevAdvisory, sevWarning, sevCritical].forEach(r => {
+        r.addEventListener('change', () => {
+            state.severity = document.querySelector('input[name="severity"]:checked').value;
+            markDirty();
+            updateChart();
+        });
+    });
+}
+
+function renderChannels() {
+    pushToggle.checked = !!state.channels.push;
+    smsToggle.checked = !!state.channels.sms;
+    smsPhoneSpan.textContent = state.channels.phone ? state.channels.phone : '(not set)';
+    managePhoneLink.classList.toggle('d-none', !smsToggle.checked);
+
+    pushToggle.addEventListener('change', async () => {
+        state.channels.push = pushToggle.checked;
+        if (pushToggle.checked) {
+            // Ask notification permission if needed
+            if ('Notification' in window && Notification.permission !== 'granted') {
+                const res = await Notification.requestPermission();
+                if (res !== 'granted') {
+                    Swal.fire('Permission needed', 'Please allow notifications in your browser settings.', 'info');
+                }
+            }
+        }
+        markDirty();
+    });
+
+    smsToggle.addEventListener('change', () => {
+        state.channels.sms = smsToggle.checked;
+        managePhoneLink.classList.toggle('d-none', !smsToggle.checked);
+        if (smsToggle.checked && !state.channels.phone) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Add a phone number',
+                text: 'To receive SMS alerts, please add a valid phone number in your profile settings.',
+                showCancelButton: true,
+                confirmButtonText: 'Go to Profile',
+                cancelButtonText: 'Later'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = './profile_settings.html';
+                }
+            });
+        }
+        markDirty();
+    });
+}
+
+function renderLocationsTable() {
+    // Pagination and filter
+    const filter = locationFilterEl.value.trim().toLowerCase();
+    let rows = state.locations.filter(l => l.name.toLowerCase().includes(filter) || l.address.toLowerCase().includes(filter));
+
+    const perPage = parseInt(rowsPerPageEl.value, 10);
+    const total = rows.length;
+    const totalPages = Math.max(1, Math.ceil(total / perPage));
+    if (currentPage > totalPages) currentPage = totalPages;
+    const startIdx = (currentPage - 1) * perPage;
+    const pageRows = rows.slice(startIdx, startIdx + perPage);
+
+    locationsTbody.innerHTML = '';
+    pageRows.forEach(l => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="fw-semibold">${l.name}</span></td>
+          <td class="d-none d-md-table-cell">${l.address}</td>
+          <td class="text-center">${Number(l.radius).toLocaleString()}</td>
+          <td class="text-center"><span class="badge bg-light text-dark">${new Date(l.updated).toLocaleDateString()}</span></td>
+          <td class="text-end">
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-light edit-location" data-id="${l.id}"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-light text-danger delete-location" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </td>`;
+        locationsTbody.appendChild(tr);
+    });
+
+    // Pagination controls
+    locationsPagination.textContent = total ? `Showing ${startIdx + 1}–${Math.min(startIdx + perPage, total)} of ${total}` : 'No locations';
+    prevPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage >= totalPages;
+
+    // Wire actions
+    document.querySelectorAll('.edit-location').forEach(btn => btn.addEventListener('click', onEditLocation));
+    document.querySelectorAll('.delete-location').forEach(btn => btn.addEventListener('click', onDeleteLocation));
+}
+
+// Sorting
+let sortKey = '';
+let sortAsc = true;
+
+function sortLocations(key) {
+    if (sortKey === key) {
+        sortAsc = !sortAsc;
+    } else {
+        sortKey = key;
+        sortAsc = true;
+    }
+    state.locations.sort((a, b) => {
+        if (key === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        if (key === 'radius') return sortAsc ? a.radius - b.radius : b.radius - a.radius;
+        return 0;
+    });
+    updateSortIcons();
+    renderLocationsTable();
+}
+
+function updateSortIcons() {
+    document.querySelectorAll('th.sortable').forEach(th => {
+        const icon = th.querySelector('i');
+        const key = th.dataset.sort;
+        if (key === sortKey) {
+            icon.className = `ms-1 fa-solid ${sortAsc ? 'fa-sort-up' : 'fa-sort-down'}`;
+        } else {
+            icon.className = 'ms-1 fa-solid fa-sort';
+        }
+    });
+}
+
+function onEditLocation(e) {
+    const id = e.currentTarget.dataset.id;
+    const loc = state.locations.find(l => l.id === id);
+    if (!loc) return;
+    locationModalTitle.textContent = 'Edit Location';
+    locationIdEl.value = loc.id;
+    locationNameEl.value = loc.name;
+    locationRadiusEl.value = loc.radius;
+    locationAddressEl.value = loc.address;
+    locationModal.show();
+}
+
+function onDeleteLocation(e) {
+    const id = e.currentTarget.dataset.id;
+    const loc = state.locations.find(l => l.id === id);
+    Swal.fire({
+        title: `Delete ${loc.name}?`,
+        text: 'This location will be removed from your alerts.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        confirmButtonColor: '#DC3545'
+    }).then(result => {
+        if (result.isConfirmed) {
+            state.locations = state.locations.filter(l => l.id !== id);
+            markDirty();
+            renderLocationsTable();
+        }
+    });
+}
+
+// Modal Save
+saveLocationBtn.addEventListener('click', () => {
+    const name = locationNameEl.value.trim();
+    const radius = parseInt(locationRadiusEl.value, 10);
+    const address = locationAddressEl.value.trim();
+    if (!name || !radius || !address) {
+        Swal.fire('Missing information', 'Please complete all fields.', 'info');
+        return;
+    }
+    const id = locationIdEl.value;
+    if (id) {
+        const idx = state.locations.findIndex(l => l.id === id);
+        if (idx > -1) {
+            state.locations[idx] = {
+                ...state.locations[idx],
+                name,
+                radius,
+                address,
+                updated: new Date().toISOString().slice(0, 10)
+            };
+        }
+    } else {
+        state.locations.unshift({
+            id: 'loc_' + Math.random().toString(36).slice(2, 8),
+            name,
+            radius,
+            address,
+            updated: new Date().toISOString().slice(0, 10)
+        });
+    }
+    locationModal.hide();
+    locationForm.reset();
+    locationIdEl.value = '';
+    markDirty();
+    renderLocationsTable();
+});
+
+// Add Location
+addLocationBtn.addEventListener('click', () => {
+    locationModalTitle.textContent = 'Add Location';
+    locationForm.reset();
+    locationIdEl.value = '';
+    locationModal.show();
+});
+
+// Current Location Toggle
+useCurrentLocationEl.addEventListener('change', async () => {
+    state.useCurrentLocation = useCurrentLocationEl.checked;
+    if (state.useCurrentLocation) {
+        const proceed = await Swal.fire({
+            title: 'Use your current location?',
+            text: 'We’ll access your device location to tailor alerts to where you are.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Allow',
+            cancelButtonText: 'Cancel'
+        });
+        if (proceed.isConfirmed) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        Swal.fire('Location enabled', 'We will use your current location when available.', 'success');
+                    },
+                    (err) => {
+                        useCurrentLocationEl.checked = false;
+                        state.useCurrentLocation = false;
+                        Swal.fire('Permission denied', 'We could not access your location.', 'error');
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 8000
+                    }
+                );
+            } else {
+                Swal.fire('Not supported', 'Geolocation is not supported by your browser.', 'error');
+                useCurrentLocationEl.checked = false;
+                state.useCurrentLocation = false;
+            }
+        } else {
+            useCurrentLocationEl.checked = false;
+            state.useCurrentLocation = false;
+        }
+    }
+    markDirty();
+    updateChart();
+});
+
+// Filtering & pagination
+locationFilterEl.addEventListener('input', () => {
+    currentPage = 1;
+    renderLocationsTable();
+});
+rowsPerPageEl.addEventListener('change', () => {
+    currentPage = 1;
+    renderLocationsTable();
+});
+prevPageBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        renderLocationsTable();
+    }
+});
+nextPageBtn.addEventListener('click', () => {
+    currentPage++;
+    renderLocationsTable();
+});
+
+// Sorting headers
+document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', () => sortLocations(th.dataset.sort)));
+
+// Select/Clear all disaster types
+selectAllTypesBtn.addEventListener('click', () => {
+    state.selectedDisasterTypes = state.disasterTypes.map(d => d.id);
+    renderDisasterTypes();
+    markDirty();
+    updateChart();
+});
+clearAllTypesBtn.addEventListener('click', () => {
+    state.selectedDisasterTypes = [];
+    renderDisasterTypes();
+    markDirty();
+    updateChart();
+});
+
+// Save/Cancel
+document.getElementById('notificationForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!isDirty) return;
+    setSaving(true);
+    // Simulate PUT request
+    setTimeout(() => {
+        Object.assign(initialPreferences, JSON.parse(JSON.stringify(state))); // update baseline
+        setSaving(false);
+        markDirty();
+        Swal.fire({
+            icon: 'success',
+            title: 'Preferences saved',
+            timer: 1400,
+            showConfirmButton: false
+        });
+    }, 1200);
+});
+
+cancelBtn.addEventListener('click', () => {
+    if (isDirty) {
+        Swal.fire({
+            title: 'Discard changes?',
+            text: 'You have unsaved changes. This will revert to your last saved settings.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Discard'
+        }).then(res => {
+            if (res.isConfirmed) window.location.href = './profile_settings.html';
+        });
+    } else {
+        window.location.href = './profile_settings.html';
+    }
+});
+
+// Chart setup
+function initChart() {
+    const ctx = document.getElementById('alertsChart');
+    const labels = Array.from({
+        length: 8
+    }, (_, i) => `W${i+1}`);
+    const data = labels.map(() => Math.floor(Math.random() * 8) + 2);
+    alertsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Alerts',
+                data,
+                fill: false,
+                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,0,0,0.2)',
+                tension: 0.25,
+                pointRadius: 3,
+                pointHoverRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'nearest',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.parsed.y} alerts`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateChart() {
+    if (!alertsChart) return;
+    // Adjust mock data based on severity and selection size
+    const base = state.selectedDisasterTypes.length || 1;
+    const sevFactor = state.severity === 'Advisory' ? 1.2 : state.severity === 'Warning' ? 0.8 : 0.5;
+    alertsChart.data.datasets[0].data = alertsChart.data.labels.map(() => Math.max(0, Math.round((Math.random() * 6 + base) * sevFactor)));
+    alertsChart.update();
+}
+
+// Simulate loading
+function loadPreferences() {
+    loadingStateEl.style.display = 'grid';
+    errorStateEl.classList.add('d-none');
+    setTimeout(() => {
+        try {
+            // Render form values
+            useCurrentLocationEl.checked = state.useCurrentLocation;
+            renderLocationsTable();
+            renderDisasterTypes();
+            renderSeverity();
+            renderChannels();
+            initChart();
+            updateChart();
+            loadingStateEl.style.display = 'none';
+        } catch (e) {
+            loadingStateEl.style.display = 'none';
+            errorStateEl.classList.remove('d-none');
+        }
+    }, 600);
+}
+
+retryLoadBtn.addEventListener('click', loadPreferences);
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach change listeners to mark dirty for various inputs
+    document.body.addEventListener('change', (e) => {
+        if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
+            markDirty();
+        }
+    });
+    loadPreferences();
+});
+  </script>
+ </body>
+</html>

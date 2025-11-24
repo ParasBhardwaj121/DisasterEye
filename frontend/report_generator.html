@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Report Generator - DisasterEye
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- SweetAlert2 -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+  <!-- Tom Select (multiselect) -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet"/>
+  <!-- Flatpickr (date picker) -->
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet"/>
+  <!-- Leaflet + Leaflet.draw (map & polygon draw) -->
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" rel="stylesheet"/>
+  <!-- Grid.js (tables) -->
+  <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet">
+   <!-- Global Theme CSS -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page CSS -->
+   <link href="report_generator.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <!-- Header (include on pages that need navigation - included here) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./authority_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/28/28'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:#FF0000">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:420px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search incidents, infrastructure, overlays..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./report_generator.html">
+      <i class="fa-solid fa-file-lines me-1">
+      </i>
+      Generate Report
+     </a>
+     <a class="btn btn-light position-relative" href="./notification_settings.html" title="Notifications">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+       5
+      </span>
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-tie me-1">
+       </i>
+       {{UserName}}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="d-flex">
+   <!-- Sidebar (needed on this page) -->
+   <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:290px;">
+    <div class="position-sticky">
+     <div class="p-3 border-bottom d-flex align-items-center gap-2">
+      <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-logo/32/32'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+      <span class="fw-bold">
+       DisasterEye
+      </span>
+     </div>
+     <div class="p-3">
+      <div class="d-flex align-items-center gap-2 mb-3">
+       <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+        <i class="fa-solid fa-user-tie text-secondary">
+        </i>
+       </div>
+       <div>
+        <div class="fw-semibold">
+         {{UserName}}
+        </div>
+        <div class="badge" style="background-color:#FFD700; color:#000;">
+         Local Authority
+        </div>
+       </div>
+      </div>
+      <ul class="nav nav-pills flex-column gap-1">
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./authority_dashboard.html">
+         <i class="fa-solid fa-city me-2 text-danger">
+         </i>
+         Command Center
+        </a>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#publicAlerts" data-bs-toggle="collapse">
+         <i class="fa-solid fa-bullhorn me-2 text-danger">
+         </i>
+         Public Alerts
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="publicAlerts">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./alert_composer.html">
+            <i class="fa-solid fa-bolt me-2 text-muted">
+            </i>
+            Issue Alert
+           </a>
+          </li>
+          <li class="nav-item">
+           <a class="nav-link" href="./alert_monitoring.html">
+            <i class="fa-solid fa-chart-bar me-2 text-muted">
+            </i>
+            Alert Monitoring
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#analytics" data-bs-toggle="collapse">
+         <i class="fa-solid fa-list-check me-2 text-danger">
+         </i>
+         Analytics &amp; Reports
+         <i class="fa-solid fa-chevron-down ms-auto small">
+         </i>
+        </button>
+        <div class="collapse show ps-3" id="analytics">
+         <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+           <a class="nav-link" href="./report_generator.html">
+            <i class="fa-solid fa-file-lines me-2 text-muted">
+            </i>
+            Report Generator
+           </a>
+          </li>
+         </ul>
+        </div>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="./incident_details.html">
+         <i class="fa-solid fa-sitemap me-2 text-danger">
+         </i>
+         Incident Details
+        </a>
+       </li>
+      </ul>
+      <div class="mt-3 p-2 bg-light rounded small">
+       <div class="text-uppercase fw-bold mb-1" style="color:#555;">
+        Quick Actions
+       </div>
+       <a class="btn btn-danger w-100 mb-2" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+        <i class="fa-solid fa-bullhorn me-2">
+        </i>
+        Issue Official Alert
+       </a>
+       <a class="btn btn-outline-danger w-100" href="./report_generator.html">
+        <i class="fa-solid fa-file-lines me-2">
+        </i>
+        Generate Report
+       </a>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <!-- Main Content -->
+   <main class="flex-grow-1">
+    <div class="container-fluid py-3 py-lg-4">
+     <!-- Breadcrumbs -->
+     <nav aria-label="breadcrumb" class="breadcrumb">
+      <ol class="breadcrumb mb-2">
+       <li class="breadcrumb-item">
+        <a href="./authority_dashboard.html">
+         Command Center
+        </a>
+       </li>
+       <li class="breadcrumb-item">
+        Analytics &amp; Reports
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        Report Generator
+       </li>
+      </ol>
+     </nav>
+     <!-- Page Header -->
+     <div class="d-flex align-items-center justify-content-between mb-3">
+      <h1 class="page-title m-0">
+       Report Generator
+      </h1>
+      <div class="d-lg-none">
+       <button aria-expanded="false" class="btn btn-light" data-bs-target="#configPanel" data-bs-toggle="collapse">
+        <i class="fa-solid fa-sliders me-1">
+        </i>
+        Filters
+       </button>
+      </div>
+     </div>
+     <p class="text-muted">
+      Generate, customize, and export summary and detailed reports from aggregated disaster data.
+     </p>
+     <!-- Notification/Feedback area -->
+     <div class="alert alert-info d-flex align-items-center gap-2" id="systemFeedback" role="alert">
+      <i class="fa-solid fa-circle-info">
+      </i>
+      Configure the report parameters on the left, then click Generate Report to preview and export.
+     </div>
+     <div class="row g-3">
+      <!-- Left: Report Configuration Panel (approx 30%) -->
+      <div class="col-12 col-lg-4">
+       <div class="collapse d-lg-block" id="configPanel">
+        <div class="card shadow-sm config-sticky">
+         <div class="card-header">
+          <div class="d-flex align-items-center justify-content-between w-100">
+           <span class="fw-semibold">
+            <i class="fa-solid fa-sliders me-2 text-danger">
+            </i>
+            Configuration
+           </span>
+           <button class="btn btn-sm btn-light" id="resetConfigBtn">
+            <i class="fa-solid fa-rotate-left me-1">
+            </i>
+            Reset
+           </button>
+          </div>
+         </div>
+         <div class="card-body">
+          <!-- Report Template Selector -->
+          <div class="mb-3">
+           <label class="form-label" for="templateSelect">
+            Report Type
+           </label>
+           <select class="form-select" id="templateSelect">
+            <option selected="" value="executive">
+             Executive Summary
+            </option>
+            <option value="incident-log">
+             Incident Detail Log
+            </option>
+            <option value="resource-allocation">
+             Resource Allocation Summary
+            </option>
+           </select>
+           <div class="form-text">
+            Selecting a template may adjust available sections.
+           </div>
+          </div>
+          <!-- Date Range Filter -->
+          <div class="row g-2 mb-3">
+           <div class="col-12 col-sm-6">
+            <label class="form-label" for="startDate">
+             Start Date
+            </label>
+            <input class="form-control" id="startDate" placeholder="Select start date" type="text"/>
+           </div>
+           <div class="col-12 col-sm-6">
+            <label class="form-label" for="endDate">
+             End Date
+            </label>
+            <input class="form-control" id="endDate" placeholder="Select end date" type="text"/>
+           </div>
+           <div class="col-12">
+            <div class="form-text">
+             Data will include events between these dates (inclusive).
+            </div>
+           </div>
+          </div>
+          <!-- Data Content Filters -->
+          <div class="mb-3">
+           <label class="form-label" for="disasterTypes">
+            Disaster Type(s)
+           </label>
+           <select class="form-select" id="disasterTypes" multiple="">
+            <option value="Flood">
+             Flood
+            </option>
+            <option value="Earthquake">
+             Earthquake
+            </option>
+            <option value="Wildfire">
+             Wildfire
+            </option>
+            <option value="Storm">
+             Storm
+            </option>
+            <option value="Landslide">
+             Landslide
+            </option>
+            <option value="Drought">
+             Drought
+            </option>
+           </select>
+           <div class="form-text">
+            Select one or more types to include.
+           </div>
+          </div>
+          <!-- Geographic Area Filter (Map with polygon) -->
+          <div class="mb-3">
+           <div class="d-flex align-items-center justify-content-between">
+            <label class="form-label mb-0">
+             Geographic Area
+            </label>
+            <button class="btn btn-sm btn-outline-secondary" id="useBoundaryBtn">
+             Use Boundary
+            </button>
+           </div>
+           <div class="rounded border mt-2" id="areaMap">
+           </div>
+           <input id="selectedArea" type="hidden">
+            <div class="form-text">
+             Draw a polygon or click "Use Boundary" to select jurisdiction area.
+            </div>
+           </input>
+          </div>
+          <!-- Data Sources -->
+          <div class="mb-2">
+           <label class="form-label">
+            Data Sources
+           </label>
+           <div class="form-check">
+            <input checked="" class="form-check-input data-source" id="dsOfficial" type="checkbox" value="Official"/>
+            <label class="form-check-label" for="dsOfficial">
+             Official
+            </label>
+           </div>
+           <div class="form-check">
+            <input checked="" class="form-check-input data-source" id="dsCommunity" type="checkbox" value="Community"/>
+            <label class="form-check-label" for="dsCommunity">
+             Community
+            </label>
+           </div>
+           <div class="form-check">
+            <input checked="" class="form-check-input data-source" id="dsSocial" type="checkbox" value="Social Media"/>
+            <label class="form-check-label" for="dsSocial">
+             Social Media
+            </label>
+           </div>
+           <div class="form-text">
+            At least one data source must be selected.
+           </div>
+          </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end gap-2">
+          <button class="btn btn-danger" id="generateBtn" style="background-color:#FF0000; border-color:#FF0000;">
+           <i class="fa-solid fa-gears me-2">
+           </i>
+           Generate Report
+          </button>
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- Right: Preview and Actions -->
+      <div class="col-12 col-lg-8">
+       <div class="card shadow-sm mb-3">
+        <div class="card-body d-flex flex-wrap align-items-center gap-2">
+         <span class="badge rounded-pill text-bg-light">
+          <i class="fa-regular fa-clock me-1">
+          </i>
+          Last generated:
+          <span id="lastGenerated">
+           Never
+          </span>
+         </span>
+         <span class="badge rounded-pill" style="background:#fffbe5; color:#5a3f00;">
+          <i class="fa-solid fa-triangle-exclamation me-1">
+          </i>
+          Draft preview
+         </span>
+         <div class="ms-auto d-flex gap-2">
+          <div class="d-lg-none">
+           <button aria-expanded="false" class="btn btn-light" data-bs-target="#configPanel" data-bs-toggle="collapse">
+            <i class="fa-solid fa-sliders me-1">
+            </i>
+            Filters
+           </button>
+          </div>
+          <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" disabled="" id="exportDropdownBtn">
+           <i class="fa-solid fa-file-export me-1">
+           </i>
+           Export As...
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+           <li>
+            <a class="dropdown-item" data-export="PDF" href="#">
+             <i class="fa-regular fa-file-pdf me-2 text-danger">
+             </i>
+             PDF
+            </a>
+           </li>
+           <li>
+            <a class="dropdown-item" data-export="CSV" href="#">
+             <i class="fa-solid fa-file-csv me-2 text-success">
+             </i>
+             CSV
+            </a>
+           </li>
+          </ul>
+         </div>
+        </div>
+       </div>
+       <div class="card shadow-sm preview-card position-relative">
+        <div class="card-header">
+         <span class="fw-semibold">
+          <i class="fa-regular fa-eye me-2 text-danger">
+          </i>
+          Report Preview
+         </span>
+        </div>
+        <div class="card-body" id="previewContainer">
+         <div class="empty-state" id="previewPlaceholder">
+          <div class="d-flex align-items-center justify-content-center rounded-circle bg-warning-soft mb-2" style="width:56px;height:56px;">
+           <i class="fa-regular fa-file-lines text-warning" style="font-size:24px;">
+           </i>
+          </div>
+          <div class="empty-state-text">
+           Configure your report parameters and click "Generate Report" to see a preview.
+          </div>
+         </div>
+         <div class="loading-state d-none" id="loadingState">
+          <div aria-hidden="true" class="spinner-border text-danger" role="status">
+          </div>
+          <div class="text-muted">
+           Generating report...
+          </div>
+         </div>
+         <div class="d-none" id="reportContent">
+          <!-- Dynamic content will be injected here after generation -->
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer (include on pages that need it - included here) -->
+  <footer class="border-top bg-light">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-footer/18/18'" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-danger btn-sm" href="./alert_composer.html" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-bullhorn me-1">
+      </i>
+      Issue Alert
+     </a>
+     <a class="btn btn-outline-danger btn-sm" href="./alert_monitoring.html">
+      <i class="fa-solid fa-chart-bar me-1">
+      </i>
+      Monitor
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Terms
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Privacy
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Scripts: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <!-- Tom Select -->
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js">
+  </script>
+  <!-- Flatpickr -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js">
+  </script>
+  <!-- Leaflet + Draw -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js">
+  </script>
+  <!-- Chart.js + Zoom plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js">
+  </script>
+  <!-- Grid.js -->
+  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js">
+  </script>
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js">
+  </script>
+  <script>
+   // Global state (mock)
+let INCIDENT_DATA = [{
+    id: 'INC-2025-001',
+    date: '2025-01-06',
+    type: 'Flood',
+    location: 'Riverside Ward',
+    severity: 'High',
+    damageUSD: 1200000,
+    resources: 85
+}, {
+    id: 'INC-2025-014',
+    date: '2025-01-12',
+    type: 'Storm',
+    location: 'Hilltop District',
+    severity: 'Medium',
+    damageUSD: 380000,
+    resources: 43
+}, {
+    id: 'INC-2025-023',
+    date: '2025-01-19',
+    type: 'Earthquake',
+    location: 'Central City',
+    severity: 'Critical',
+    damageUSD: 5850000,
+    resources: 210
+}, {
+    id: 'INC-2025-031',
+    date: '2025-01-25',
+    type: 'Wildfire',
+    location: 'Pine Valley',
+    severity: 'High',
+    damageUSD: 1960000,
+    resources: 132
+}, {
+    id: 'INC-2025-037',
+    date: '2025-02-02',
+    type: 'Landslide',
+    location: 'East Ridge',
+    severity: 'Medium',
+    damageUSD: 420000,
+    resources: 56
+}, {
+    id: 'INC-2025-044',
+    date: '2025-02-10',
+    type: 'Flood',
+    location: 'Bayview',
+    severity: 'Low',
+    damageUSD: 125000,
+    resources: 22
+}, {
+    id: 'INC-2025-051',
+    date: '2025-02-18',
+    type: 'Storm',
+    location: 'North Point',
+    severity: 'High',
+    damageUSD: 850000,
+    resources: 77
+}];
+let generated = false;
+let lineChartRef = null,
+    barChartRef = null,
+    gridRef = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply Poppins font to body (in case global theme uses different default)
+    document.body.style.fontFamily = "'Poppins', var(--font-sans)";
+
+    // Initialize multiselect
+    const ts = new TomSelect('#disasterTypes', {
+        plugins: ['remove_button'],
+        persist: false,
+        create: false,
+        placeholder: 'Select disaster types'
+    });
+
+    // Initialize date pickers with constraints
+    const startPicker = flatpickr('#startDate', {
+        dateFormat: 'Y-m-d',
+        defaultDate: '2025-01-01',
+        onChange: function(selectedDates, dateStr) {
+            endPicker.set('minDate', dateStr);
+        }
+    });
+    const endPicker = flatpickr('#endDate', {
+        dateFormat: 'Y-m-d',
+        defaultDate: '2025-02-28',
+        onChange: function(selectedDates, dateStr) {
+            startPicker.set('maxDate', dateStr);
+        }
+    });
+
+    // Initialize Leaflet map with draw tools
+    initAreaMap();
+
+    // Reset configuration
+    document.getElementById('resetConfigBtn').addEventListener('click', () => {
+        document.getElementById('templateSelect').value = 'executive';
+        startPicker.setDate('2025-01-01');
+        endPicker.setDate('2025-02-28');
+        ts.clear();
+        // Data sources default all checked
+        document.querySelectorAll('.data-source').forEach(chk => chk.checked = true);
+        // Clear polygon
+        if (window._drawnLayer) {
+            window._drawnGroup.removeLayer(window._drawnLayer);
+            window._drawnLayer = null;
+        }
+        document.getElementById('selectedArea').value = '';
+        Swal.fire({
+            icon: 'success',
+            title: 'Configuration reset',
+            timer: 1200,
+            showConfirmButton: false
+        });
+    });
+
+    // Use jurisdiction boundary (mock polygon)
+    document.getElementById('useBoundaryBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window._drawnLayer) {
+            window._drawnGroup.removeLayer(window._drawnLayer);
+            window._drawnLayer = null;
+        }
+        const coords = [
+            [51.5079, -0.128],
+            [51.509, -0.09],
+            [51.499, -0.08],
+            [51.495, -0.12]
+        ];
+        window._drawnLayer = L.polygon(coords, {
+            color: '#FF0000'
+        });
+        window._drawnGroup.addLayer(window._drawnLayer);
+        window._map.fitBounds(window._drawnLayer.getBounds());
+        document.getElementById('selectedArea').value = JSON.stringify(window._drawnLayer.toGeoJSON());
+    });
+
+    // Generate report
+    document.getElementById('generateBtn').addEventListener('click', onGenerateReport);
+
+    // Export handlers
+    document.querySelectorAll('.dropdown-menu [data-export]').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const type = e.currentTarget.getAttribute('data-export');
+            if (!generated) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'No report generated',
+                    text: 'Please generate a report first.'
+                });
+                return;
+            }
+            if (type === 'CSV') exportCSV();
+            if (type === 'PDF') exportPDF();
+        });
+    });
+});
+
+function initAreaMap() {
+    const mapEl = document.getElementById('areaMap');
+    const map = L.map(mapEl).setView([51.505, -0.09], 12);
+    window._map = map;
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Feature group to store drawn layers
+    const drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+    window._drawnGroup = drawnItems;
+    window._drawnLayer = null;
+
+    const drawControl = new L.Control.Draw({
+        draw: {
+            polygon: {
+                allowIntersection: false,
+                showArea: true
+            },
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            marker: false,
+            circlemarker: false
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, function(e) {
+        if (window._drawnLayer) {
+            drawnItems.removeLayer(window._drawnLayer);
+        }
+        const layer = e.layer;
+        drawnItems.addLayer(layer);
+        window._drawnLayer = layer;
+        document.getElementById('selectedArea').value = JSON.stringify(layer.toGeoJSON());
+    });
+
+    map.on('draw:edited', function() {
+        if (window._drawnLayer) {
+            document.getElementById('selectedArea').value = JSON.stringify(window._drawnLayer.toGeoJSON());
+        }
+    });
+
+    // Size fix on collapse show for mobile
+    const configPanel = document.getElementById('configPanel');
+    configPanel?.addEventListener('shown.bs.collapse', () => {
+        setTimeout(() => map.invalidateSize(), 200);
+    });
+}
+
+function onGenerateReport() {
+    // Validate data sources
+    const sources = Array.from(document.querySelectorAll('.data-source:checked')).map(x => x.value);
+    if (sources.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Select at least one data source'
+        });
+        return;
+    }
+
+    // Start loading state
+    setLoading(true);
+    document.getElementById('systemFeedback').classList.replace('alert-info', 'alert-warning');
+    document.getElementById('systemFeedback').innerHTML = '<i class="fa-solid fa-hourglass-half me-1"></i> Generating report...';
+
+    setTimeout(() => {
+        // Simulate API response and render preview
+        renderPreview();
+        setLoading(false);
+        generated = true;
+        document.getElementById('exportDropdownBtn').disabled = false;
+        const now = new Date();
+        document.getElementById('lastGenerated').textContent = now.toLocaleString();
+        document.getElementById('systemFeedback').classList.replace('alert-warning', 'alert-success');
+        document.getElementById('systemFeedback').innerHTML = '<i class="fa-regular fa-circle-check me-1"></i> Report generated successfully. You can export as PDF or CSV.';
+        Swal.fire({
+            icon: 'success',
+            title: 'Report ready',
+            showConfirmButton: false,
+            timer: 1200
+        });
+    }, 1400);
+}
+
+function setLoading(isLoading) {
+    document.getElementById('generateBtn').disabled = isLoading;
+    document.getElementById('previewPlaceholder').classList.toggle('d-none', isLoading);
+    document.getElementById('loadingState').classList.toggle('d-none', !isLoading);
+    document.getElementById('reportContent').classList.toggle('d-none', true);
+}
+
+function renderPreview() {
+    const container = document.getElementById('reportContent');
+    container.innerHTML = `
+        <div class="mb-3">
+          <div class="row g-3">
+            <div class="col-6 col-md-3">
+              <div class="metric-card text-center">
+                <div class="metric-title">Total Incidents</div>
+                <div class="metric-value">${INCIDENT_DATA.length}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="metric-card text-center">
+                <div class="metric-title">High/Critical</div>
+                <div class="metric-value text-danger">${INCIDENT_DATA.filter(i => ['High','Critical'].includes(i.severity)).length}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="metric-card text-center">
+                <div class="metric-title">Resources Deployed</div>
+                <div class="metric-value">${INCIDENT_DATA.reduce((a,b)=>a+b.resources,0)}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="metric-card text-center">
+                <div class="metric-title">Est. Damage</div>
+                <div class="metric-value">$${formatNumber(INCIDENT_DATA.reduce((a,b)=>a+b.damageUSD,0))}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-12 col-xl-6">
+            <div class="card h-100">
+              <div class="card-header"><span class="widget-title"><i class="fa-solid fa-chart-line me-2 text-danger"></i>Incidents over Time</span></div>
+              <div class="card-body"><canvas id="incidentsLine"></canvas></div>
+            </div>
+          </div>
+          <div class="col-12 col-xl-6">
+            <div class="card h-100">
+              <div class="card-header"><span class="widget-title"><i class="fa-solid fa-chart-column me-2 text-danger"></i>Incidents by Type</span></div>
+              <div class="card-body"><canvas id="incidentsBar"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <span class="widget-title"><i class="fa-regular fa-rectangle-list me-2 text-danger"></i>Incident Details</span>
+            <span class="text-muted small">Sortable • Searchable • Paginated</span>
+          </div>
+          <div class="card-body">
+            <div id="incidentTable"></div>
+          </div>
+        </div>
+      `;
+
+    // Show content
+    document.getElementById('loadingState').classList.add('d-none');
+    container.classList.remove('d-none');
+    document.getElementById('previewPlaceholder').classList.add('d-none');
+
+    // Build charts
+    buildCharts();
+    // Build table
+    buildTable();
+}
+
+function buildCharts() {
+    const byDate = aggregateByDate(INCIDENT_DATA);
+    const lineCtx = document.getElementById('incidentsLine');
+    const barCtx = document.getElementById('incidentsBar');
+
+    if (lineChartRef) lineChartRef.destroy();
+    if (barChartRef) barChartRef.destroy();
+
+    // Line chart: time series
+    lineChartRef = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: byDate.labels,
+            datasets: [{
+                label: 'Incidents',
+                data: byDate.counts,
+                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,0,0,0.15)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'x'
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'x'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Bar chart: by type
+    const typesAgg = aggregateByType(INCIDENT_DATA);
+    barChartRef = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: typesAgg.labels,
+            datasets: [{
+                label: 'Count',
+                data: typesAgg.counts,
+                backgroundColor: ['#FF6B6B', '#FFD700', '#0099D2', '#28A745', '#6C757D', '#9C27B0']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function buildTable() {
+    if (gridRef) gridRef.destroy();
+    const rows = INCIDENT_DATA.map(item => [
+        item.id,
+        new Date(item.date),
+        item.type,
+        item.location,
+        item.severity,
+        item.resources,
+        item.damageUSD
+    ]);
+
+    gridRef = new gridjs.Grid({
+        columns: [{
+            id: 'id',
+            name: 'Incident ID',
+            formatter: (cell) => gridjs.html(`<a href="./incident_details.html?id=${cell}">${cell}</a>`)
+        }, {
+            id: 'date',
+            name: 'Date',
+            sort: {
+                compare: (a, b) => a - b
+            },
+            formatter: (cell) => new Date(cell).toLocaleDateString()
+        }, {
+            id: 'type',
+            name: 'Type'
+        }, {
+            id: 'location',
+            name: 'Location'
+        }, {
+            id: 'severity',
+            name: 'Severity'
+        }, {
+            id: 'resources',
+            name: 'Resources'
+        }, {
+            id: 'damageUSD',
+            name: 'Est. Damage',
+            formatter: (cell) => `$${formatNumber(cell)}`
+        }],
+        data: rows,
+        search: true,
+        sort: true,
+        pagination: {
+            enabled: true,
+            limit: 5,
+            summary: true
+        },
+        style: {
+            table: {
+                'font-size': '0.95rem'
+            }
+        }
+    }).render(document.getElementById('incidentTable'));
+}
+
+function aggregateByDate(data) {
+    const map = new Map();
+    data.forEach(i => {
+        map.set(i.date, (map.get(i.date) || 0) + 1);
+    });
+    const labels = Array.from(map.keys()).sort();
+    const counts = labels.map(l => map.get(l));
+    return {
+        labels,
+        counts
+    };
+}
+
+function aggregateByType(data) {
+    const map = new Map();
+    data.forEach(i => map.set(i.type, (map.get(i.type) || 0) + 1));
+    const labels = Array.from(map.keys());
+    const counts = labels.map(l => map.get(l));
+    return {
+        labels,
+        counts
+    };
+}
+
+function formatNumber(n) {
+    return n.toLocaleString(undefined, {
+        maximumFractionDigits: 0
+    });
+}
+
+function exportCSV() {
+    const headers = ['Incident ID', 'Date', 'Type', 'Location', 'Severity', 'Resources', 'Est. Damage (USD)'];
+    const rows = INCIDENT_DATA.map(i => [i.id, i.date, i.type, i.location, i.severity, i.resources, i.damageUSD]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], {
+        type: 'text/csv;charset=utf-8;'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `DisasterEye_Report_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    Swal.fire({
+        icon: 'success',
+        title: 'CSV exported',
+        timer: 1200,
+        showConfirmButton: false
+    });
+}
+
+async function exportPDF() {
+    const {
+        jsPDF
+    } = window.jspdf;
+    const doc = new jsPDF({
+        unit: 'pt',
+        format: 'a4'
+    });
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.text('DisasterEye - Report', 40, 50);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 40, 70);
+
+    // Summary metrics
+    const totalDamage = INCIDENT_DATA.reduce((a, b) => a + b.damageUSD, 0);
+    const metrics = [
+        `Total Incidents: ${INCIDENT_DATA.length}`,
+        `High/Critical: ${INCIDENT_DATA.filter(i=>['High','Critical'].includes(i.severity)).length}`,
+        `Resources Deployed: ${INCIDENT_DATA.reduce((a,b)=>a+b.resources,0)}`,
+        `Estimated Damage: $${formatNumber(totalDamage)}`
+    ];
+    metrics.forEach((m, idx) => doc.text(m, 40, 100 + idx * 16));
+
+    // Try to add line chart image if available
+    try {
+        const canvas = document.getElementById('incidentsLine');
+        const imgData = canvas.toDataURL('image/png', 1.0);
+        doc.addImage(imgData, 'PNG', 40, 180, 500, 220);
+    } catch (err) {}
+
+    doc.save(`DisasterEye_Report_${new Date().toISOString().slice(0,10)}.pdf`);
+    Swal.fire({
+        icon: 'success',
+        title: 'PDF exported',
+        timer: 1200,
+        showConfirmButton: false
+    });
+}
+  </script>
+ </body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   DisasterEye - Individual Dashboard
+  </title>
+  <!-- Brand Typography: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- Leaflet CSS (Interactive Map) -->
+   <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    </script>
+    <!-- Global Theme CSS -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page-specific CSS -->
+    <link href="individual_dashboard.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body class="view-grid">
+  <!-- Header (Common Component) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./individual_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/disastereye/120/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:320px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search nearby alerts..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./incident_report.html">
+      <i class="fa-solid fa-pen-to-square me-1">
+      </i>
+      Report
+     </a>
+     <a class="btn btn-danger btn-sm js-mark-safe-link" href="/mark-safe" style="background-color:#FF0000; border-color:#FF0000;">
+      <i class="fa-solid fa-satellite-dish me-1">
+      </i>
+      Mark Safe
+     </a>
+     <div class="dropdown">
+      <a aria-expanded="false" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-circle me-1">
+       </i>
+       {{UserName}}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <a class="dropdown-item" href="./notification_settings.html">
+         <i class="fa-solid fa-bell me-2">
+         </i>
+         Notification Prefs
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row flex-nowrap">
+    <!-- Sidebar (Common Component) -->
+    <div class="col-auto p-0">
+     <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:280px;">
+      <div class="position-sticky">
+       <div class="p-3 border-bottom d-flex align-items-center gap-2">
+        <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-logo/120/32';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+        <span class="fw-bold">
+         DisasterEye
+        </span>
+       </div>
+       <div class="p-3">
+        <div class="d-flex align-items-center gap-2 mb-3">
+         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+          <i class="fa-solid fa-user text-secondary">
+          </i>
+         </div>
+         <div>
+          <div class="fw-semibold">
+           {{UserName}}
+          </div>
+          <div class="badge" style="background-color:#FFD700; color:#000;">
+           Individual
+          </div>
+         </div>
+        </div>
+        <a class="btn w-100 mb-3 js-mark-safe-link" href="/mark-safe" style="background-color:#FF0000; color:#fff;">
+         <i class="fa-solid fa-satellite-dish me-2">
+         </i>
+         Mark Myself Safe
+        </a>
+        <ul class="nav nav-pills flex-column gap-1">
+         <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="./individual_dashboard.html">
+           <i class="fa-solid fa-house me-2 text-danger">
+           </i>
+           Dashboard
+          </a>
+         </li>
+         <li class="nav-item">
+          <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#alertsPrefs" data-bs-toggle="collapse">
+           <i class="fa-solid fa-bell me-2 text-danger">
+           </i>
+           Alerts &amp; Preferences
+           <i class="fa-solid fa-chevron-down ms-auto small">
+           </i>
+          </button>
+          <div class="collapse show ps-3" id="alertsPrefs">
+           <ul class="nav flex-column gap-1">
+            <li class="nav-item">
+             <a class="nav-link" href="./notification_settings.html">
+              <i class="fa-solid fa-sliders me-2 text-muted">
+              </i>
+              Notification Settings
+             </a>
+            </li>
+            <li class="nav-item">
+             <a class="nav-link" href="./safety_guides.html">
+              <i class="fa-solid fa-shield-heart me-2 text-muted">
+              </i>
+              Safety Guides
+             </a>
+            </li>
+           </ul>
+          </div>
+         </li>
+         <li class="nav-item">
+          <button aria-expanded="false" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#reportingMenu" data-bs-toggle="collapse">
+           <i class="fa-solid fa-map-location-dot me-2 text-danger">
+           </i>
+           Reporting
+           <i class="fa-solid fa-chevron-down ms-auto small">
+           </i>
+          </button>
+          <div class="collapse ps-3" id="reportingMenu">
+           <ul class="nav flex-column gap-1">
+            <li class="nav-item">
+             <a class="nav-link" href="./incident_report.html">
+              <i class="fa-solid fa-pen-to-square me-2 text-muted">
+              </i>
+              Report Incident
+             </a>
+            </li>
+           </ul>
+          </div>
+         </li>
+        </ul>
+       </div>
+      </div>
+     </nav>
+    </div>
+    <!-- Main Content -->
+    <div class="col ps-md-0">
+     <main class="main-panel">
+      <!-- Page header area -->
+      <div class="page-header">
+       <div class="d-flex align-items-center gap-2">
+        <h1 class="page-title mb-0">
+         My Safety Dashboard
+        </h1>
+        <span class="badge-soft warning">
+         <i class="fa-solid fa-circle-exclamation me-1">
+         </i>
+         Active Alerts
+        </span>
+       </div>
+       <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-light" href="./safety_guides.html">
+         <i class="fa-solid fa-shield-heart me-2 text-warning">
+         </i>
+         Safety Guides
+        </a>
+        <a class="btn btn-danger" href="./incident_report.html">
+         <i class="fa-solid fa-pen-to-square me-2">
+         </i>
+         Report Incident
+        </a>
+       </div>
+      </div>
+      <div class="row g-3">
+       <!-- Map and Controls -->
+       <div class="col-12 col-lg-8">
+        <div class="card app-card map-card position-relative">
+         <div class="card-header">
+          <div class="d-flex align-items-center gap-2">
+           <i class="fa-solid fa-map-location-dot text-danger">
+           </i>
+           <span class="widget-title">
+            Live Situation Map
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-light btn-sm" id="btnLocate">
+            <i class="fa-solid fa-location-crosshairs me-1">
+            </i>
+            My Location
+           </button>
+           <button class="btn btn-light btn-sm" id="btnRefresh">
+            <i class="fa-solid fa-rotate me-1">
+            </i>
+            Refresh
+           </button>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div class="row g-0">
+           <div class="col-12">
+            <div aria-label="Interactive disaster map" id="map" role="region">
+            </div>
+            <!-- Loading overlay -->
+            <div class="map-loading-overlay d-flex align-items-center justify-content-center" id="mapLoading">
+             <div class="d-flex align-items-center gap-2">
+              <div aria-hidden="true" class="spinner-border text-danger" role="status">
+              </div>
+              <span>
+               Loading map &amp; data...
+              </span>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <div class="d-flex align-items-center gap-3 small text-muted">
+           <span>
+            <span class="legend-dot bg-danger">
+            </span>
+            Alerts
+           </span>
+           <span>
+            <span class="legend-dot bg-primary">
+            </span>
+            Community Reports
+           </span>
+           <span>
+            <span class="legend-dot bg-success">
+            </span>
+            Resources
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+           <div class="form-check form-check-inline">
+            <input checked="" class="form-check-input layer-toggle" data-layer="alerts" id="toggleAlerts" type="checkbox"/>
+            <label class="form-check-label" for="toggleAlerts">
+             Alerts
+            </label>
+           </div>
+           <div class="form-check form-check-inline">
+            <input checked="" class="form-check-input layer-toggle" data-layer="reports" id="toggleReports" type="checkbox"/>
+            <label class="form-check-label" for="toggleReports">
+             Reports
+            </label>
+           </div>
+           <div class="form-check form-check-inline">
+            <input checked="" class="form-check-input layer-toggle" data-layer="resources" id="toggleResources" type="checkbox"/>
+            <label class="form-check-label" for="toggleResources">
+             Resources
+            </label>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- Right side: Alerts feed, mini chart, nearby resources table -->
+       <div class="col-12 col-lg-4">
+        <!-- Active Alerts Feed -->
+        <div class="card app-card h-100">
+         <div class="card-header">
+          <div class="d-flex align-items-center gap-2">
+           <i class="fa-solid fa-bell text-danger">
+           </i>
+           <span class="widget-title">
+            Active Alerts
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <select class="form-select form-select-sm" id="filterSeverity" style="min-width:140px;">
+            <option selected="" value="all">
+             All Severities
+            </option>
+            <option value="Critical">
+             Critical
+            </option>
+            <option value="High">
+             High
+            </option>
+            <option value="Medium">
+             Medium
+            </option>
+           </select>
+           <button class="btn btn-light btn-sm" id="btnToggleFeed" type="button">
+            <i class="fa-solid fa-chevron-down">
+            </i>
+           </button>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div class="alerts-feed list-group list-group-flush" id="alertsFeed">
+           <!-- Feed items injected by JS -->
+          </div>
+         </div>
+         <div class="card-footer d-flex justify-content-between align-items-center small text-muted">
+          <span id="alertsCount">
+           0 alerts
+          </span>
+          <a class="text-decoration-none" href="./alert_monitoring.html">
+           Open monitoring
+           <i class="fa-solid fa-arrow-right-long ms-1">
+           </i>
+          </a>
+         </div>
+        </div>
+        <!-- Alerts last 24h chart -->
+        <div class="card app-card mt-3">
+         <div class="card-header">
+          <div class="d-flex align-items-center gap-2">
+           <i class="fa-solid fa-chart-line text-danger">
+           </i>
+           <span class="widget-title">
+            Alerts in last 24h
+           </span>
+          </div>
+         </div>
+         <div class="card-body">
+          <canvas aria-label="Alerts trend chart" height="160" id="alertsChart" role="img">
+          </canvas>
+         </div>
+        </div>
+        <!-- Nearby Shelters Table -->
+        <div class="card app-card mt-3">
+         <div class="card-header">
+          <div class="d-flex align-items-center gap-2">
+           <i class="fa-solid fa-warehouse text-success">
+           </i>
+           <span class="widget-title">
+            Nearby Shelters
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <input class="form-control form-control-sm" id="shelterSearch" placeholder="Search..." type="text">
+           </input>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div class="table-responsive">
+           <table class="table table-theme mb-0" id="sheltersTable">
+            <thead>
+             <tr>
+              <th class="sortable" data-key="name">
+               Name
+               <i class="fa-solid fa-sort">
+               </i>
+              </th>
+              <th class="sortable" data-key="distance">
+               Distance (mi)
+               <i class="fa-solid fa-sort">
+               </i>
+              </th>
+              <th class="sortable" data-key="capacity">
+               Capacity
+               <i class="fa-solid fa-sort">
+               </i>
+              </th>
+              <th class="sortable" data-key="available">
+               Available
+               <i class="fa-solid fa-sort">
+               </i>
+              </th>
+              <th>
+               Status
+              </th>
+              <th class="sortable" data-key="updated">
+               Updated
+               <i class="fa-solid fa-sort">
+               </i>
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <!-- Rows injected by JS -->
+            </tbody>
+           </table>
+          </div>
+         </div>
+         <div class="card-footer d-flex justify-content-between align-items-center small text-muted">
+          <div id="sheltersPagination">
+           Showing 1–6 of 18
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-sm btn-light" disabled="" id="shelterPrev">
+            <i class="fa-solid fa-chevron-left">
+            </i>
+           </button>
+           <button class="btn btn-sm btn-light" id="shelterNext">
+            <i class="fa-solid fa-chevron-right">
+            </i>
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main>
+    </div>
+   </div>
+  </div>
+  <!-- Quick Actions Panel -->
+  <div class="quick-actions-panel reveal-on-hover">
+   <div class="btn-group shadow-2">
+    <a class="btn btn-danger" href="./incident_report.html">
+     <i class="fa-solid fa-pen-to-square me-2">
+     </i>
+     Report Incident
+    </a>
+    <button class="btn btn-warning js-mark-safe-action" id="btnMarkSafe">
+     <i class="fa-solid fa-satellite-dish me-2">
+     </i>
+     <span class="label">
+      Mark Myself Safe
+     </span>
+    </button>
+   </div>
+   <div class="small text-muted mt-1 text-end">
+    Always visible
+   </div>
+  </div>
+  <!-- Toast Container (system feedback) -->
+  <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1080;">
+  </div>
+  <!-- Footer (Common Component) -->
+  <footer class="border-top bg-light mt-4">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/de-footer/120/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      © 2025 DisasterEye
+     </span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-outline-danger btn-sm" href="./incident_report.html">
+      <i class="fa-solid fa-pen-to-square me-1">
+      </i>
+      Report Incident
+     </a>
+     <a class="btn btn-outline-warning btn-sm" href="./safety_guides.html">
+      <i class="fa-solid fa-shield-heart me-1">
+      </i>
+      Safety Guides
+     </a>
+     <ul class="nav">
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Terms
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link px-2 text-muted" href="#">
+        Privacy
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </footer>
+  <!-- Bootstrap 5 Bundle JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Leaflet JS -->
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Utility: Toasts
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const id = 't' + Date.now();
+    const bgClass = type === 'success' ? 'text-bg-success' : type === 'error' ? 'text-bg-danger' : type === 'warning' ? 'text-bg-warning' : 'text-bg-info';
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center ' + bgClass;
+    toast.id = id;
+    toast.role = 'alert';
+    toast.ariaLive = 'assertive';
+    toast.ariaAtomic = 'true';
+    toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>`;
+    container.appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast, {
+        delay: 3500
+    });
+    bsToast.show();
+    toast.addEventListener('hidden.bs.toast', () => toast.remove());
+}
+
+// Mock Data
+const defaultCenter = {
+    lat: 37.7749,
+    lng: -122.4194
+};
+
+const alertsData = [{
+    id: 'a1',
+    type: 'alert',
+    title: 'Wildfire Evacuation Order',
+    severity: 'Critical',
+    summary: 'Immediate evacuation advised in North Canyon area.',
+    timestamp: Date.now() - 20 * 60 * 1000,
+    coords: {
+        lat: 37.78,
+        lng: -122.41
+    }
+}, {
+    id: 'a2',
+    type: 'alert',
+    title: 'Flash Flood Warning',
+    severity: 'High',
+    summary: 'Rapid water rise expected near Riverfront.',
+    timestamp: Date.now() - 45 * 60 * 1000,
+    coords: {
+        lat: 37.76,
+        lng: -122.43
+    }
+}, {
+    id: 'a3',
+    type: 'alert',
+    title: 'Heat Advisory',
+    severity: 'Medium',
+    summary: 'Stay hydrated; limit outdoor activity.',
+    timestamp: Date.now() - 2 * 60 * 60 * 1000,
+    coords: {
+        lat: 37.75,
+        lng: -122.40
+    }
+}, {
+    id: 'a4',
+    type: 'alert',
+    title: 'Earthquake Aftershocks',
+    severity: 'High',
+    summary: 'Expect minor aftershocks. Drop, Cover, and Hold On.',
+    timestamp: Date.now() - 3 * 60 * 60 * 1000,
+    coords: {
+        lat: 37.79,
+        lng: -122.45
+    }
+}, {
+    id: 'a5',
+    type: 'alert',
+    title: 'Air Quality Alert',
+    severity: 'Medium',
+    summary: 'AQI elevated; masks recommended outdoors.',
+    timestamp: Date.now() - 4 * 60 * 60 * 1000,
+    coords: {
+        lat: 37.77,
+        lng: -122.435
+    }
+}, {
+    id: 'a6',
+    type: 'alert',
+    title: 'Severe Thunderstorm Watch',
+    severity: 'Medium',
+    summary: 'High winds and lightning possible.',
+    timestamp: Date.now() - 5 * 60 * 60 * 1000,
+    coords: {
+        lat: 37.73,
+        lng: -122.41
+    }
+}];
+
+const reportsData = [{
+    id: 'r1',
+    type: 'report',
+    title: 'Road Blocked by Debris',
+    summary: 'Fallen tree on 5th Ave.',
+    timestamp: Date.now() - 30 * 60 * 1000,
+    coords: {
+        lat: 37.771,
+        lng: -122.42
+    }
+}, {
+    id: 'r2',
+    type: 'report',
+    title: 'Power Outage',
+    summary: 'No electricity since 1 AM.',
+    timestamp: Date.now() - 90 * 60 * 1000,
+    coords: {
+        lat: 37.768,
+        lng: -122.414
+    }
+}, {
+    id: 'r3',
+    type: 'report',
+    title: 'Minor Flooding',
+    summary: 'Puddles across Elm Street.',
+    timestamp: Date.now() - 120 * 60 * 1000,
+    coords: {
+        lat: 37.783,
+        lng: -122.427
+    }
+}, {
+    id: 'r4',
+    type: 'report',
+    title: 'Smoke Sighting',
+    summary: 'Smoke visible near hills.',
+    timestamp: Date.now() - 70 * 60 * 1000,
+    coords: {
+        lat: 37.755,
+        lng: -122.405
+    }
+}, {
+    id: 'r5',
+    type: 'report',
+    title: 'Injured Animal',
+    summary: 'Deer injured near park.',
+    timestamp: Date.now() - 160 * 60 * 1000,
+    coords: {
+        lat: 37.747,
+        lng: -122.447
+    }
+}];
+
+const resourcesData = [{
+    id: 's1',
+    type: 'resource',
+    title: 'Civic Center Shelter',
+    summary: 'General shelter & supplies',
+    timestamp: Date.now() - 10 * 60 * 1000,
+    coords: {
+        lat: 37.78,
+        lng: -122.42
+    }
+}, {
+    id: 's2',
+    type: 'resource',
+    title: 'Harborview Clinic',
+    summary: 'Medical assistance',
+    timestamp: Date.now() - 40 * 60 * 1000,
+    coords: {
+        lat: 37.772,
+        lng: -122.435
+    }
+}, {
+    id: 's3',
+    type: 'resource',
+    title: 'Community Hall Shelter',
+    summary: 'Overnight shelter',
+    timestamp: Date.now() - 80 * 60 * 1000,
+    coords: {
+        lat: 37.762,
+        lng: -122.412
+    }
+}, {
+    id: 's4',
+    type: 'resource',
+    title: 'Westside Warehouse',
+    summary: 'Supply distribution point',
+    timestamp: Date.now() - 200 * 60 * 1000,
+    coords: {
+        lat: 37.742,
+        lng: -122.422
+    }
+}, {
+    id: 's5',
+    type: 'resource',
+    title: 'High School Gym Shelter',
+    summary: 'Families & pets allowed',
+    timestamp: Date.now() - 15 * 60 * 1000,
+    coords: {
+        lat: 37.765,
+        lng: -122.45
+    }
+}];
+
+const sheltersTableData = [{
+    name: 'Civic Center Shelter',
+    distance: 1.2,
+    capacity: 250,
+    available: 80,
+    status: 'Open',
+    updated: '2025-01-21 14:20'
+}, {
+    name: 'Community Hall Shelter',
+    distance: 2.1,
+    capacity: 180,
+    available: 47,
+    status: 'Open',
+    updated: '2025-01-21 14:15'
+}, {
+    name: 'High School Gym',
+    distance: 2.8,
+    capacity: 320,
+    available: 155,
+    status: 'Open',
+    updated: '2025-01-21 13:58'
+}, {
+    name: 'Westside Warehouse',
+    distance: 3.4,
+    capacity: 200,
+    available: 0,
+    status: 'Full',
+    updated: '2025-01-21 14:10'
+}, {
+    name: 'Harborview Clinic',
+    distance: 3.9,
+    capacity: 120,
+    available: 22,
+    status: 'Limited',
+    updated: '2025-01-21 14:05'
+}, {
+    name: 'Northside Church',
+    distance: 4.2,
+    capacity: 150,
+    available: 61,
+    status: 'Open',
+    updated: '2025-01-21 13:47'
+}];
+
+// Map & Layers
+let map, alertsLayer, reportsLayer, resourcesLayer, userMarker;
+
+function timeAgo(ts) {
+    const diff = Date.now() - ts;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 60) return mins + ' min ago';
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + ' h ago';
+    const days = Math.floor(hrs / 24);
+    return days + ' d ago';
+}
+
+function severityColor(sev) {
+    return sev === 'Critical' ? '#FF0000' : sev === 'High' ? '#FF8C00' : '#FFC107';
+}
+
+function buildPopupContent(item) {
+    const isAlert = item.type === 'alert';
+    const dest = isAlert ? `./alert_details.html?id=${encodeURIComponent(item.id)}` : `./incident_details.html?id=${encodeURIComponent(item.id)}`;
+    const sev = item.severity ? `<div class="badge-soft warning" style="display:inline-flex"><span class="status-dot" style="background:${severityColor(item.severity)}"></span><span class="ms-1">${item.severity}</span></div>` : '';
+    return `
+        <div class="small">
+          <div class="fw-bold mb-1">${item.title}</div>
+          <div class="text-muted mb-2">${item.summary || ''}</div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="text-muted">${timeAgo(item.timestamp)} ${sev}</span>
+            <a class="btn btn-sm btn-link p-0" href="${dest}">View Details <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
+          </div>
+        </div>`;
+}
+
+function initMap() {
+    map = L.map('map');
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    });
+    tiles.addTo(map);
+    map.setView([defaultCenter.lat, defaultCenter.lng], 12);
+
+    // Layers
+    alertsLayer = L.layerGroup().addTo(map);
+    reportsLayer = L.layerGroup().addTo(map);
+    resourcesLayer = L.layerGroup().addTo(map);
+
+    // Populate layers
+    alertsData.forEach(a => {
+        const m = L.circleMarker([a.coords.lat, a.coords.lng], {
+            radius: 8,
+            color: severityColor(a.severity),
+            weight: 2,
+            fillColor: severityColor(a.severity),
+            fillOpacity: 0.6
+        });
+        m.bindPopup(buildPopupContent(a));
+        m.on('click', () => {
+            /* state: selectedMarkerId = a.id */ });
+        alertsLayer.addLayer(m);
+    });
+    reportsData.forEach(r => {
+        const m = L.circleMarker([r.coords.lat, r.coords.lng], {
+            radius: 7,
+            color: '#0d6efd',
+            weight: 2,
+            fillColor: '#0d6efd',
+            fillOpacity: 0.5
+        });
+        m.bindPopup(buildPopupContent(r));
+        reportsLayer.addLayer(m);
+    });
+    resourcesData.forEach(s => {
+        const m = L.circleMarker([s.coords.lat, s.coords.lng], {
+            radius: 7,
+            color: '#28a745',
+            weight: 2,
+            fillColor: '#28a745',
+            fillOpacity: 0.5
+        });
+        m.bindPopup(buildPopupContent(s));
+        resourcesLayer.addLayer(m);
+    });
+
+    // Geolocate user
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const {
+                latitude,
+                longitude
+            } = pos.coords;
+            if (userMarker) map.removeLayer(userMarker);
+            userMarker = L.marker([latitude, longitude]).addTo(map).bindPopup('<b>You are here</b>');
+            map.setView([latitude, longitude], 13);
+            document.getElementById('mapLoading').classList.add('d-none');
+            showToast('Location acquired', 'success');
+        }, err => {
+            document.getElementById('mapLoading').classList.add('d-none');
+            showToast('Unable to get your location. Using default map view.', 'warning');
+        }, {
+            enableHighAccuracy: true,
+            timeout: 8000,
+            maximumAge: 30000
+        });
+    } else {
+        document.getElementById('mapLoading').classList.add('d-none');
+    }
+
+    // Map events
+    map.on('moveend', () => {
+        const c = map.getCenter();
+        // currentZoomLevel = map.getZoom(); mapCenterCoordinates = c;
+        // console.log('Map moved', c, map.getZoom());
+    });
+    map.on('zoomend', () => {
+        const z = map.getZoom();
+        // console.log('Zoom', z);
+    });
+
+    // Buttons
+    document.getElementById('btnLocate').addEventListener('click', () => {
+        if (userMarker) {
+            map.setView(userMarker.getLatLng(), 14, {
+                animate: true
+            });
+            userMarker.openPopup();
+        } else showToast('User location not available yet', 'info');
+    });
+    document.getElementById('btnRefresh').addEventListener('click', () => {
+        // Placeholder for data refresh
+        showToast('Map data refreshed', 'success');
+    });
+
+    // Layer toggles
+    document.querySelectorAll('.layer-toggle').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+            const layer = e.target.getAttribute('data-layer');
+            const checked = e.target.checked;
+            if (layer === 'alerts') checked ? alertsLayer.addTo(map) : map.removeLayer(alertsLayer);
+            if (layer === 'reports') checked ? reportsLayer.addTo(map) : map.removeLayer(reportsLayer);
+            if (layer === 'resources') checked ? resourcesLayer.addTo(map) : map.removeLayer(resourcesLayer);
+        });
+    });
+}
+
+// Alerts Feed
+function renderAlertsFeed(filter = 'all') {
+    const feed = document.getElementById('alertsFeed');
+    feed.innerHTML = '';
+    let items = alertsData.slice();
+    if (filter !== 'all') items = items.filter(a => a.severity === filter);
+    items.sort((a, b) => b.timestamp - a.timestamp);
+    items.forEach(a => {
+        const item = document.createElement('a');
+        item.href = `./alert_details.html?id=${encodeURIComponent(a.id)}`;
+        item.className = 'list-group-item list-group-item-action p-3 alerts-feed-item';
+        item.innerHTML = `
+          <div class="d-flex w-100 align-items-center justify-content-between">
+            <h6 class="mb-1">${a.title}</h6>
+            <small class="text-muted">${timeAgo(a.timestamp)}</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <small class="text-muted">${a.summary}</small>
+            <span class="badge rounded-pill" style="background:${severityColor(a.severity)}; color:#111">${a.severity}</span>
+          </div>`;
+        feed.appendChild(item);
+    });
+    document.getElementById('alertsCount').textContent = items.length + ' alerts';
+}
+
+// Chart: Alerts last 24h
+function initAlertsChart() {
+    const ctx = document.getElementById('alertsChart');
+    const labels = Array.from({
+        length: 12
+    }, (_, i) => `${i*2}h`);
+    const data = labels.map((_, i) => Math.max(0, Math.round(20 - Math.abs(i - 6) * 2 + (Math.random() * 3 - 1))));
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Alerts',
+                data,
+                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,0,0,0.15)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 5
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Nearby Shelters Table: sorting, filtering, pagination (mock)
+let sheltersSortKey = 'distance';
+let sheltersSortDir = 'asc';
+let sheltersPage = 1;
+const sheltersPageSize = 6;
+
+function renderSheltersTable() {
+    const tbody = document.querySelector('#sheltersTable tbody');
+    const search = document.getElementById('shelterSearch').value.toLowerCase().trim();
+    let data = sheltersTableData.filter(r => r.name.toLowerCase().includes(search));
+    data.sort((a, b) => {
+        let va = a[sheltersSortKey],
+            vb = b[sheltersSortKey];
+        if (typeof va === 'string') {
+            va = va.toLowerCase();
+            vb = vb.toLowerCase();
+        }
+        if (va < vb) return sheltersSortDir === 'asc' ? -1 : 1;
+        if (va > vb) return sheltersSortDir === 'asc' ? 1 : -1;
+        return 0;
+    });
+    const total = data.length;
+    const start = (sheltersPage - 1) * sheltersPageSize;
+    const paged = data.slice(start, start + sheltersPageSize);
+    tbody.innerHTML = '';
+    paged.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.name}</td>
+          <td>${r.distance.toFixed(1)}</td>
+          <td>${r.capacity}</td>
+          <td>${r.available}</td>
+          <td>
+            <span class="status-dot ${r.status==='Open'?'success':r.status==='Full'?'error':'warning'}"></span>
+            <span class="ms-1">${r.status}</span>
+          </td>
+          <td>${r.updated}</td>`;
+        tbody.appendChild(tr);
+    });
+    const startDisp = total === 0 ? 0 : start + 1;
+    const endDisp = Math.min(start + sheltersPageSize, total);
+    document.getElementById('sheltersPagination').textContent = `Showing ${startDisp}${endDisp} of ${total}`.replace('\u0013', '–');
+    document.getElementById('shelterPrev').disabled = sheltersPage === 1;
+    document.getElementById('shelterNext').disabled = endDisp >= total;
+}
+
+function attachSheltersTableHandlers() {
+    document.querySelectorAll('#sheltersTable thead th.sortable').forEach(th => {
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+            const key = th.getAttribute('data-key');
+            if (sheltersSortKey === key) sheltersSortDir = sheltersSortDir === 'asc' ? 'desc' : 'asc';
+            else {
+                sheltersSortKey = key;
+                sheltersSortDir = 'asc';
+            }
+            renderSheltersTable();
+        });
+    });
+    document.getElementById('shelterPrev').addEventListener('click', () => {
+        sheltersPage = Math.max(1, sheltersPage - 1);
+        renderSheltersTable();
+    });
+    document.getElementById('shelterNext').addEventListener('click', () => {
+        sheltersPage = sheltersPage + 1;
+        renderSheltersTable();
+    });
+    document.getElementById('shelterSearch').addEventListener('input', () => {
+        sheltersPage = 1;
+        renderSheltersTable();
+    });
+}
+
+// Mark Safe action (Quick action + header/sidebar links)
+let isMarkedSafe = false;
+
+function handleMarkSafe() {
+    if (isMarkedSafe) return;
+    Swal.fire({
+        title: 'Mark yourself safe?',
+        text: 'This will notify your contacts and update your status.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#FF0000',
+        confirmButtonText: 'Yes, mark me safe',
+    }).then((res) => {
+        if (res.isConfirmed) {
+            // Mock API call
+            // fetch('/api/user/safetystatus', {method:'POST', body: JSON.stringify({ status:'safe' })})
+            //   .then(r=>r.json())
+            //   .then(() => {...})
+            setTimeout(() => {
+                isMarkedSafe = true;
+                const btn = document.getElementById('btnMarkSafe');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.classList.remove('btn-warning');
+                    btn.classList.add('btn-success');
+                    btn.querySelector('.label').textContent = 'You are Marked Safe';
+                }
+                document.querySelectorAll('.js-mark-safe-link').forEach(a => {
+                    a.classList.add('disabled');
+                    a.setAttribute('aria-disabled', 'true');
+                });
+                showToast('Status updated: You are marked safe.', 'success');
+            }, 800);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply Poppins font priority if needed (already via CSS, but ensure)
+    document.body.style.fontFamily = '\"Poppins\", var(--font-sans)';
+
+    initMap();
+    renderAlertsFeed('all');
+    initAlertsChart();
+    renderSheltersTable();
+    attachSheltersTableHandlers();
+
+    // Alerts feed filters
+    document.getElementById('filterSeverity').addEventListener('change', (e) => renderAlertsFeed(e.target.value));
+    document.getElementById('btnToggleFeed').addEventListener('click', () => document.getElementById('alertsFeed').classList.toggle('d-none'));
+
+    // Mark safe button + links
+    document.getElementById('btnMarkSafe').addEventListener('click', handleMarkSafe);
+    document.querySelectorAll('a.js-mark-safe-link').forEach(a => {
+        a.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            handleMarkSafe();
+        });
+    });
+});
+  </script>
+ </body>
+</html>

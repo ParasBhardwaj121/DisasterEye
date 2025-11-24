@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Incident Details | DisasterEye
+  </title>
+  <!-- Brand Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+   <!-- Leaflet (Map) -->
+   <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+    <!-- Site Theme -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page-specific CSS -->
+    <link href="incident_details.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body>
+  <!-- Header (Common) -->
+  <header class="navbar navbar-expand bg-white border-bottom shadow-sm" style="--primary:#FF0000; --secondary:#FFD700;">
+   <div class="container-fluid">
+    <button aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle sidebar" class="btn d-md-none" data-bs-target="#sidebarMenu" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="./community_dashboard.html">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/48/28';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:28px;"/>
+     <span class="fw-bold" style="color:var(--primary)">
+      DisasterEye
+     </span>
+    </a>
+    <form class="ms-auto me-3 d-none d-md-block" role="search" style="max-width:360px;">
+     <div class="input-group">
+      <span class="input-group-text bg-white">
+       <i class="fa-solid fa-magnifying-glass text-muted">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search incidents, alerts, guides..." type="search"/>
+     </div>
+    </form>
+    <ul class="navbar-nav ms-auto align-items-center">
+     <li class="nav-item me-2">
+      <a class="nav-link position-relative" href="./notification_settings.html" title="Notifications">
+       <i class="fa-solid fa-bell">
+       </i>
+       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#FF0000;">
+        3
+       </span>
+      </a>
+     </li>
+     <li class="nav-item dropdown">
+      <a aria-expanded="false" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" href="#" role="button">
+       <i class="fa-solid fa-user-circle me-2">
+       </i>
+       <span id="topUserName">
+        Alex Rivera
+       </span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./profile_settings.html">
+         <i class="fa-solid fa-gear me-2">
+         </i>
+         Settings
+        </a>
+       </li>
+       <li>
+        <hr class="dropdown-divider"/>
+       </li>
+       <li>
+        <a class="dropdown-item text-danger" href="./login_page.html">
+         <i class="fa-solid fa-right-from-bracket me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="d-flex">
+    <!-- Left Sidebar (Common) -->
+    <nav class="collapse d-md-block bg-white border-end" id="sidebarMenu" style="min-height:100vh; width:280px;">
+     <div class="position-sticky">
+      <div class="p-3 border-bottom d-flex align-items-center gap-2">
+       <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo2/64/32';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:32px;"/>
+       <span class="fw-bold">
+        DisasterEye
+       </span>
+      </div>
+      <div class="p-3">
+       <div class="d-flex align-items-center gap-2 mb-3">
+        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+         <i class="fa-solid fa-user text-secondary">
+         </i>
+        </div>
+        <div>
+         <div class="fw-semibold" id="sbUserName">
+          Alex Rivera
+         </div>
+         <div class="badge" id="sbUserRole" style="background-color:#FFD700; color:#000;">
+          Local Authority
+         </div>
+        </div>
+       </div>
+       <ul class="nav nav-pills flex-column gap-1">
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./profile_settings.html">
+          <i class="fa-solid fa-user-gear me-2 text-danger">
+          </i>
+          Profile Settings
+         </a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link d-flex align-items-center" href="./safety_guides.html">
+          <i class="fa-solid fa-shield-heart me-2 text-danger">
+          </i>
+          Safety Guides
+         </a>
+        </li>
+        <li class="nav-item">
+         <button aria-expanded="true" class="btn w-100 text-start nav-link d-flex align-items-center" data-bs-target="#alertsMenu" data-bs-toggle="collapse">
+          <i class="fa-solid fa-triangle-exclamation me-2 text-danger">
+          </i>
+          Alerts &amp; Incidents
+          <i class="fa-solid fa-chevron-down ms-auto small">
+          </i>
+         </button>
+         <div class="collapse show ps-3" id="alertsMenu">
+          <ul class="nav flex-column gap-1">
+           <li class="nav-item">
+            <a class="nav-link" href="./alert_details.html">
+             <i class="fa-solid fa-map me-2 text-muted">
+             </i>
+             Alert Details
+            </a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link active" href="./incident_details.html">
+             <i class="fa-solid fa-clipboard-list me-2 text-muted">
+             </i>
+             Incident Details
+            </a>
+           </li>
+          </ul>
+         </div>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="flex-grow-1 p-3 p-lg-4">
+     <!-- Breadcrumbs and Page Header -->
+     <nav aria-label="breadcrumb" class="breadcrumb">
+      <ol class="breadcrumb mb-2">
+       <li class="breadcrumb-item">
+        <a href="./community_dashboard.html">
+         Dashboard
+        </a>
+       </li>
+       <li class="breadcrumb-item">
+        Alerts &amp; Incidents
+       </li>
+       <li aria-current="page" class="breadcrumb-item active">
+        Incident Details
+       </li>
+      </ol>
+     </nav>
+     <div class="page-header">
+      <div class="d-flex align-items-center gap-2">
+       <i class="fa-solid fa-droplet text-primary">
+       </i>
+       <h1 class="page-title m-0">
+        Incident Details
+       </h1>
+       <span class="badge rounded-pill bg-info ms-2" id="statusBadge">
+        In Progress
+       </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+       <a class="btn btn-outline-danger btn-sm" href="./incident_report.html">
+        <i class="fa-solid fa-circle-plus me-1">
+        </i>
+        New Incident
+       </a>
+       <a class="btn btn-light btn-sm" href="./report_generator.html">
+        <i class="fa-solid fa-file-export me-1">
+        </i>
+        Generate Report
+       </a>
+      </div>
+     </div>
+     <!-- 2-column responsive layout -->
+     <div class="row g-3 g-lg-4">
+      <!-- Left Column: Map + Media -->
+      <div class="col-12 col-lg-7">
+       <!-- Map Card -->
+       <div class="card mb-3">
+        <div class="card-header">
+         <div class="title d-flex align-items-center gap-2">
+          <i class="fa-solid fa-map-location-dot text-danger">
+          </i>
+          <span class="widget-title">
+           Incident Location
+          </span>
+         </div>
+         <div class="text-muted small" id="incidentAddress">
+          Loading address...
+         </div>
+        </div>
+        <div class="card-body p-0">
+         <div class="map-container rounded-bottom" id="incidentMap">
+         </div>
+        </div>
+       </div>
+       <!-- Media Viewer Card -->
+       <div class="card">
+        <div class="card-header">
+         <div class="title d-flex align-items-center gap-2">
+          <i class="fa-solid fa-photo-film text-danger">
+          </i>
+          <span class="widget-title">
+           Media Evidence
+          </span>
+         </div>
+         <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-light btn-sm" id="btnFullScreenMedia">
+           <i class="fa-solid fa-up-right-and-down-left-from-center me-1">
+           </i>
+           Full Screen
+          </button>
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="media-area" id="mediaArea">
+          <div class="skeleton w-100" style="height: 260px;">
+          </div>
+         </div>
+         <div class="text-muted small mt-2 d-none" id="noMediaMsg">
+          No media submitted.
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- Right Column: Info + Actions -->
+      <div class="col-12 col-lg-5">
+       <!-- Report Information Panel -->
+       <div class="card mb-3">
+        <div class="card-header">
+         <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-droplet text-primary" id="incidentTypeIcon">
+          </i>
+          <div>
+           <div class="fw-bold" id="incidentTitle">
+            Flood • Critical
+           </div>
+           <small class="text-muted" id="incidentId">
+            ID: —
+           </small>
+          </div>
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="row g-3">
+          <div class="col-12">
+           <div class="d-flex align-items-center justify-content-between mb-1">
+            <div class="form-label m-0">
+             AI Validation
+            </div>
+            <span class="small text-muted" id="aiLevelLabel">
+             High
+            </span>
+           </div>
+           <div class="progress" data-bs-title="Confidence score indicates how likely the report is valid." data-bs-toggle="tooltip">
+            <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" id="aiScoreBar" role="progressbar" style="width: 0%">
+             0%
+            </div>
+           </div>
+          </div>
+          <div class="col-12">
+           <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+             <span class="text-muted">
+              Timestamp
+             </span>
+             <span class="fw-semibold" id="incidentTime">
+              —
+             </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+             <span class="text-muted">
+              Source
+             </span>
+             <span class="fw-semibold" id="incidentSource">
+              —
+             </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+             <span class="text-muted">
+              Coordinates
+             </span>
+             <span class="fw-semibold" id="incidentCoords">
+              —
+             </span>
+            </li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- Description Panel -->
+       <div class="card mb-3">
+        <div class="card-header">
+         <div class="title">
+          Description
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="description-box small text-secondary" id="incidentDescription">
+          Loading description...
+         </div>
+        </div>
+       </div>
+       <!-- Action Panel (authorized users) -->
+       <div class="card">
+        <div class="card-header">
+         <div class="title d-flex align-items-center gap-2">
+          <i class="fa-solid fa-sliders text-danger">
+          </i>
+          <span class="widget-title">
+           Manage Incident
+          </span>
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="mb-3">
+          <label class="form-label" for="statusSelect">
+           Change Status
+          </label>
+          <select aria-label="Status select" class="form-select" id="statusSelect">
+           <option value="New">
+            New
+           </option>
+           <option value="In Progress">
+            In Progress
+           </option>
+           <option value="Resolved">
+            Resolved
+           </option>
+           <option value="Invalid">
+            Invalid
+           </option>
+          </select>
+          <div class="form-text">
+           Only authorized roles can update status.
+          </div>
+         </div>
+         <button class="btn btn-primary w-100" disabled="" id="btnUpdateStatus">
+          <span class="btn-text">
+           <i class="fa-solid fa-arrows-rotate me-2">
+           </i>
+           Update Status
+          </span>
+          <span aria-hidden="true" class="spinner-border spinner-border-sm d-none" role="status">
+          </span>
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Visualization & Related Incidents -->
+     <div class="row g-3 g-lg-4 mt-1">
+      <div class="col-12 col-xl-6">
+       <div class="card h-100">
+        <div class="card-header">
+         <div class="title d-flex align-items-center gap-2">
+          <i class="fa-solid fa-chart-line text-danger">
+          </i>
+          <span class="widget-title">
+           Reports Trend (Last 24h)
+          </span>
+         </div>
+        </div>
+        <div class="card-body">
+         <canvas aria-label="Reports in last 24 hours" height="140" id="trendChart" role="img">
+         </canvas>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-xl-6">
+       <div class="card h-100">
+        <div class="card-header justify-content-between">
+         <div class="title d-flex align-items-center gap-2">
+          <i class="fa-solid fa-list-check text-danger">
+          </i>
+          <span class="widget-title">
+           Related Incidents Nearby
+          </span>
+         </div>
+         <div class="d-flex gap-2">
+          <input class="form-control form-control-sm" id="filterText" placeholder="Filter by type or area" style="max-width:220px;">
+           <select class="form-select form-select-sm" id="filterStatus" style="max-width:160px;">
+            <option value="">
+             All Statuses
+            </option>
+            <option>
+             New
+            </option>
+            <option>
+             In Progress
+            </option>
+            <option>
+             Resolved
+            </option>
+            <option>
+             Invalid
+            </option>
+           </select>
+          </input>
+         </div>
+        </div>
+        <div class="card-body">
+         <div class="table-responsive">
+          <table class="table table-theme align-middle" id="relatedTable">
+           <thead>
+            <tr>
+             <th class="sortable" data-sort="id">
+              ID
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th class="sortable" data-sort="type">
+              Type
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th class="sortable" data-sort="area">
+              Area
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th class="sortable" data-sort="time">
+              Time
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th class="sortable" data-sort="status">
+              Status
+              <i class="fa-solid fa-sort ms-1">
+              </i>
+             </th>
+             <th>
+              Action
+             </th>
+            </tr>
+           </thead>
+           <tbody id="relatedBody">
+            <!-- rows via JS -->
+           </tbody>
+          </table>
+         </div>
+         <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+          <div id="paginationInfo">
+           Showing 1–6 of 24
+          </div>
+          <div>
+           <button class="btn btn-light btn-sm me-1" disabled="" id="prevPage">
+            <i class="fa-solid fa-chevron-left">
+            </i>
+           </button>
+           <button class="btn btn-light btn-sm" id="nextPage">
+            <i class="fa-solid fa-chevron-right">
+            </i>
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Footer (Common) -->
+  <footer class="border-top bg-light mt-3">
+   <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between small">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo3/36/18';" src="https://dsaishared.blob.core.windows.net/uxcceleratecontainer/projects/68c2bc58b3f88442584e5f26/logos/logo_07c28723-6add-4475-a1c8-2b377d0b765d.jpg" style="height:18px;"/>
+     <span class="text-muted">
+      DisasterEye
+     </span>
+    </div>
+    <ul class="nav align-items-center">
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Terms
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link px-2 text-muted" href="#">
+       Privacy
+      </a>
+     </li>
+     <li class="nav-item d-none d-md-block">
+      <a class="btn btn-outline-danger btn-sm ms-2" href="./report_generator.html">
+       <i class="fa-solid fa-flag me-1">
+       </i>
+       Report Issue
+      </a>
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- JS: Bootstrap, Leaflet, Chart.js, SweetAlert2 -->
+  <script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   // Mock incident data fetch
+const incidentData = {
+    id: 'INC-20250911-0423',
+    type: 'Flood',
+    severity: 'Critical',
+    status: 'In Progress',
+    timestamp: '2025-09-11T14:30:00Z',
+    source: 'Community Report',
+    aiConfidenceScore: 0.88,
+    location: {
+        lat: 37.7599,
+        lng: -122.4148,
+        address: 'Mission District, San Francisco, CA'
+    },
+    media: {
+        type: 'image',
+        url: 'https://picsum.photos/id/1011/800/450'
+    },
+    description: 'Water levels rose rapidly after continuous heavy rainfall. Several intersections are flooded up to knee height. Vehicles are stalled and pedestrians are seeking higher ground. Power flickers reported in nearby blocks. Requesting sandbags and traffic redirection.'
+};
+
+// Related incidents mock data
+const relatedIncidents = Array.from({
+    length: 24
+}).map((_, i) => {
+    const types = ['Flood', 'Fire', 'Landslide', 'Power Outage', 'Road Block'];
+    const areas = ['Mission', 'SOMA', 'Sunset', 'Bayview', 'Richmond', 'Castro'];
+    const statuses = ['New', 'In Progress', 'Resolved', 'Invalid'];
+    const t = types[i % types.length];
+    const a = areas[i % areas.length];
+    const s = statuses[(i * 2) % statuses.length];
+    const now = new Date();
+    const dt = new Date(now.getTime() - (i + 1) * 45 * 60 * 1000);
+    return {
+        id: `INC-2025${(i+1).toString().padStart(2,'0')}`,
+        type: t,
+        area: `${a} District`,
+        time: dt,
+        status: s
+    };
+});
+
+let map, marker; // Leaflet references
+
+function formatDateLocal(isoString) {
+    try {
+        const d = new Date(isoString);
+        return d.toLocaleString(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
+    } catch {
+        return isoString;
+    }
+}
+
+function severityClass(sev) {
+    const v = (sev || '').toLowerCase();
+    if (v.includes('critical') || v.includes('severe')) return 'text-danger';
+    if (v.includes('moderate')) return 'text-warning';
+    if (v.includes('minor') || v.includes('low')) return 'text-muted';
+    return 'text-strong';
+}
+
+function statusBadgeClass(status) {
+    switch ((status || '').toLowerCase()) {
+        case 'new':
+            return 'bg-secondary';
+        case 'in progress':
+            return 'bg-info';
+        case 'resolved':
+            return 'bg-success';
+        case 'invalid':
+            return 'bg-danger';
+        default:
+            return 'bg-secondary';
+    }
+}
+
+function aiLevel(score) {
+    if (score >= 0.85) return {
+        label: 'High',
+        cls: 'bg-success'
+    };
+    if (score >= 0.60) return {
+        label: 'Medium',
+        cls: 'bg-warning'
+    };
+    return {
+        label: 'Low',
+        cls: 'bg-danger'
+    };
+}
+
+function setMedia(media) {
+    const mediaArea = document.getElementById('mediaArea');
+    const noMedia = document.getElementById('noMediaMsg');
+    mediaArea.innerHTML = '';
+    if (!media || !media.url) {
+        noMedia.classList.remove('d-none');
+        return;
+    }
+    noMedia.classList.add('d-none');
+    if (media.type && media.type.startsWith('video')) {
+        const video = document.createElement('video');
+        video.src = media.url;
+        video.className = 'w-100 rounded';
+        video.controls = true;
+        video.playsInline = true;
+        video.setAttribute('aria-label', 'Incident video evidence');
+        mediaArea.appendChild(video);
+    } else {
+        const img = document.createElement('img');
+        img.src = media.url;
+        img.alt = 'Incident photo evidence';
+        img.className = 'img-fluid rounded';
+        img.onerror = function() {
+            this.onerror = null;
+            this.src = 'https://picsum.photos/seed/incident/800/450';
+        };
+        mediaArea.appendChild(img);
+    }
+}
+
+function openMediaFullscreen() {
+    const media = incidentData.media;
+    if (!media || !media.url) {
+        Swal.fire({
+            icon: 'info',
+            title: 'No media',
+            text: 'No media submitted for this incident.'
+        });
+        return;
+    }
+    if (media.type && media.type.startsWith('video')) {
+        Swal.fire({
+            width: '80%',
+            html: `<video src="${media.url}" controls autoplay style="width:100%; border-radius:8px;"></video>`,
+            showConfirmButton: false,
+            showCloseButton: true,
+            background: '#fff'
+        });
+    } else {
+        Swal.fire({
+            width: '80%',
+            imageUrl: media.url,
+            imageAlt: 'Incident photo',
+            showConfirmButton: false,
+            showCloseButton: true,
+            background: '#fff'
+        });
+    }
+}
+
+function initMap() {
+    const {
+        lat,
+        lng
+    } = incidentData.location;
+    map = L.map('incidentMap', {
+        zoomControl: true
+    }).setView([lat, lng], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Context overlay (example: caution radius)
+    const circle = L.circle([lat, lng], {
+        color: '#FFC107',
+        fillColor: '#FFC107',
+        fillOpacity: 0.12,
+        radius: 400
+    }).addTo(map);
+
+    // Icon per incident type
+    const iconHtml = `<div class="fa-stack fa-2x incident-pin">
+          <i class="fa-solid fa-location-dot fa-stack-2x text-danger"></i>
+          <i class="fa-solid ${incidentData.type.toLowerCase()==='fire'?'fa-fire':'fa-droplet'} fa-stack-1x text-white"></i>
+        </div>`;
+    const divIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: iconHtml,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36]
+    });
+    marker = L.marker([lat, lng], {
+        icon: divIcon
+    }).addTo(map);
+    marker.bindPopup(`<div class="small"><strong>${incidentData.type}</strong> • ${incidentData.severity}<br/>${formatDateLocal(incidentData.timestamp)}</div>`);
+}
+
+function populateIncident() {
+    // Title & severity
+    const titleEl = document.getElementById('incidentTitle');
+    titleEl.innerHTML = `${incidentData.type} • <span class="${severityClass(incidentData.severity)}">${incidentData.severity}</span>`;
+
+    // ID
+    document.getElementById('incidentId').textContent = `ID: ${incidentData.id}`;
+
+    // Status badge
+    const statusBadge = document.getElementById('statusBadge');
+    statusBadge.textContent = incidentData.status;
+    statusBadge.className = `badge rounded-pill ${statusBadgeClass(incidentData.status)}`;
+
+    // Metadata
+    document.getElementById('incidentTime').textContent = formatDateLocal(incidentData.timestamp);
+    document.getElementById('incidentSource').textContent = incidentData.source;
+    document.getElementById('incidentCoords').textContent = `${incidentData.location.lat.toFixed(4)}, ${incidentData.location.lng.toFixed(4)}`;
+    document.getElementById('incidentAddress').textContent = incidentData.location.address;
+
+    // AI score
+    const scorePct = Math.round(incidentData.aiConfidenceScore * 100);
+    const level = aiLevel(incidentData.aiConfidenceScore);
+    const bar = document.getElementById('aiScoreBar');
+    const levelLabel = document.getElementById('aiLevelLabel');
+    levelLabel.textContent = level.label;
+    bar.style.width = `${scorePct}%`;
+    bar.textContent = `${scorePct}%`;
+    bar.classList.remove('bg-success', 'bg-warning', 'bg-danger');
+    bar.classList.add(level.cls);
+
+    // Description
+    document.getElementById('incidentDescription').textContent = incidentData.description;
+
+    // Media
+    setMedia(incidentData.media);
+
+    // Status select default
+    const statusSelect = document.getElementById('statusSelect');
+    statusSelect.value = incidentData.status;
+}
+
+function initStatusActions() {
+    const statusSelect = document.getElementById('statusSelect');
+    const btn = document.getElementById('btnUpdateStatus');
+    const btnText = btn.querySelector('.btn-text');
+    const spinner = btn.querySelector('.spinner-border');
+
+    let selected = statusSelect.value;
+    statusSelect.addEventListener('change', () => {
+        selected = statusSelect.value;
+        btn.disabled = (selected === incidentData.status);
+    });
+
+    btn.addEventListener('click', () => {
+        btn.disabled = true;
+        spinner.classList.remove('d-none');
+        btnText.classList.add('d-none');
+        // Simulate API call
+        setTimeout(() => {
+            spinner.classList.add('d-none');
+            btnText.classList.remove('d-none');
+            incidentData.status = selected;
+            document.getElementById('statusBadge').textContent = incidentData.status;
+            document.getElementById('statusBadge').className = `badge rounded-pill ${statusBadgeClass(incidentData.status)}`;
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: `Status updated to ${incidentData.status}`,
+                showConfirmButton: false,
+                timer: 2200,
+                timerProgressBar: true
+            });
+        }, 1200);
+    });
+}
+
+function initTooltips() {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+
+function initTrendChart() {
+    const ctx = document.getElementById('trendChart');
+    const labels = Array.from({
+        length: 24
+    }).map((_, i) => `${i}:00`);
+    const data = labels.map((_, i) => Math.max(1, Math.round(6 + 3 * Math.sin(i / 3) + (Math.random() * 2 - 1))));
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Reports',
+                data,
+                fill: true,
+                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,0,0,0.08)',
+                pointRadius: 2,
+                tension: 0.28
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)'
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Related table sorting/filtering/pagination
+let currentSort = {
+    key: 'time',
+    dir: 'desc'
+};
+let currentPage = 1;
+const pageSize = 6;
+
+function compare(a, b, key) {
+    if (key === 'time') return new Date(a.time) - new Date(b.time);
+    const av = (a[key] + '').toLowerCase();
+    const bv = (b[key] + '').toLowerCase();
+    if (av < bv) return -1;
+    if (av > bv) return 1;
+    return 0;
+}
+
+function renderTable() {
+    const tbody = document.getElementById('relatedBody');
+    const ft = document.getElementById('filterText').value.toLowerCase();
+    const fs = document.getElementById('filterStatus').value;
+
+    let rows = relatedIncidents.filter(r => {
+        const m = `${r.type} ${r.area}`.toLowerCase().includes(ft);
+        const s = !fs || r.status === fs;
+        return m && s;
+    });
+
+    rows.sort((a, b) => {
+        const cmp = compare(a, b, currentSort.key);
+        return currentSort.dir === 'asc' ? cmp : -cmp;
+    });
+
+    const total = rows.length;
+    const start = (currentPage - 1) * pageSize;
+    const end = Math.min(start + pageSize, total);
+    const pageRows = rows.slice(start, end);
+
+    tbody.innerHTML = pageRows.map(r => {
+        return `<tr>
+          <td class="text-muted small">${r.id}</td>
+          <td>${r.type}</td>
+          <td>${r.area}</td>
+          <td class="small text-muted">${r.time.toLocaleString(undefined,{ dateStyle:'medium', timeStyle:'short' })}</td>
+          <td><span class="badge rounded-pill ${statusBadgeClass(r.status)}">${r.status}</span></td>
+          <td><a class="btn btn-sm btn-outline-danger" href="./incident_details.html"><i class="fa-solid fa-eye"></i></a></td>
+        </tr>`;
+    }).join('');
+
+    document.getElementById('paginationInfo').textContent = `Showing ${total?start+1:0}–${end} of ${total}`;
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = end >= total;
+}
+
+function initRelatedTable() {
+    document.getElementById('filterText').addEventListener('input', () => {
+        currentPage = 1;
+        renderTable();
+    });
+    document.getElementById('filterStatus').addEventListener('change', () => {
+        currentPage = 1;
+        renderTable();
+    });
+    document.querySelectorAll('#relatedTable thead th.sortable').forEach(th => {
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+            const key = th.getAttribute('data-sort');
+            if (currentSort.key === key) currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+            else {
+                currentSort.key = key;
+                currentSort.dir = 'asc';
+            }
+            currentPage = 1;
+            renderTable();
+        });
+    });
+    document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+    document.getElementById('nextPage').addEventListener('click', () => {
+        currentPage++;
+        renderTable();
+    });
+    renderTable();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize UI
+    populateIncident();
+    initMap();
+    initStatusActions();
+    initTooltips();
+    initTrendChart();
+    initRelatedTable();
+
+    document.getElementById('btnFullScreenMedia').addEventListener('click', openMediaFullscreen);
+});
+  </script>
+ </body>
+</html>

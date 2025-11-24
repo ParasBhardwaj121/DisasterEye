@@ -1,0 +1,70 @@
+/* Alert Monitoring Dashboard — Page specific CSS (alert_monitoring.css) */
+/* Use brand font */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout: left panel 30%, right panel 70% on lg+ */
+.monitoring-layout .issued-panel {
+    flex: 1 1 100%
+    }
+.monitoring-layout .analytics-panel {
+    flex: 1 1 100%
+    }
+@media (min-width: 992px) {
+    .monitoring-layout .issued-panel {
+        flex: 0 0 30%;
+        max-width: 30%
+        }
+    .monitoring-layout .analytics-panel {
+        flex: 0 0 70%;
+        max-width: 70%
+        }
+    }
+/* Make the alerts list scroll within the card body */
+.list-scroll {
+    max-height: calc(100vh - 360px);
+    overflow-y: auto
+    }
+@media (min-width: 992px) {
+    .list-scroll {
+        max-height: calc(100vh - 320px)
+        }
+    }
+/* Active item styling aligns with theme */
+.list-group-item.active {
+    background-color: var(--primary-soft);
+    color: var(--text-strong);
+    border-color: var(--color-primary)
+    }
+/* Map sizing */
+.map-area {
+    height: 380px;
+    width: 100%
+    }
+@media (min-width: 1200px) {
+    .map-area {
+        height: 460px
+        }
+    }
+/* Small adjustments to metric cards on this page */
+.metric-card .metric-value {
+    line-height: 1.1
+    }
+/* Ensure header breadcrumb masks don’t clip in small widths */
+.breadcrumb {
+    --fade: 0
+    }
+/* Buttons and controls spacing */
+#applyFiltersBtn {
+    min-width: 100px
+    }
+/* Table tweaks */
+#detailsTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03)
+    }
+/* Reduce card body padding on small screens for dense data */
+@media (max-width: 575.98px) {
+    .card .card-body {
+        padding: 12px
+        }
+    }

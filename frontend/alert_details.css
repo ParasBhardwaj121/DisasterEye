@@ -1,0 +1,116 @@
+/* Alert Details Page CSS (alert_details.css) */
+/* Use brand typography (Poppins) for this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Map container sizing */
+.alert-map {
+    height: 420px;
+    min-height: 320px
+    }
+/* Map legend chips */
+.legend {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    border: 1px solid var(--border-color)
+    }
+.legend.color-area {
+    background: rgba(255, 0, 0, 0.18);
+    border-color: rgba(255, 0, 0, 0.6)
+    }
+.legend.color-shelter {
+    background: rgba(0, 153, 210, 0.18);
+    border-color: rgba(0, 153, 210, 0.6)
+    }
+.legend.color-route {
+    background: rgba(255, 215, 0, 0.25);
+    border-color: rgba(255, 215, 0, 0.7)
+    }
+/* Sticky action toolbar style */
+.action-toolbar {
+    position: sticky;
+    bottom: 12px;
+    z-index: 100;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-2)
+    }
+/* Leaflet custom markers */
+.user-marker {
+    position: relative
+    }
+.user-marker .user-dot {
+    width: 12px;
+    height: 12px;
+    background: #0099D2;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25)
+    }
+.user-marker .user-pulse {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0, 153, 210, 0.25);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: userPulse 1.8s ease-out infinite
+    }
+@keyframes userPulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.7;
+        } 70% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+        } 100% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0;
+        }
+    }
+.resource-marker .rm-badge {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    color: #111;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-size: 12px
+    }
+.resource-marker.shelter .rm-badge {
+    color: #005b7a;
+    border-color: rgba(0, 153, 210, 0.6);
+    background: rgba(0, 153, 210, 0.1)
+    }
+.resource-marker.route .rm-badge {
+    color: #7a5a00;
+    border-color: rgba(255, 215, 0, 0.7);
+    background: rgba(255, 215, 0, 0.15)
+    }
+/* Table tweaks */
+#resourcesTable thead th[role="button"] {
+    cursor: pointer;
+    user-select: none
+    }
+#resourcesTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.025)
+    }
+/* Small responsive adjustments */
+@media (max-width: 767.98px) {
+    .action-toolbar {
+        bottom: 8px
+        }
+    .alert-map {
+        height: 320px
+        }
+    }

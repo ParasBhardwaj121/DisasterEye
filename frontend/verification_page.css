@@ -1,0 +1,46 @@
+/* verification_page.css - page-specific styles for Account Verification */
+/* Layout centering within main area taking header/footer into account */
+.verification-wrapper {
+    min-height: calc(100vh - 112px);
+    /* approx header + footer heights */
+    }
+/* Compact, readable container */
+.verification-shell {
+    max-width: 540px;
+    margin: 0 auto
+    }
+/* Status icon styling */
+.status-icon {
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--text-muted)
+    }
+.status-success {
+    color: var(--color-success)
+    }
+.status-error {
+    color: var(--color-error)
+    }
+.status-warning {
+    color: var(--color-warning)
+    }
+/* Resend button disabled state clarity */
+#btnResend[disabled] {
+    opacity: 0.85;
+    cursor: not-allowed
+    }
+/* Inline feedback spacing */
+#inlineFeedback {
+    margin-top: 1rem
+    }
+/* Breadcrumb spacing adjust for this page */
+.breadcrumb {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem
+    }
+/* Responsive tune: reduce icon size on very small screens */
+@media (max-width: 360px) {
+    .status-icon {
+        font-size: 2.5rem
+        }
+    }

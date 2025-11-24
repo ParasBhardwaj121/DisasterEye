@@ -1,0 +1,45 @@
+/* profile_settings.css - page-specific styles for Profile Settings */
+/* Use brand typography on this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Improve card spacing consistency */
+.card + .card {
+    margin-top: var(--space-4)
+    }
+/* Sortable table header visual cue */
+th.sortable {
+    user-select: none
+    }
+th.sortable:hover {
+    color: var(--text-strong)
+    }
+/* Tighter table cell vertical rhythm */
+.table-theme th, .table-theme td {
+    padding-top: 10px;
+    padding-bottom: 10px
+    }
+/* Strength badge subtle transition */
+#pwdRulesBadge {
+    transition: background-color 0.2s ease, color 0.2s ease
+    }
+/* View switcher cursor */
+.view-switcher .option {
+    cursor: pointer
+    }
+/* Ensure sidebar + main layout plays nicely on small screens */
+@media (max-width: 767.98px) {
+    #sidebarMenu {
+        position: fixed;
+        z-index: var(--z-sidebar)
+        }
+    .main-panel {
+        padding-bottom: var(--space-6)
+        }
+    }
+/* Utility: Make code elements in tables a bit subtler */
+.table-theme code {
+    background: transparent;
+    color: var(--text);
+    font-weight: 600
+    }
